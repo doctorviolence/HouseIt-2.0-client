@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Manager extends Component {
+class Apartments extends Component {
     render() {
         return (
             <div>
@@ -10,4 +10,4 @@ class Manager extends Component {
     }
 }
 
-export default Manager;
+export default Apartments;

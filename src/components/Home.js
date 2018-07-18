@@ -1,14 +1,18 @@
-import React from 'react';
-import Auxiliary from '../hoc/Auxiliary';
+import React, {Component} from 'react';
+
 import styles from '../assets/css/Home.css';
+import Buildings from '../containers/Buildings';
 
-const home = (props) => (
-    <Auxiliary>
-        <div>Toolbar, SideDrawer, Backdrop</div>
-        <main className={styles.Home}>
-            {props.children}
-        </main>
-    </Auxiliary>
-);
+class Home extends Component {
+    constructor(props) {
+        super(props);
+    }
 
-export default home;
+    render() {
+        return (
+            <Buildings styles={styles.Home}/>
+        )
+    }
+}
+
+export default Home;

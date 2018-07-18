@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class TaskMessage extends Component {
+class Managers extends Component {
     render() {
         return (
             <div>
@@ -10,4 +10,4 @@ class TaskMessage extends Component {
     }
 }
 
-export default TaskMessage;
+export default Managers;
