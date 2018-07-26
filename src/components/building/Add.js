@@ -62,6 +62,7 @@ class AddBuilding extends Component {
 }
 
 AddBuilding.propTypes = {
+    id: PropTypes.number,
     streetAddress: PropTypes.string,
     floorLevels: PropTypes.number
 };
