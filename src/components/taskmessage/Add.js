@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiTaskMessage";
 
 import PropTypes from 'prop-types';
 
 class AddTaskMessage extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             messageNo: '',
-            text: ''
+            text: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -36,7 +38,14 @@ class AddTaskMessage extends Component {
     }
 
     addTaskMessage(taskMessage) {
-        this.props.addToTaskMessages(taskMessage);
+        api.addTaskMessage(taskMessage).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add taskMessage, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToTasks(taskMessage);
+        });
     }
 
     render() {

@@ -1,40 +1,18 @@
-import React, {Component} from 'react';
+import React from 'react';
 
 import Edit from './/Edit';
 
-class Tenant extends Component {
-    render() {
-        let tenants = this.props.tenants.map((t, i) => {
-            return (
-                <li key={i}>
-                    <b>ID: </b>{t.id}
-                    <b>First Name: </b>{t.firstName}
-                    <b>Last name: </b>{t.lastName}
-                    <b>Phone No.: </b>{t.phoneNo}
-                    <Edit/>
-                    <button onClick={() => this.props.removeTenant(i)}>Remove</button>
-                </li>
-            )
-        });
+const tenant = (props) => (
+    <div className="Tenant">
+        <li key={props.id}>
+            <b>ID: </b>{props.id}
+            <b>First Name: </b>{props.firstName}
+            <b>Last name: </b>{props.lastName}
+            <b>Phone No.: </b>{props.phoneNo}
+            <Edit/>
+            <button onClick={() => this.props.removeTenant(props.id)}>Remove</button>
+        </li>
+    </div>
+);
 
-        console.log(Object.prototype.toString.call(tenants));
-        console.log(tenants);
-
-        if (tenants.length !== 0) {
-            return (
-                <ul>
-                    {tenants}
-                </ul>
-            )
-        }
-        else {
-            return (
-                <p>
-                    There are no tenants currently available.
-                </p>
-            )
-        }
-    }
-}
-
-export default Tenant;
+export default tenant;

@@ -1,17 +1,19 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiTask";
 
 import PropTypes from 'prop-types';
 
 class AddTask extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             taskNo: '',
             taskType: '',
             taskStatus: '',
             resolved: '',
             taskDate: '',
-            fixDate: ''
+            fixDate: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -44,7 +46,14 @@ class AddTask extends Component {
     }
 
     addTask(task) {
-        this.props.addToTasks(task);
+        api.addTask(task).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add task, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToTasks(task);
+        });
     }
 
     render() {

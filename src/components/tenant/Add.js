@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiTenant";
 
 import PropTypes from 'prop-types';
 
 class AddTenant extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             id: '',
             firstName: '',
             lastName: '',
-            phoneNo: ''
+            phoneNo: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,7 +42,14 @@ class AddTenant extends Component {
     }
 
     addTenant(tenant) {
-        this.props.addToTenants(tenant);
+        api.addTenant(tenant).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add tenant, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToTenants(tenant);
+        });
     }
 
     render() {

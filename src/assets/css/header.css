@@ -1,31 +1,35 @@
 .header {
-    height: 40px;
-    width: 100%;
     position: fixed;
     color: #ffffff;
-    background-color: #414141;
-    padding: 0;
+    background-color: #333333;
+    font-size: 14px;
     top: 0;
     right: 0;
-    box-sizing: border-box;
+    height: 40px;
+    width: 100%;
     display: flex;
-    z-index: 90;
+    padding: 0 20px;
+    box-sizing: border-box;
+    z-index: 9999;
 }
 
 .nav {
-    height: 40px;
-    width: 50%;
     position: fixed;
     margin: 0;
     padding: 0;
     top: 0;
     right: 0;
-    background-color: #414141;
+    height: 40px;
+    width: 50%;
+    background-color: #333333;
     box-sizing: border-box;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 9999;
 }
 
-.nav ul {
+.nav div {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -33,7 +37,6 @@
 
 .nav li {
     width: 100%;
-    float: right;
 }
 
 .nav li a {
@@ -46,16 +49,21 @@
 
 .nav li a:hover,
 .nav li a:active {
-    color: #007AFF;
+    color: #999999;
     height: 100%;
     display: block;
 }
 
-@media (min-width: 499px) {
+@media (max-width: 499px) {
+    .nav {
+        display: none;
+    }
+}
+
+@media (max-width: 500px) {
     .nav li {
         flex-flow: column;
     }
 }
-
 
 

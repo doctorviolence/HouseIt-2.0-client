@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiUser";
 
 import PropTypes from 'prop-types';
 
 class AddUser extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             id: '',
             username: '',
             password: '',
-            role: ''
+            role: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -40,7 +42,14 @@ class AddUser extends Component {
     }
 
     addUser(user) {
-        this.props.addToUsers(user);
+        api.addUser(user).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add user, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToUsers(user);
+        });
     }
 
     render() {

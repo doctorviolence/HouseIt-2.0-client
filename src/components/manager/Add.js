@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiManager";
 
 import PropTypes from 'prop-types';
 
 class AddManager extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
-            id: ''
+            id: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -34,7 +36,14 @@ class AddManager extends Component {
     }
 
     addManager(manager) {
-        this.props.addToManagers(manager);
+        api.addManager(manager).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add manager, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToManagers(manager);
+        });
     }
 
     render() {

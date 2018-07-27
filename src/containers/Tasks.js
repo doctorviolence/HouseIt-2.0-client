@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiTask';
 
 import Task from "../components/task/Task";
-import styles from "../assets/css/components.css";
 import Add from "../components/task/Add";
 
 class Tasks extends Component {
@@ -12,7 +12,8 @@ class Tasks extends Component {
         this.removeFromTasks = this.removeFromTasks.bind(this);
 
         this.state = {
-            tasks: []
+            tasks: [],
+            error: false
         }
     }
 
@@ -25,34 +26,64 @@ class Tasks extends Component {
     }
 
     getTasks = () => {
-        // add api call here
-        this.setState({tasks: this.state.tasks})
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+
+        api.getAllTasks().then(result => {
+            this.setState({tasks: result});
+        })
+            .catch(e => {
+                console.log('Error loading tasks:', e);
+                this.setState({error: true});
+            })
     };
 
     addToTasks = (task) => {
-        // add api call here
         const updated = [...this.state.tasks];
         updated.push(task);
         this.setState({tasks: updated});
+        console.log('Task added');
     };
 
     removeFromTasks = (id) => {
-        // add api call here
-        const tasks = [...this.state.tasks];
-        delete tasks[id];
-        const updated = tasks.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteTask(id).then(result => {
+                const tasks = [...this.state.tasks];
+                delete tasks[id];
+                const updated = tasks.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({tasks: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({tasks: updated});
+        console.log('Task removed');
     };
 
     render() {
+        let tasks = <p>There are no tasks currently available.</p>;
+        if (!this.state.error) {
+            tasks = this.state.tasks.map(t => {
+                    return <Task
+                        key={t.id}
+                        taskNo={t.taskNo}
+                        taskType={t.taskType}
+                        taskStatus={t.taskStatus}
+                        resolved={t.resolved}
+                        taskDate={t.taskDate}
+                        fixDate={t.fixDate}
+                        removeTask={() => this.removeFromTasks}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Tasks</h1>
-                <Task className={styles.task} tasks={this.state.tasks}
-                        removeTask={this.removeFromTasks}/>
-                <Add tasks={this.state.tasks} addToTasks={this.addToTasks}/>
+                <section className="tasks">
+                    <h1>Tasks</h1>
+                    {tasks}
+                </section>
+                <Add addToTasks={this.addToTasks}/>
             </div>
         );
     }

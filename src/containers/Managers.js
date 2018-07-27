@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiManager';
 
 import Manager from "../components/manager/Manager";
-import styles from "../assets/css/components.css";
 import Add from "../components/manager/Add";
 
 class Managers extends Component {
@@ -12,7 +12,8 @@ class Managers extends Component {
         this.removeFromManagers = this.removeFromManagers.bind(this);
 
         this.state = {
-            managers: []
+            managers: [],
+            error: false
         }
     }
 
@@ -25,34 +26,59 @@ class Managers extends Component {
     }
 
     getManagers = () => {
-        // add api call here
-        this.setState({managers: this.state.managers})
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+
+        api.getManagers().then(result => {
+            this.setState({managers: result});
+        })
+            .catch(e => {
+                console.log('Error loading managers:', e);
+                this.setState({error: true});
+            })
     };
 
     addToManagers = (manager) => {
-        // add api call here
         const updated = [...this.state.managers];
         updated.push(manager);
         this.setState({managers: updated});
+        console.log('Manager added');
     };
 
     removeFromManagers = (id) => {
-        // add api call here
-        const managers = [...this.state.managers];
-        delete managers[id];
-        const updated = managers.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteManager(id).then(result => {
+                const managers = [...this.state.managers];
+                delete managers[id];
+                const updated = managers.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({managers: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({managers: updated});
+        console.log('Manager removed');
     };
 
     render() {
+        let managers = <p>There are no managers currently available.</p>;
+        if (!this.state.error) {
+            managers = this.state.managers.map(m => {
+                    return <Manager
+                        key={m.id}
+                        id={m.id}
+                        removeManager={() => this.removeFromManagers}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Managers</h1>
-                <Manager className={styles.manager} managers={this.state.managers}
-                      removeManager={this.removeFromManagers}/>
-                <Add managers={this.state.managers} addToManagers={this.addToManagers}/>
+                <section className="managers">
+                    <h1>Managers</h1>
+                    {managers}
+                </section>
+                <Add addToManagers={this.addToManagers}/>
             </div>
         );
     }

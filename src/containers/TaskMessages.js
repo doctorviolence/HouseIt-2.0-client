@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiTaskMessage';
 
 import TaskMessage from "../components/taskmessage/TaskMessage";
-import styles from "../assets/css/components.css";
 import Add from "../components/taskmessage/Add";
 
 class TaskMessages extends Component {
@@ -12,7 +12,8 @@ class TaskMessages extends Component {
         this.removeFromTaskMessages = this.removeFromTaskMessages.bind(this);
 
         this.state = {
-            taskMessages: []
+            taskMessages: [],
+            error: false
         }
     }
 
@@ -24,9 +25,15 @@ class TaskMessages extends Component {
         this.getTaskMessages();
     }
 
-    getTaskMessages = () => {
-        // add api call here
-        this.setState({taskMessages: this.state.taskMessages})
+    getTaskMessages = (no) => {
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.getTaskMessages(no).then(result => {
+            this.setState({taskMessages: result});
+        })
+            .catch(e => {
+                console.log('Error loading task messages:', e);
+                this.setState({error: true});
+            })
     };
 
     addToTaskMessages = (taskMessage) => {
@@ -37,22 +44,41 @@ class TaskMessages extends Component {
     };
 
     removeFromTaskMessages = (id) => {
-        // add api call here
-        const taskMessages = [...this.state.taskMessages];
-        delete taskMessages[id];
-        const updated = taskMessages.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteTaskMessage(id).then(result => {
+                const taskMessages = [...this.state.taskMessages];
+                delete taskMessages[id];
+                const updated = taskMessages.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({taskMessages: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({taskMessages: updated});
+        console.log('Task message removed');
     };
 
     render() {
+        let taskMessages = <p>There are no tasks messages currently available.</p>;
+        if (!this.state.error) {
+            taskMessages = this.state.taskMessages.map(t => {
+                    return <TaskMessage
+                        key={t.id}
+                        messageNo={t.messageNo}
+                        text={t.text}
+                        removeTaskMessage={() => this.removeFromTaskMessages}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Task Messages</h1>
-                <TaskMessage className={styles.taskmessage} taskMessages={this.state.taskMessages}
-                      removeTask={this.removeFromTaskMessages}/>
-                <Add taskMessages={this.state.taskMessages} addToTaskMessages={this.addToTaskMessages}/>
+                <section className="tasksMessages">
+                    <h1>Tasks Messages</h1>
+                    {taskMessages}
+                </section>
+                <Add addToTaskMessages={this.addToTaskMessages}/>
             </div>
         );
     }

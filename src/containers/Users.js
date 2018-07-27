@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiUser';
 
 import User from "../components/user/User";
-import styles from "../assets/css/components.css";
 import Add from "../components/user/Add";
 
 class Users extends Component {
@@ -12,7 +12,8 @@ class Users extends Component {
         this.removeFromUsers = this.removeFromUsers.bind(this);
 
         this.state = {
-            users: []
+            users: [],
+            error: false
         }
     }
 
@@ -24,35 +25,61 @@ class Users extends Component {
         this.getUsers();
     }
 
-    getUsers = () => {
-        // add api call here
-        this.setState({users: this.state.users})
-    };
+    /*getUsers = () => {
+        api.getUsers().then(result => {
+            this.setState({users: result});
+        })
+            .catch(e => {
+                console.log('Error loading users:', e);
+                this.setState({error: true});
+            })
+    };*/
 
     addToUsers = (user) => {
-        // add api call here
         const updated = [...this.state.users];
         updated.push(user);
         this.setState({users: updated});
+        console.log('User added');
     };
 
     removeFromUsers = (id) => {
-        // add api call here
-        const users = [...this.state.users];
-        delete users[id];
-        const updated = users.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteUser(id).then(result => {
+                const users = [...this.state.users];
+                delete users[id];
+                const updated = users.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({users: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({users: updated});
+        console.log('Tenant removed');
     };
 
     render() {
+        let users = <p>There are no users currently available.</p>;
+        if (!this.state.error) {
+            users = this.state.users.map(u => {
+                    return <User
+                        key={u.id}
+                        id={u.id}
+                        username={u.username}
+                        password={u.password}
+                        role={u.role}
+                        removeUser={() => this.removeFromUsers}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Users</h1>
-                <User className={styles.user} users={this.state.users}
-                      removeUser={this.removeFromUsers}/>
-                <Add users={this.state.users} addToUsers={this.addToUsers}/>
+                <section className="users">
+                    <h1>Users</h1>
+                    {users}
+                </section>
+                <Add addToUsers={this.addToUsers}/>
             </div>
         );
     }

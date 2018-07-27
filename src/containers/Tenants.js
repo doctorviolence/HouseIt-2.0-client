@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiTenant';
 
 import Tenant from "../components/tenant/Tenant";
-import styles from "../assets/css/components.css";
 import Add from "../components/tenant/Add";
 
 class Tenants extends Component {
@@ -12,7 +12,8 @@ class Tenants extends Component {
         this.removeFromTenants = this.removeFromTenants.bind(this);
 
         this.state = {
-            tenants: []
+            tenants: [],
+            error: false
         }
     }
 
@@ -24,35 +25,61 @@ class Tenants extends Component {
         this.getTenants();
     }
 
-    getTenants = () => {
-        // add api call here
-        this.setState({tenants: this.state.tenants})
+    getTenants = (id) => {
+        api.getTenantsInApartment(id).then(result => {
+            this.setState({tenants: result});
+        })
+            .catch(e => {
+                console.log('Error loading tenants:', e);
+                this.setState({error: true});
+            })
     };
 
     addToTenants = (tenant) => {
-        // add api call here
         const updated = [...this.state.tenants];
         updated.push(tenant);
         this.setState({tenants: updated});
+        console.log('Tenant added');
     };
 
     removeFromTenants = (id) => {
-        // add api call here
-        const tenants = [...this.state.tenants];
-        delete tenants[id];
-        const updated = tenants.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteTenant(id).then(result => {
+                const tenants = [...this.state.tenants];
+                delete tenants[id];
+                const updated = tenants.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({tenants: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({tenants: updated});
+        console.log('Tenant removed');
     };
 
     render() {
+        let tenants = <p>There are no tenants currently available.</p>;
+        if (!this.state.error) {
+            tenants = this.state.tenants.map(t => {
+                    return <Tenant
+                        key={t.id}
+                        id={t.id}
+                        firstName={t.firstName}
+                        lastName={t.lastName}
+                        phoneNo={t.phoneNo}
+                        removeTenant={() => this.removeFromTenants}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Tenants</h1>
-                <Tenant className={styles.tenant} tenants={this.state.tenants}
-                        removeTenant={this.removeFromTenants}/>
-                <Add tenants={this.state.tenants} addToTenants={this.addToTenants}/>
+                <section className="tenants">
+                    <h1>Tenants</h1>
+                    {tenants}
+                </section>
+                <Add addToTenants={this.addToTenants}/>
             </div>
         );
     }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiApartment';
 
-import Apartment from "../components/Apartment/Apartment";
-import styles from "../assets/css/components.css";
+import Apartment from "../components/apartment/Apartment";
 import Add from "../components/apartment/Add";
 
 class Apartments extends Component {
@@ -12,7 +12,8 @@ class Apartments extends Component {
         this.removeFromApartments = this.removeFromApartments.bind(this);
 
         this.state = {
-            apartments: []
+            apartments: [],
+            error: false
         }
     }
 
@@ -24,35 +25,64 @@ class Apartments extends Component {
         this.getApartments();
     }
 
-    getApartments = () => {
-        // add api call here
-        this.setState({apartments: this.state.apartments})
+    getApartments = (id) => {
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+
+        api.getApartmentsInBuilding(id).then(result => {
+            this.setState({apartments: result});
+        })
+            .catch(e => {
+                console.log('Error loading apartments:', e);
+                this.setState({error: true});
+            })
     };
 
     addToApartments = (apartment) => {
-        // add api call here
         const updated = [...this.state.apartments];
         updated.push(apartment);
         this.setState({apartments: updated});
+        console.log('Apartment added');
     };
 
     removeFromApartments = (id) => {
-        // add api call here
-        const apartments = [...this.state.apartments];
-        delete apartments[id];
-        const updated = apartments.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteApartment(id).then(result => {
+                const apartments = [...this.state.apartments];
+                delete apartments[id];
+                const updated = apartments.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({apartments: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({apartments: updated});
+        console.log('Apartment removed');
     };
 
     render() {
+        let apartments = <p>There are no apartments currently available.</p>;
+        if (!this.state.error) {
+            apartments = this.state.apartments.map(a => {
+                    return <Apartment
+                        key={a.id}
+                        id={a.id}
+                        apartmentNo={a.apartmentNo}
+                        size={a.size}
+                        rent={a.rent}
+                        floorNo={a.floorNo}
+                        removeApartment={() => this.removeFromApartments}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Apartments</h1>
-                <Apartment className={styles.apartment} apartments={this.state.apartments}
-                           removeApartment={this.removeFromApartments}/>
-                <Add apartments={this.state.apartments} addToApartments={this.addToApartments}/>
+                <section className="apartments">
+                    <h1>Apartments</h1>
+                    {apartments}
+                </section>
+                <Add addToApartments={this.addToApartments}/>
             </div>
         );
     }

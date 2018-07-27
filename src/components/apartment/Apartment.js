@@ -1,41 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import Edit from './/Edit';
+import Edit from './Edit';
 
-class Apartment extends Component {
-    render() {
-        let apartments = this.props.apartments.map((a, i) => {
-            return (
-                <li key={i}>
-                    <b>ID: </b>{a.id}
-                    <b>Apartment No.: </b>{a.apartmentNo}
-                    <b>Floor no.: </b>{a.floorNo}
-                    <b>Size: </b>{a.size}
-                    <b>Rent: </b>{a.rent}
-                    <Edit/>
-                    <button onClick={() => this.props.removeApartment(i)}>Remove</button>
-                </li>
-            )
-        });
+const apartment = (props) => (
+    <div className="Apartment">
+        <li key={props.id}>
+            <b>ID: </b>{props.id}
+            <b>Apartment No.: </b>{props.apartmentNo}
+            <b>Floor no.: </b>{props.floorNo}
+            <b>Size: </b>{props.size}
+            <b>Rent: </b>{props.rent}
+            <Edit/>
+            <button onClick={() => props.removeApartment(props.id)}>Remove</button>
+        </li>
+    </div>
+);
 
-        console.log(Object.prototype.toString.call(apartments));
-        console.log(apartments);
-
-        if (apartments.length !== 0) {
-            return (
-                <ul>
-                    {apartments}
-                </ul>
-            )
-        }
-        else {
-            return (
-                <p>
-                    There are no apartments currently available.
-                </p>
-            )
-        }
-    }
-}
-
-export default Apartment;
+export default apartment;

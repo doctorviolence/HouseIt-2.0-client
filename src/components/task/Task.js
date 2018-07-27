@@ -1,42 +1,20 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-import Edit from './/Edit';
+import Edit from './Edit';
 
-class Task extends Component {
-    render() {
-        let tasks = this.props.tasks.map((t, i) => {
-            return (
-                <li key={i}>
-                    <b>Task No.: </b>{t.taskNo}
-                    <b>Task Type: </b>{t.taskType}
-                    <b>Task Status: </b>{t.taskStatus}
-                    <b>Resolved: </b>{t.resolved}
-                    <b>Task Date: </b>{t.taskDate}
-                    <b>Fix Date: </b>{t.fixDate}
-                    <Edit/>
-                    <button onClick={() => this.props.removeTask(i)}>Remove</button>
-                </li>
-            )
-        });
+const task = (props) => (
+    <div className="Task">
+        <li key={props.id}>
+            <b>Task No.: </b>{props.taskNo}
+            <b>Task Type: </b>{props.taskType}
+            <b>Task Status: </b>{props.taskStatus}
+            <b>Resolved: </b>{props.resolved}
+            <b>Task Date: </b>{props.taskDate}
+            <b>Fix Date: </b>{props.fixDate}
+            <Edit/>
+            <button onClick={() => this.props.removeTask(props.id)}>Remove</button>
+        </li>
+    </div>
+);
 
-        console.log(Object.prototype.toString.call(tasks));
-        console.log(tasks);
-
-        if (tasks.length !== 0) {
-            return (
-                <ul>
-                    {tasks}
-                </ul>
-            )
-        }
-        else {
-            return (
-                <p>
-                    There are no tasks currently available.
-                </p>
-            )
-        }
-    }
-}
-
-export default Task;
+export default task;

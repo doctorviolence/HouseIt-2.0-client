@@ -2,16 +2,23 @@ import React, {Component} from 'react';
 
 import styles from '../../../assets/css/menu.css';
 
-class Menu extends Component {
-    render() {
+const menu = (props) => {
+    if (!props.display) {
         return (
-            <div className={styles.menu} onClick={this.props.clicked}>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div className={styles.menu} onClick={props.clicked}>
+                <div className={styles.open}></div>
+                <div className={styles.open}></div>
+            </div>
+        );
+    } else {
+        return (
+            <div className={styles.menu} onClick={props.clicked}>
+                <div className={styles.closed}></div>
+                <div className={styles.closed}></div>
             </div>
         );
     }
-}
 
-export default Menu;
+};
+
+export default menu;

@@ -1,15 +1,17 @@
 import React, {Component} from 'react';
+import * as api from "../../api/apiApartment";
 
 import PropTypes from 'prop-types';
 
 class AddApartment extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             apartmentNo: '',
             floorNo: '',
             size: '',
-            rent: ''
+            rent: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -41,7 +43,14 @@ class AddApartment extends Component {
     }
 
     addApartment(apartment) {
-        this.props.addToApartments(apartment);
+        api.addApartment(apartment).then(response => {
+            //if (response.status === 500 && response !== null) {
+            //    this.setState({error: 'Could not add apartment, please try again.'});
+            //    return;
+            //}
+
+            this.props.addToApartments(apartment);
+        });
     }
 
     render() {

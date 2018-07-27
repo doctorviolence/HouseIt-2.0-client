@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
+import * as api from '../api/apiBuilding';
 
 import Building from '../components/building/Building';
 import Add from '../components/building/Add';
-import styles from '../assets/css/components.css';
 
 class Buildings extends Component {
     constructor() {
@@ -12,7 +12,8 @@ class Buildings extends Component {
         this.removeFromBuildings = this.removeFromBuildings.bind(this);
 
         this.state = {
-            buildings: []
+            buildings: [],
+            error: false
         }
     }
 
@@ -25,12 +26,18 @@ class Buildings extends Component {
     }
 
     getBuildings = () => {
-        // add api call here
-        this.setState({buildings: this.state.buildings})
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+
+        api.getBuildings().then(result => {
+            this.setState({buildings: result});
+        })
+            .catch(e => {
+                console.log('Error loading buildings:', e);
+                this.setState({error: true});
+            })
     };
 
     addToBuildings = (building) => {
-        // add api call here
         const updated = [...this.state.buildings];
         updated.push(building);
         this.setState({buildings: updated});
@@ -38,23 +45,42 @@ class Buildings extends Component {
     };
 
     removeFromBuildings = (id) => {
-        // add api call here
-        const buildings = [...this.state.buildings];
-        delete buildings[id];
-        const updated = buildings.filter(el => {
-            return el.id !== id;
+        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        api.deleteBuilding(id).then(result => {
+                const buildings = [...this.state.buildings];
+                delete buildings[id];
+                const updated = buildings.filter(el => {
+                    return el.id !== id;
+                });
+                this.setState({buildings: updated});
+            }
+        ).catch(e => {
+            console.log(e);
         });
-        this.setState({buildings: updated});
         console.log('Building removed');
     };
 
     render() {
+        let buildings = <p>There are no buildings currently available.</p>;
+        if (!this.state.error) {
+            buildings = this.state.buildings.map(b => {
+                    return <Building
+                        key={b.id}
+                        id={b.id}
+                        streetAddress={b.address}
+                        floorLevels={b.floorLevels}
+                        removeBuilding={() => this.removeFromBuildings}/>
+                }
+            );
+        }
+
         return (
             <div>
-                <h1>Buildings</h1>
-                <Building className={styles.building} buildings={this.state.buildings}
-                          removeBuilding={this.removeFromBuildings}/>
-                <Add buildings={this.state.buildings} addToBuildings={this.addToBuildings}/>
+                <section className="Buildings">
+                    <h1>Buildings</h1>
+                    {buildings}
+                </section>
+                <Add addToBuildings={this.addToBuildings}/>
             </div>
         );
     }
