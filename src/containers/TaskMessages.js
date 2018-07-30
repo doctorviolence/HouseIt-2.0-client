@@ -74,8 +74,8 @@ class TaskMessages extends Component {
 
         return (
             <div>
+                <h1>Tasks Messages</h1>
                 <section className="tasksMessages">
-                    <h1>Tasks Messages</h1>
                     {taskMessages}
                 </section>
                 <Add addToTaskMessages={this.addToTaskMessages}/>

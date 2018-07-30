@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
+import {BrowserRouter} from 'react-router-dom';
 
 import Home from './hoc/Home';
 
 class App extends Component {
     render() {
-
         return (
-            <Home/>
+            <BrowserRouter basename="/">
+                <div className="App">
+                    <Home/>
+                </div>
+            </BrowserRouter>
         );
     }
 }

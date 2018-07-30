@@ -74,8 +74,8 @@ class Managers extends Component {
 
         return (
             <div>
+                <h1>Managers</h1>
                 <section className="managers">
-                    <h1>Managers</h1>
                     {managers}
                 </section>
                 <Add addToManagers={this.addToManagers}/>

@@ -78,8 +78,8 @@ class Apartments extends Component {
 
         return (
             <div>
+                <h1>Apartments</h1>
                 <section className="apartments">
-                    <h1>Apartments</h1>
                     {apartments}
                 </section>
                 <Add addToApartments={this.addToApartments}/>

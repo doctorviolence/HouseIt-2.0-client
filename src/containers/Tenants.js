@@ -75,8 +75,8 @@ class Tenants extends Component {
 
         return (
             <div>
+                <h1>Tenants</h1>
                 <section className="tenants">
-                    <h1>Tenants</h1>
                     {tenants}
                 </section>
                 <Add addToTenants={this.addToTenants}/>

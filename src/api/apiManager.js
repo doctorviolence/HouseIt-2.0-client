@@ -3,8 +3,7 @@ import axios from './axios-instance';
 export const getManagers = () => {
     return axios
         .post('/admin/managers')
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const addManager = manager => {

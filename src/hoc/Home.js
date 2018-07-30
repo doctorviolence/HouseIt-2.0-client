@@ -1,22 +1,57 @@
 import React, {Component} from 'react';
+import {Route, Switch} from 'react-router-dom';
 
 import Header from '../components/ui/header/Header';
 import SideBar from '../components/ui/sidebar/SideBar';
-import Buildings from '../containers/Buildings';
-import Apartments from '../containers/Apartments';
-import Tenants from '../containers/Tenants';
-import Tasks from '../containers/Tasks';
-import TaskMessages from '../containers/TaskMessages';
-import Managers from '../containers/Managers';
-import Users from '../containers/Users';
 import Aux from './Aux';
+import async from './async';
 import headerStyles from '../assets/css/header.css';
-import componentStyles from '../assets/css/component.css';
 import sidebarStyles from '../assets/css/sidebar.css';
+
+const AsyncBuildings = async(() => {
+    return import('../containers/Buildings');
+});
+
+const AsyncApartments = async(() => {
+    return import('../containers/Apartments');
+});
+
+const AsyncTenants = async(() => {
+    return import('../containers/Tenants');
+});
+
+const AsyncTasks = async(() => {
+    return import('../containers/Tasks');
+});
+
+const AsyncMessages = async(() => {
+    return import('../containers/TaskMessages');
+});
+
+const AsyncManagers = async(() => {
+    return import('../containers/Managers');
+});
+
+const AsyncUsers = async(() => {
+    return import('../containers/Users');
+});
 
 class Home extends Component {
     state = {
         displaySideBar: false,
+        isLoggedIn: false
+    };
+
+    loginHandler = () => {
+        // add api call here and add jwt to localstorage
+        console.log('Logged in...');
+        this.setState({isLoggedIn: true});
+    };
+
+    logoutHandler = () => {
+        // add api call here
+        console.log('Logged out...');
+        this.setState({isLoggedIn: false});
     };
 
     sideBarClosedHandler = () => {
@@ -32,11 +67,28 @@ class Home extends Component {
     render() {
         return (
             <Aux>
-                <Header className={headerStyles.header} toggle={this.sideBarToggleHandler}
+                <Header className={headerStyles.header}
+                        isLoggedIn={this.state.isLoggedIn}
+                        loginHandler={this.loginHandler}
+                        logoutHandler={this.logoutHandler}
+                        toggle={this.sideBarToggleHandler}
                         display={this.state.displaySideBar}/>
-                <SideBar className={sidebarStyles.sidebar} display={this.state.displaySideBar}
+                <SideBar className={sidebarStyles.sidebar}
+                         isLoggedIn={this.state.isLoggedIn}
+                         loginHandler={this.loginHandler}
+                         logoutHandler={this.logoutHandler}
+                         display={this.state.displaySideBar}
                          closed={this.sideBarClosedHandler}/>
-                <Buildings className={componentStyles.component}/>
+                <Switch>
+                    <Route path="/buildings" component={AsyncBuildings}/>
+                    <Route path="/apartments" exact component={AsyncApartments}/>
+                    <Route path="/tenants" exact component={AsyncTenants}/>
+                    <Route path="/tasks" exact component={AsyncTasks}/>
+                    <Route path="/messages" exact component={AsyncMessages}/>
+                    <Route path="/managers" exact component={AsyncManagers}/>
+                    <Route path="/users" exact component={AsyncUsers}/>
+                    <Route path="/" render={() => <section><p>Home page</p></section>}/>
+                </Switch>
             </Aux>
         )
     }

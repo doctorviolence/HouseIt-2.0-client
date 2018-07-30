@@ -25,7 +25,7 @@ class Users extends Component {
         this.getUsers();
     }
 
-    /*getUsers = () => {
+    getUsers = () => {
         api.getUsers().then(result => {
             this.setState({users: result});
         })
@@ -33,7 +33,7 @@ class Users extends Component {
                 console.log('Error loading users:', e);
                 this.setState({error: true});
             })
-    };*/
+    };
 
     addToUsers = (user) => {
         const updated = [...this.state.users];
@@ -75,8 +75,8 @@ class Users extends Component {
 
         return (
             <div>
+                <h1>Users</h1>
                 <section className="users">
-                    <h1>Users</h1>
                     {users}
                 </section>
                 <Add addToUsers={this.addToUsers}/>

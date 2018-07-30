@@ -1,5 +1,11 @@
 import axios from './axios-instance';
 
+export const getUsers = id => {
+    return axios
+        .post('/admin/users', id)
+        .then(response => response.data);
+};
+
 export const addUser = user => {
     return axios
         .post('/admin/create-user', user)

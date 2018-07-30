@@ -3,8 +3,7 @@ import axios from './axios-instance';
 export const getAllTasks = () => {
     return axios
         .post('/manager/tasks')
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const getTasksByTenant = id => {

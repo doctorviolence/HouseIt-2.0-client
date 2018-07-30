@@ -31,8 +31,7 @@
     display: flex;
 }
 
-
-.sidebar li a {
+.sidebar a {
     display: block;
     color: #000000;
     text-align: center;
@@ -42,8 +41,9 @@
     text-decoration: none;
 }
 
-.sidebar li a:hover,
-.sidebar li a:active {
+.sidebar a:hover,
+.sidebar a:active,
+.sidebar a.active {
     color: #007AFF;
     height: 100%;
     display: block;

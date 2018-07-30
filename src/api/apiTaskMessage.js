@@ -3,8 +3,7 @@ import axios from './axios-instance';
 export const getTaskMessages = no => {
     return axios
         .post('/manager/messages-by-task' + no)
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const addTaskMessage = taskMessage => {

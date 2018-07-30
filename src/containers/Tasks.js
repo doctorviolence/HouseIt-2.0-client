@@ -79,8 +79,8 @@ class Tasks extends Component {
 
         return (
             <div>
+                <h1>Tasks</h1>
                 <section className="tasks">
-                    <h1>Tasks</h1>
                     {tasks}
                 </section>
                 <Add addToTasks={this.addToTasks}/>

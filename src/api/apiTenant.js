@@ -3,8 +3,7 @@ import axios from './axios-instance';
 export const getTenantsInApartment = id => {
     return axios
         .post('/manager/tenants-in-apartment', id)
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const addTenant = tenant => {

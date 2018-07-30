@@ -1,0 +1,48 @@
+.auth {
+    position: absolute;
+    margin: auto;
+    padding: 10px;
+    right: 100px;
+    height: 40px;
+    width: 400px;
+    background-color: #333333;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+}
+
+.auth div {
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+}
+
+.auth label {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.auth form {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    font-size: 12px;
+    width: 100%;
+}
+
+@media (max-width: 499px) {
+    .auth {
+        display: none;
+    }
+}

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Aux from '../../../hoc/Aux';
-import Navigation from './SideBarNavigation';
+import SideBarLink from './SideBarLink';
 import styles from '../../../assets/css/sidebar.css';
 
 const sideBar = (props) => {
@@ -14,7 +14,7 @@ const sideBar = (props) => {
         <Aux>
             <div className={attachedStyles.join(' ')} onClick={props.closed}>
                 <nav className={styles.sidebar}>
-                    <Navigation />
+                    <SideBarLink className={styles.sidebar}/>
                 </nav>
             </div>
         </Aux>
