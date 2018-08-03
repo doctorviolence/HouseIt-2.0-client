@@ -8,5 +8,5 @@ export const login = (data) => {
 // I need to add this to my REST endpoints
 export const logout = () => {
     return axios
-        .post('/auth/logout');
+        .post('/login/logout');
 };

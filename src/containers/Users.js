@@ -25,16 +25,6 @@ class Users extends Component {
         this.getUsers();
     }
 
-    getUsers = () => {
-        api.getUsers().then(result => {
-            this.setState({users: result});
-        })
-            .catch(e => {
-                console.log('Error loading users:', e);
-                this.setState({error: true});
-            })
-    };
-
     addToUsers = (user) => {
         const updated = [...this.state.users];
         updated.push(user);

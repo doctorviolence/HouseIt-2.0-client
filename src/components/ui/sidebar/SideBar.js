@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Aux from '../../../hoc/Aux';
 import SideBarLink from './SideBarLink';
 import Backdrop from '../backdrop/Backdrop';
 import styles from '../../../assets/css/sidebar.css';
@@ -12,14 +11,14 @@ const sideBar = (props) => {
     }
 
     return (
-        <Aux>
+        <div>
             <div className={attachedStyles.join(' ')} onClick={props.closed}>
                 <nav>
-                    <SideBarLink/>
+                    <SideBarLink isLoggedIn={props.isLoggedIn}/>
                 </nav>
             </div>
             <Backdrop show={props.display} clicked={props.closed}/>
-        </Aux>
+        </div>
     )
 };
 

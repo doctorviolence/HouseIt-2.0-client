@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import * as api from "../../api/apiLogin";
 
-import styles from '../../assets/css/auth.css';
+import styles from '../../assets/css/login.css';
 
-class Auth extends Component {
+class Login extends Component {
     constructor() {
         super();
         this.state = {
@@ -42,9 +42,8 @@ class Auth extends Component {
 
     login = (userCredentials) => {
         api.login(userCredentials).then(result => {
-                console.log(result);
                 if (result.status === 401) {
-                    console.log('Invalid credentials');
+                    console.log('Invalid credentials!');
                     return;
                 }
 
@@ -52,16 +51,14 @@ class Auth extends Component {
                 this.props.loginHandler(token);
             }
         ).catch(e => {
-            console.log("Login error: " + e);
+            console.log(e);
         });
-
-
     };
 
     render() {
         if (!this.props.isLoggedIn) {
             return (
-                <div className={styles.auth}>
+                <div className={styles.login}>
                     <form onSubmit={this.handleSubmit}>
                         <label>Username: </label>
                         <input name="username" type="text" placeholder="Username" value={this.state.username}
@@ -71,17 +68,17 @@ class Auth extends Component {
                         <input name="password" type="password" placeholder="Password" value={this.state.password}
                                required="true" minLength="6"
                                onChange={this.userInputHandler}/>
-                        <input className={styles["auth-button"]} type="submit" value="Login"/>
+                        <input className={styles["login-button"]} type="submit" value="Login"/>
                     </form>
                 </div>
             );
         }
         return (
-            <div className={styles.auth}>
-                <button className={styles["auth-button"]} onClick={this.props.logoutHandler}>Logout</button>
+            <div className={styles.login}>
+                <button className={styles["login-button"]} onClick={this.props.logoutHandler}>Logout</button>
             </div>
         );
     }
 }
 
-export default Auth;
+export default Login;

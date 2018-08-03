@@ -1,28 +1,37 @@
 import axios from './axios-instance';
 
-export const getUsers = id => {
+export const addUser = (user, queryToken) => {
     return axios
-        .post('/admin/users', id)
-        .then(response => response.data);
-};
-
-export const addUser = user => {
-    return axios
-        .post('/admin/create-user', user)
+        .post('/users/create-user', user, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const updateUser = user => {
+export const updateUser = (user, queryToken) => {
     return axios
-        .put('/admin/update-user', user)
+        .put('/users/update-user', user, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const deleteUser = id => {
+export const deleteUser = (id, queryToken) => {
     return axios
-        .delete('/admin/delete-user/' + id)
+        .delete('/users/delete-user/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };

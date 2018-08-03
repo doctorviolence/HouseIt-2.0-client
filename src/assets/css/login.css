@@ -1,4 +1,4 @@
-.auth {
+.login {
     position: absolute;
     margin: auto;
     padding: 10px;
@@ -7,34 +7,33 @@
     width: 400px;
     background-color: #333333;
     box-sizing: border-box;
+    float: right;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 90;
 }
 
-.auth div {
-    list-style-type: none;
-    margin: auto;
+.login div {
+    list-style-type: none;margin: auto;
     right: 0;
     padding: 0;
 }
 
-.auth label {
+.login label {
     color: #ffffff;
     font-size: 12px;
 }
 
-.auth form {
+.login form {
     display: flex;
     margin: auto;
     align-items: center;
     justify-content: space-between;
 }
 
-.auth-button {
+.login-button {
     border: none;
-    right: 0;
     background-color: transparent;
     cursor: pointer;
     outline: none;
@@ -44,7 +43,7 @@
 }
 
 @media (max-width: 499px) {
-    .auth {
+    .login {
         display: none;
     }
 }

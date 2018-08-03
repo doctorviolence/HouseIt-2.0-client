@@ -7,15 +7,13 @@ const async = (importComponent) => {
         };
 
         componentDidMount() {
-            importComponent()
-                .then(comp => {
-                    this.setState({component: comp.default});
-                });
+            importComponent().then(comp => {
+                this.setState({component: comp.default});
+            });
         }
 
         render() {
             const C = this.state.component;
-
             return C ? <C {...this.props} /> : null;
         }
     }
