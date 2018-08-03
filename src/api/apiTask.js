@@ -1,49 +1,64 @@
 import axios from './axios-instance';
 
-export const getAllTasks = () => {
+export const getAllTasks = (queryToken) => {
     return axios
-        .post('/manager/tasks')
+        .get('/tasks', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
 export const getTasksByTenant = id => {
     return axios
-        .post('/manager/tasks-by-tenant', id)
+        .get('/tasks/tasks-by-tenant' + id)
         .then(response => response.data)
         .catch(error => error.response);
 };
 
 export const getTasksByType = type => {
     return axios
-        .post('/manager/tasks-by-type', type)
+        .get('/tasks/tasks-by-type' + type)
         .then(response => response.data)
         .catch(error => error.response);
 };
 
 export const getTasksByFixDate = () => {
     return axios
-        .post('/manager/tasks-by-fix-date')
+        .get('/tasks/tasks-by-fix-date')
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const addTask = task => {
+export const addTask = (task, queryToken) => {
     return axios
-        .post('/manager/create-task', task)
+        .post('/tasks/create-task', task, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const updateTask = task => {
+export const updateTask = (task, queryToken) => {
     return axios
-        .put('/manager/update-task', task)
+        .put('/tasks/update-task', task, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const deleteTask = id => {
+export const deleteTask = (id, queryToken) => {
     return axios
-        .delete('/manager/delete-task/' + id)
+        .delete('/tasks/delete-task/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };

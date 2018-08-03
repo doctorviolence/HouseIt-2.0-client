@@ -28,10 +28,6 @@ const AsyncMessages = async(() => {
     return import('../containers/TaskMessages');
 });
 
-const AsyncManagers = async(() => {
-    return import('../containers/Managers');
-});
-
 const AsyncUsers = async(() => {
     return import('../containers/Users');
 });
@@ -39,19 +35,6 @@ const AsyncUsers = async(() => {
 class Home extends Component {
     state = {
         displaySideBar: false,
-        isLoggedIn: false
-    };
-
-    loginHandler = () => {
-        // add api call here and add jwt to localstorage
-        console.log('Logged in...');
-        this.setState({isLoggedIn: true});
-    };
-
-    logoutHandler = () => {
-        // add api call here
-        console.log('Logged out...');
-        this.setState({isLoggedIn: false});
     };
 
     sideBarClosedHandler = () => {
@@ -68,25 +51,21 @@ class Home extends Component {
         return (
             <Aux>
                 <Header className={headerStyles.header}
-                        isLoggedIn={this.state.isLoggedIn}
-                        loginHandler={this.loginHandler}
-                        logoutHandler={this.logoutHandler}
+                        isLoggedIn={this.props.isLoggedIn}
+                        loginHandler={this.props.loginHandler}
+                        logoutHandler={this.props.logoutHandler}
                         toggle={this.sideBarToggleHandler}
                         display={this.state.displaySideBar}/>
                 <SideBar className={sidebarStyles.sidebar}
-                         isLoggedIn={this.state.isLoggedIn}
-                         loginHandler={this.loginHandler}
-                         logoutHandler={this.logoutHandler}
                          display={this.state.displaySideBar}
                          closed={this.sideBarClosedHandler}/>
                 <Switch>
                     <Route path="/buildings" component={AsyncBuildings}/>
-                    <Route path="/apartments" exact component={AsyncApartments}/>
-                    <Route path="/tenants" exact component={AsyncTenants}/>
-                    <Route path="/tasks" exact component={AsyncTasks}/>
-                    <Route path="/messages" exact component={AsyncMessages}/>
-                    <Route path="/managers" exact component={AsyncManagers}/>
-                    <Route path="/users" exact component={AsyncUsers}/>
+                    <Route path="/apartments" component={AsyncApartments}/>
+                    <Route path="/tenants" component={AsyncTenants}/>
+                    <Route path="/tasks" component={AsyncTasks}/>
+                    <Route path="/messages" component={AsyncMessages}/>
+                    <Route path="/users" component={AsyncUsers}/>
                     <Route path="/" render={() => <section><p>Home page</p></section>}/>
                 </Switch>
             </Aux>

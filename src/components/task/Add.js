@@ -7,7 +7,6 @@ class AddTask extends Component {
     constructor() {
         super();
         this.state = {
-            taskNo: '',
             taskType: '',
             taskStatus: '',
             resolved: '',
@@ -46,11 +45,13 @@ class AddTask extends Component {
     }
 
     addTask(task) {
-        api.addTask(task).then(response => {
-            //if (response.status === 500 && response !== null) {
-            //    this.setState({error: 'Could not add task, please try again.'});
-            //    return;
-            //}
+        const queryToken = localStorage.getItem('token');
+
+        api.addTask(task, queryToken).then(response => {
+            if (response.status === 500 && response !== null) {
+                this.setState({error: 'Could not add task, please try again.'});
+                return;
+            }
 
             this.props.addToTasks(task);
         });
@@ -61,11 +62,6 @@ class AddTask extends Component {
             <form>
                 <h2>Add a new task</h2>
                 <p>Enter the information about this task</p>
-                <label>
-                    Task No:
-                    <input name="taskNo" type="number" value={this.state.taskNo}
-                           onChange={this.handleChange}/>
-                </label>
                 <label>
                     Task Type:
                     <input name="taskType" type="text" value={this.state.taskType}

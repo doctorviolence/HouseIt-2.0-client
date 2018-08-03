@@ -3,6 +3,9 @@ import * as api from '../api/apiTaskMessage';
 
 import TaskMessage from "../components/taskmessage/TaskMessage";
 import Add from "../components/taskmessage/Add";
+import styles from "../assets/css/component.css";
+import {Route} from "react-router-dom";
+import Edit from "../components/building/Edit";
 
 class TaskMessages extends Component {
     constructor() {
@@ -22,18 +25,22 @@ class TaskMessages extends Component {
     }
 
     componentDidMount() {
-        this.getTaskMessages();
+        this.loadData();
     }
 
-    getTaskMessages = (no) => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
-        api.getTaskMessages(no).then(result => {
+    taskMessageSelectedHandler = (messageNo) => {
+        this.props.history.push('/tasks/' + messageNo)
+    };
+
+    loadData = () => {
+        const queryToken = localStorage.getItem('token');
+
+        api.getAllTaskMessages(queryToken).then(result => {
             this.setState({taskMessages: result});
+        }).catch(e => {
+            console.log('Error loading task messages:', e);
+            this.setState({error: true});
         })
-            .catch(e => {
-                console.log('Error loading task messages:', e);
-                this.setState({error: true});
-            })
     };
 
     addToTaskMessages = (taskMessage) => {
@@ -63,22 +70,26 @@ class TaskMessages extends Component {
         let taskMessages = <p>There are no tasks messages currently available.</p>;
         if (!this.state.error) {
             taskMessages = this.state.taskMessages.map(t => {
-                    return <TaskMessage
-                        key={t.id}
-                        messageNo={t.messageNo}
-                        text={t.text}
-                        removeTaskMessage={() => this.removeFromTaskMessages}/>
+                    return (
+                        <div key={t.messageNo}>
+                            <TaskMessage
+                                key={t.messageNo}
+                                messageNo={t.messageNo}
+                                text={t.messageText}
+                                clicked={() => this.taskMessageSelectedHandler(t.messageNo)}
+                                removeTaskMessage={() => this.removeFromTaskMessages}/>
+                        </div>
+                    )
                 }
             );
         }
 
         return (
-            <div>
+            <div className={styles.component}>
                 <h1>Tasks Messages</h1>
-                <section className="tasksMessages">
-                    {taskMessages}
-                </section>
+                {taskMessages}
                 <Add addToTaskMessages={this.addToTaskMessages}/>
+                <Route path={this.props.match.url + '/:no'} exact component={Edit}/>
             </div>
         );
     }

@@ -1,28 +1,48 @@
 import axios from './axios-instance';
 
-export const getApartmentsInBuilding = id => {
-    return axios
-        .post('/admin/apartments-in-building', id)
+export const getAllApartments = (queryToken) => {
+    return axios.get('/apartments', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
-export const addApartment = apartment => {
+//export const getApartmentsInBuilding = id => {
+//    return axios
+//        .get('/apartments/apartments-in-building' + id)
+//        .then(response => response.data);
+//};
+
+export const addApartment = (apartment, queryToken) => {
     return axios
-        .post('/admin/create-apartment', apartment)
+        .post('/apartments/create-apartment', apartment, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const updateApartment = apartment => {
+export const updateApartment = (apartment, queryToken) => {
     return axios
-        .put('/admin/update-apartment', apartment)
+        .put('/apartments/update-apartment', apartment, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const deleteApartment = id => {
+export const deleteApartment = (id, queryToken) => {
     return axios
-        .delete('/admin/delete-apartment/' + id)
+        .delete('/apartments/delete-apartment/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };

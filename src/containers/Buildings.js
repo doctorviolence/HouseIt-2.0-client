@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import * as api from '../api/apiBuilding';
 import {Route} from 'react-router-dom';
+import * as api from '../api/apiBuilding';
 
 import Building from '../components/building/Building';
 import Add from '../components/building/Add';
@@ -13,7 +13,6 @@ class Buildings extends Component {
 
         this.addToBuildings = this.addToBuildings.bind(this);
         this.buildingSelectedHandler = this.buildingSelectedHandler.bind(this);
-        this.addToBuildings = this.addToBuildings.bind(this);
         this.removeFromBuildings = this.removeFromBuildings.bind(this);
 
         this.state = {
@@ -35,9 +34,9 @@ class Buildings extends Component {
     };
 
     loadData = () => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+        const queryToken = localStorage.getItem('token');
 
-        api.getBuildings().then(result => {
+        api.getBuildings(queryToken).then(result => {
             this.setState({buildings: result});
         }).catch(e => {
             console.log('Error loading buildings:', e);
@@ -53,19 +52,23 @@ class Buildings extends Component {
     };
 
     removeFromBuildings = (id) => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
-        api.deleteBuilding(id).then(result => {
+        const queryToken = localStorage.getItem('token');
+
+        api.deleteBuilding(id, queryToken).then(result => {
+                if (result.status === 500 && result !== null) {
+                    console.log(result.error);
+                    return;
+                }
+
                 const buildings = [...this.state.buildings];
-                delete buildings[id];
                 const updated = buildings.filter(el => {
-                    return el.id !== id;
+                    return el.buildingId !== id;
                 });
                 this.setState({buildings: updated});
             }
         ).catch(e => {
             console.log(e);
         });
-        console.log('Building removed');
     };
 
     render() {
@@ -73,14 +76,14 @@ class Buildings extends Component {
         if (!this.state.error) {
             buildings = this.state.buildings.map(b => {
                     return (
-                        <div key={b.id}>
+                        <div key={b.buildingId}>
                             <Building
-                                key={b.id}
-                                id={b.id}
-                                streetAddress={b.streetAddress}
+                                key={b.buildingId}
+                                id={b.buildingId}
+                                streetAddress={b.address}
                                 floorLevels={b.floorLevels}
-                                clicked={() => this.buildingSelectedHandler(b.id)}
-                                removeBuilding={() => this.removeFromBuildings(b.id)}/>
+                                clicked={() => this.buildingSelectedHandler(b.buildingId)}
+                                removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
                         </div>
                     )
                 }

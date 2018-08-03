@@ -11,6 +11,7 @@ class AddApartment extends Component {
             floorNo: '',
             size: '',
             rent: '',
+            buildingId: '',
             error: null
         };
 
@@ -35,7 +36,8 @@ class AddApartment extends Component {
             apartmentNo: this.state.apartmentNo,
             floorNo: this.state.floorNo,
             size: this.state.size,
-            rent: this.state.rent
+            rent: this.state.rent,
+            buildingId: this.state.buildingId
         };
 
         this.addApartment(apartment);
@@ -43,12 +45,15 @@ class AddApartment extends Component {
     }
 
     addApartment(apartment) {
-        api.addApartment(apartment).then(response => {
-            //if (response.status === 500 && response !== null) {
-            //    this.setState({error: 'Could not add apartment, please try again.'});
-            //    return;
-            //}
+        const queryToken = localStorage.getItem('token');
 
+        api.addApartment(apartment, queryToken).then(response => {
+            if (response.status === 500 && response !== null) {
+                this.setState({error: 'Could not add apartment, please try again.'});
+                return;
+            }
+
+            // Cannot add to database due to data integrity violation (TO-DO)
             this.props.addToApartments(apartment);
         });
     }
@@ -78,6 +83,11 @@ class AddApartment extends Component {
                     <input name="size" type="number" value={this.state.size}
                            onChange={this.handleChange}/>
                 </label>
+                <label>
+                    Building:
+                    <input name="buildingId" type="number" value={this.state.buildingId}
+                           onChange={this.handleChange}/>
+                </label>
                 <input type="submit" value="Add Apartment" onClick={this.handleSubmit}/>
             </form>
         );
@@ -89,7 +99,8 @@ AddApartment.propTypes = {
     apartmentNo: PropTypes.string,
     floorLevels: PropTypes.number,
     rent: PropTypes.number,
-    size: PropTypes.number
+    size: PropTypes.number,
+    buildingId: PropTypes.number
 };
 
 export default AddApartment;

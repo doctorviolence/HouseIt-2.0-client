@@ -13,6 +13,7 @@ class Auth extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.userInputHandler = this.userInputHandler.bind(this);
+        this.login = this.login.bind(this);
     }
 
     userInputHandler = (event) => {
@@ -41,17 +42,20 @@ class Auth extends Component {
 
     login = (userCredentials) => {
         api.login(userCredentials).then(result => {
-            if (!result) {
-                console.log('Invalid credentials');
+                console.log(result);
+                if (result.status === 401) {
+                    console.log('Invalid credentials');
+                    return;
+                }
+
+                const token = result.headers.authorization;
+                this.props.loginHandler(token);
             }
-
-            const user = result.user;
-            user.access_token = result.access.token;
-            user.token_expiry = result.access.expires;
+        ).catch(e => {
+            console.log("Login error: " + e);
         });
-        console.log(userCredentials);
 
-        this.props.loginHandler();
+
     };
 
     render() {
@@ -59,9 +63,11 @@ class Auth extends Component {
             return (
                 <div className={styles.auth}>
                     <form onSubmit={this.handleSubmit}>
+                        <label>Username: </label>
                         <input name="username" type="text" placeholder="Username" value={this.state.username}
                                required="true"
                                onChange={this.userInputHandler}/>
+                        <label>Password: </label>
                         <input name="password" type="password" placeholder="Password" value={this.state.password}
                                required="true" minLength="6"
                                onChange={this.userInputHandler}/>
@@ -69,13 +75,12 @@ class Auth extends Component {
                     </form>
                 </div>
             );
-        } else {
-            return (
-                <div className={styles.auth}>
-                    <button className={styles["auth-button"]} onClick={this.props.logoutHandler}>Logout</button>
-                </div>
-            )
         }
+        return (
+            <div className={styles.auth}>
+                <button className={styles["auth-button"]} onClick={this.props.logoutHandler}>Logout</button>
+            </div>
+        );
     }
 }
 

@@ -31,7 +31,7 @@ class AddBuilding extends Component {
         event.preventDefault();
         const building = {
             id: null,
-            streetAddress: this.state.streetAddress,
+            address: this.state.streetAddress,
             floorLevels: this.state.floorLevels
         };
 
@@ -39,11 +39,13 @@ class AddBuilding extends Component {
     }
 
     addBuilding(building) {
-        api.addBuilding(building).then(response => {
-            //if (response.status === 500 && response !== null) {
-            //    this.setState({error: 'Could not add building, please try again.'});
-            //    return;
-            //}
+        const queryToken = localStorage.getItem('token');
+
+        api.addBuilding(building, queryToken).then(response => {
+            if (response.status === 500 && response !== null) {
+                this.setState({error: 'Could not add building, please try again.'});
+                return;
+            }
 
             this.props.addToBuildings(building);
         });

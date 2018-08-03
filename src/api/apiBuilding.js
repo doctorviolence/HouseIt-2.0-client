@@ -1,28 +1,43 @@
 import axios from './axios-instance';
 
-export const getBuildings = () => {
+export const getBuildings = (queryToken) => {
     return axios
-        .post('/admin/buildings')
+        .get('/buildings', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
-export const addBuilding = building => {
+export const addBuilding = (building, queryToken) => {
     return axios
-        .post('/admin/create-building', building)
+        .post('/buildings/create-building', building, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const updateBuilding = building => {
+export const updateBuilding = (building, queryToken) => {
     return axios
-        .put('/admin/update-building', building)
+        .put('/buildings/update-building', building, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const deleteBuilding = id => {
+export const deleteBuilding = (id, queryToken) => {
     return axios
-        .delete('/admin/delete-building/' + id)
+        .delete('/buildings/delete-building/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };

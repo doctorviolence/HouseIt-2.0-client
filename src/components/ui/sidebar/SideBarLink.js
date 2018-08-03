@@ -18,8 +18,6 @@ const sideBarLink = (props) => {
                          activeStyle={{color: '#007AFF'}}>Tasks</NavLink></li>
             <li><NavLink to={{pathname: '/messages'}} activeClassName="active" activeStyle={{color: '#007AFF'}}>Task
                 Messages</NavLink></li>
-            <li><NavLink to={{pathname: '/managers'}} activeClassName="active"
-                         activeStyle={{color: '#007AFF'}}>Managers</NavLink></li>
             <li><NavLink to={{pathname: '/users'}} activeClassName="active"
                          activeStyle={{color: '#007AFF'}}>Users</NavLink></li>
             <footer className={styles.footer}>Copyright © 2018 J. Lindvall</footer>

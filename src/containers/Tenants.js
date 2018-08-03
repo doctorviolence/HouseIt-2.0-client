@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
+import {Route} from "react-router-dom";
 import * as api from '../api/apiTenant';
 
 import Tenant from "../components/tenant/Tenant";
 import Add from "../components/tenant/Add";
+import Edit from "../components/tenant/Edit";
+import styles from "../assets/css/component.css";
 
 class Tenants extends Component {
     constructor() {
         super();
 
         this.addToTenants = this.addToTenants.bind(this);
+        this.tenantSelectedHandler = this.tenantSelectedHandler.bind(this);
         this.removeFromTenants = this.removeFromTenants.bind(this);
 
         this.state = {
@@ -22,17 +26,22 @@ class Tenants extends Component {
     }
 
     componentDidMount() {
-        this.getTenants();
+        this.loadData();
     }
 
-    getTenants = (id) => {
-        api.getTenantsInApartment(id).then(result => {
+    tenantSelectedHandler = (id) => {
+        this.props.history.push('/tenants/' + id)
+    };
+
+    loadData = () => {
+        const queryToken = localStorage.getItem('token');
+
+        api.getAllTenants(queryToken).then(result => {
             this.setState({tenants: result});
+        }).catch(e => {
+            console.log('Error loading tenants:', e);
+            this.setState({error: true});
         })
-            .catch(e => {
-                console.log('Error loading tenants:', e);
-                this.setState({error: true});
-            })
     };
 
     addToTenants = (tenant) => {
@@ -43,43 +52,53 @@ class Tenants extends Component {
     };
 
     removeFromTenants = (id) => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
-        api.deleteTenant(id).then(result => {
+        const queryToken = localStorage.getItem('token');
+
+        api.deleteTenant(id, queryToken).then(result => {
+                if (result.status === 500 && result !== null) {
+                    console.log(result.error);
+                    return;
+                }
+
                 const tenants = [...this.state.tenants];
                 delete tenants[id];
                 const updated = tenants.filter(el => {
-                    return el.id !== id;
+                    return el.tenantId !== id;
                 });
                 this.setState({tenants: updated});
             }
         ).catch(e => {
             console.log(e);
         });
-        console.log('Tenant removed');
     };
 
     render() {
         let tenants = <p>There are no tenants currently available.</p>;
         if (!this.state.error) {
             tenants = this.state.tenants.map(t => {
-                    return <Tenant
-                        key={t.id}
-                        id={t.id}
-                        firstName={t.firstName}
-                        lastName={t.lastName}
-                        phoneNo={t.phoneNo}
-                        removeTenant={() => this.removeFromTenants}/>
+                    return (
+                        <div key={t.tenantId}>
+                            <Tenant
+                                key={t.tenantId}
+                                id={t.tenantId}
+                                firstName={t.firstName}
+                                lastName={t.lastName}
+                                phoneNo={t.phoneNo}
+                                clicked={() => this.tenantSelectedHandler(t.tenantId)}
+                                removeTenant={() => this.removeFromTenants}/>
+                        </div>
+                    )
                 }
             );
         }
 
         return (
-            <div>
+            <div className={styles.component}>
                 <h1>Tenants</h1>
-                <section className="tenants">
-                    {tenants}
-                </section>
+                {tenants}
                 <Add addToTenants={this.addToTenants}/>
+                <Route path={this.props.match.url + '/:id'} exact component={Edit}/>
+
             </div>
         );
     }

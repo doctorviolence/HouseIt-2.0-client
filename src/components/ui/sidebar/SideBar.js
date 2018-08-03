@@ -2,6 +2,7 @@ import React from 'react';
 
 import Aux from '../../../hoc/Aux';
 import SideBarLink from './SideBarLink';
+import Backdrop from '../backdrop/Backdrop';
 import styles from '../../../assets/css/sidebar.css';
 
 const sideBar = (props) => {
@@ -13,10 +14,11 @@ const sideBar = (props) => {
     return (
         <Aux>
             <div className={attachedStyles.join(' ')} onClick={props.closed}>
-                <nav className={styles.sidebar}>
-                    <SideBarLink className={styles.sidebar}/>
+                <nav>
+                    <SideBarLink/>
                 </nav>
             </div>
+            <Backdrop show={props.display} clicked={props.closed}/>
         </Aux>
     )
 };

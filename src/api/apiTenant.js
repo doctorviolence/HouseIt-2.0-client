@@ -1,28 +1,49 @@
 import axios from './axios-instance';
 
-export const getTenantsInApartment = id => {
+export const getAllTenants = (queryToken) => {
     return axios
-        .post('/manager/tenants-in-apartment', id)
+        .get('/tenants', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
-export const addTenant = tenant => {
+//export const getTenantsInApartment = id => {
+//    return axios
+//        .get('/manager/tenants-in-apartment/' + id)
+//        .then(response => response.data);
+//};
+
+export const addTenant = (tenant, queryToken) => {
     return axios
-        .post('/manager/create-tenant', tenant)
+        .post('/tenants/create-tenant', tenant, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const updateTenant = tenant => {
+export const updateTenant = (tenant, queryToken) => {
     return axios
-        .put('/manager/update-tenant', tenant)
+        .put('/tenants/update-tenant', tenant, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };
 
-export const deleteTenant = id => {
+export const deleteTenant = (id, queryToken) => {
     return axios
-        .delete('/manager/delete-tenant/' + id)
+        .delete('/tenants/delete-tenant/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
         .then(response => response.data)
         .catch(error => error.response);
 };

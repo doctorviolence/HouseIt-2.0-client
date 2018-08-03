@@ -1,8 +1,8 @@
 import axios from './axios-instance';
 
-export const getManagers = () => {
+export const getManagers = (queryToken) => {
     return axios
-        .post('/admin/managers')
+        .get('/admin/managers', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 

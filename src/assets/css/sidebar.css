@@ -2,14 +2,15 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 100%;
-    max-width: 100%;
+    width: 300px;
+    max-width: 70%;
     height: 100%;
-    background-color: #f2f2f2;
-    opacity: 0.9;
+    background-color: #ffffff;
+    opacity: 1;
     box-sizing: border-box;
     transition: transform 0.3s ease-out;
     z-index: 200;
+    vertical-align: middle;
 }
 
 .footer {

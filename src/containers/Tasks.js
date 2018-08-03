@@ -3,6 +3,9 @@ import * as api from '../api/apiTask';
 
 import Task from "../components/task/Task";
 import Add from "../components/task/Add";
+import styles from "../assets/css/component.css";
+import {Route} from "react-router-dom";
+import Edit from "../components/building/Edit";
 
 class Tasks extends Component {
     constructor() {
@@ -22,19 +25,22 @@ class Tasks extends Component {
     }
 
     componentDidMount() {
-        this.getTasks();
+        this.loadData();
     }
 
-    getTasks = () => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
+    taskSelectedHandler = (taskNo) => {
+        this.props.history.push('/tasks/' + taskNo)
+    };
 
-        api.getAllTasks().then(result => {
+    loadData = () => {
+        const queryToken = localStorage.getItem('token');
+
+        api.getAllTasks(queryToken).then(result => {
             this.setState({tasks: result});
+        }).catch(e => {
+            console.log('Error loading tasks:', e);
+            this.setState({error: true});
         })
-            .catch(e => {
-                console.log('Error loading tasks:', e);
-                this.setState({error: true});
-            })
     };
 
     addToTasks = (task) => {
@@ -44,46 +50,54 @@ class Tasks extends Component {
         console.log('Task added');
     };
 
-    removeFromTasks = (id) => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
-        api.deleteTask(id).then(result => {
+    removeFromTasks = (taskNo) => {
+        const queryToken = localStorage.getItem('token');
+
+        api.deleteTask(taskNo, queryToken).then(result => {
+                if (result.status === 500 && result !== null) {
+                    console.log(result.error);
+                    return;
+                }
+
                 const tasks = [...this.state.tasks];
-                delete tasks[id];
                 const updated = tasks.filter(el => {
-                    return el.id !== id;
+                    return el.taskNo !== taskNo;
                 });
                 this.setState({tasks: updated});
             }
         ).catch(e => {
             console.log(e);
         });
-        console.log('Task removed');
     };
 
     render() {
         let tasks = <p>There are no tasks currently available.</p>;
         if (!this.state.error) {
             tasks = this.state.tasks.map(t => {
-                    return <Task
-                        key={t.id}
-                        taskNo={t.taskNo}
-                        taskType={t.taskType}
-                        taskStatus={t.taskStatus}
-                        resolved={t.resolved}
-                        taskDate={t.taskDate}
-                        fixDate={t.fixDate}
-                        removeTask={() => this.removeFromTasks}/>
+                    return (
+                        <div key={t.taskNo}>
+                            <Task
+                                key={t.taskNo}
+                                taskNo={t.taskNo}
+                                taskType={t.taskType}
+                                taskStatus={t.taskStatus}
+                                resolved={t.resolved}
+                                taskDate={t.taskDate}
+                                fixDate={t.fixDate}
+                                clicked={() => this.taskSelectedHandler(t.taskNo)}
+                                removeBuilding={() => this.removeFromTasks(t.taskNo)}/>
+                        </div>
+                    )
                 }
             );
         }
 
         return (
-            <div>
+            <div className={styles.component}>
                 <h1>Tasks</h1>
-                <section className="tasks">
-                    {tasks}
-                </section>
+                {tasks}
                 <Add addToTasks={this.addToTasks}/>
+                <Route path={this.props.match.url + '/:no'} exact component={Edit}/>
             </div>
         );
     }

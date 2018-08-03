@@ -3,8 +3,8 @@ import React from 'react';
 import Edit from './Edit';
 
 const task = (props) => (
-    <div className="Task">
-        <li key={props.id}>
+    <ul key={props.taskNo} onClick={() => props.clicked()}>
+        <li key={props.taskNo}>
             <b>Task No.: </b>{props.taskNo}
             <b>Task Type: </b>{props.taskType}
             <b>Task Status: </b>{props.taskStatus}
@@ -12,9 +12,9 @@ const task = (props) => (
             <b>Task Date: </b>{props.taskDate}
             <b>Fix Date: </b>{props.fixDate}
             <Edit/>
-            <button onClick={() => this.props.removeTask(props.id)}>Remove</button>
+            <button onClick={() => this.props.removeTask(props.taskNo)}>Remove</button>
         </li>
-    </div>
+    </ul>
 );
 
 export default task;

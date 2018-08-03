@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from '../../../assets/css/header.css';
 import Menu from '../menu/Menu';
-import Auth from '../../../containers/auth/Auth';
+import Auth from '../../auth/Auth';
 
 const header = (props) => {
     return (
