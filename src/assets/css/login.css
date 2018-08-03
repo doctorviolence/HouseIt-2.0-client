@@ -1,0 +1,49 @@
+.login {
+    position: absolute;
+    margin: auto;
+    padding: 10px;
+    right: 100px;
+    height: 40px;
+    width: 400px;
+    background-color: #333333;
+    box-sizing: border-box;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+}
+
+.login div {
+    list-style-type: none;margin: auto;
+    right: 0;
+    padding: 0;
+}
+
+.login label {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+.login form {
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.login-button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    font-size: 12px;
+    width: 100%;
+}
+
+@media (max-width: 499px) {
+    .login {
+        display: none;
+    }
+}

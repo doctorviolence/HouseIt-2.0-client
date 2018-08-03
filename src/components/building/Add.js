@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
+import * as api from "../../api/apiBuilding";
 
 class AddBuilding extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             streetAddress: '',
-            floorLevels: ''
+            floorLevels: '',
+            error: null
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -26,18 +28,27 @@ class AddBuilding extends Component {
     }
 
     handleSubmit(event) {
+        event.preventDefault();
         const building = {
             id: null,
-            streetAddress: this.state.streetAddress,
+            address: this.state.streetAddress,
             floorLevels: this.state.floorLevels
         };
 
         this.addBuilding(building);
-        event.preventDefault();
     }
 
     addBuilding(building) {
-        this.props.addToBuildings(building);
+        const queryToken = localStorage.getItem('token');
+
+        api.addBuilding(building, queryToken).then(response => {
+            if (response.status === 500 && response !== null) {
+                this.setState({error: 'Could not add building, please try again.'});
+                return;
+            }
+
+            this.props.addToBuildings(building);
+        });
     }
 
     render() {
@@ -62,6 +73,7 @@ class AddBuilding extends Component {
 }
 
 AddBuilding.propTypes = {
+    id: PropTypes.number,
     streetAddress: PropTypes.string,
     floorLevels: PropTypes.number
 };

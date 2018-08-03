@@ -9,3 +9,5 @@ Usage
 
 Still developing the API. Will be adding more functions/tests as I progress with the (React) web-client.
 
+[Note: Development will be put on a brief halt as I need to consult w my landlord re user requirements/specs]
+

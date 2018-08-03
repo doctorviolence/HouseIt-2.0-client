@@ -1,0 +1,33 @@
+.component div {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #f2f2f2;
+    text-align: center;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.component div:hover,
+.component div:active {
+    background-color: #f2f2f2;
+}
+
+.component li {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.component button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    color: #fa923f;
+}
