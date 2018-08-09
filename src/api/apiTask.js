@@ -27,9 +27,9 @@ export const getTasksByFixDate = () => {
         .catch(error => error.response);
 };
 
-export const addTask = (task, queryToken) => {
+export const addTask = (data, queryToken) => {
     return axios
-        .post('/tasks/create-task', task, {
+        .post('/tasks/create-task', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -39,9 +39,9 @@ export const addTask = (task, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateTask = (task, queryToken) => {
+export const updateTask = (data, queryToken) => {
     return axios
-        .put('/tasks/update-task', task, {
+        .put('/tasks/update-task', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

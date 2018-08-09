@@ -10,7 +10,7 @@
     display: flex;
     padding: 0 20px;
     box-sizing: border-box;
-    z-index: 9999;
+    z-index: 100;
 }
 
 .nav {

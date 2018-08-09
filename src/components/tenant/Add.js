@@ -31,29 +31,29 @@ class AddTenant extends Component {
     }
 
     handleSubmit(event) {
-        const tenant = {
+        const data = {
             id: null,
             phoneNo: this.state.phoneNo,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
-            apartmentId: this.state.apartmentId
+            apartment: {apartmentId: this.state.apartmentId}
         };
 
-        this.addTenant(tenant);
+        this.addTenant(data);
         event.preventDefault();
     }
 
-    addTenant(tenant) {
+    addTenant(data) {
         const queryToken = localStorage.getItem('token');
 
-        api.addTenant(tenant, queryToken).then(response => {
+        api.addTenant(data, queryToken).then(response => {
             if (response.status === 500 && response !== null) {
                 this.setState({error: 'Could not add tenant, please try again.'});
                 return;
             }
 
             // Cannot add to database due to data integrity violation (TO-DO)
-            this.props.addToTenants(tenant);
+            this.props.addToTenants(data);
         });
     }
 
@@ -62,11 +62,6 @@ class AddTenant extends Component {
             <form>
                 <h2>Add a new tenant</h2>
                 <p>Enter the information about this tenant</p>
-                <label>
-                    Tenant ID:
-                    <input name="id" type="number" value={this.state.id}
-                           onChange={this.handleChange}/>
-                </label>
                 <label>
                     First Name:
                     <input name="firstName" type="text" value={this.state.firstName}

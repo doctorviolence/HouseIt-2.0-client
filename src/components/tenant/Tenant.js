@@ -7,7 +7,7 @@ const tenant = (props) => (
             <b>First Name: </b>{props.firstName}
             <b>Last name: </b>{props.lastName}
             <b>Phone No.: </b>{props.phoneNo}
-            <button onClick={() => this.props.removeTenant(props.id)}>Remove</button>
+            <button onClick={() => props.removeTenant(props.id)}>Remove</button>
         </li>
     </ul>
 );

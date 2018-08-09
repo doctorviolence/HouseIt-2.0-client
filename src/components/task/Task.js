@@ -12,7 +12,7 @@ const task = (props) => (
             <b>Task Date: </b>{props.taskDate}
             <b>Fix Date: </b>{props.fixDate}
             <Edit/>
-            <button onClick={() => this.props.removeTask(props.taskNo)}>Remove</button>
+            <button onClick={() => props.removeTask(props.taskNo)}>Remove</button>
         </li>
     </ul>
 );

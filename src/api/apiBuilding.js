@@ -6,9 +6,9 @@ export const getBuildings = (queryToken) => {
         .then(response => response.data);
 };
 
-export const addBuilding = (building, queryToken) => {
+export const addBuilding = (data, queryToken) => {
     return axios
-        .post('/buildings/create-building', building, {
+        .post('/buildings/create-building', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -18,9 +18,9 @@ export const addBuilding = (building, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateBuilding = (building, queryToken) => {
+export const updateBuilding = (data, queryToken) => {
     return axios
-        .put('/buildings/update-building', building, {
+        .put('/buildings/update-building', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

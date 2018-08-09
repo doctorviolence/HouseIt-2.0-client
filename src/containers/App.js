@@ -6,6 +6,7 @@ import Header from "../components/ui/header/Header";
 import SideBar from "../components/ui/sidebar/SideBar";
 import headerStyles from "../assets/css/header.css";
 import sidebarStyles from "../assets/css/sidebar.css";
+import Welcome from "../components/ui/welcome/Welcome";
 
 const AsyncBuildings = async(() => {
     return import('./Buildings');
@@ -61,6 +62,7 @@ class App extends Component {
         return (
             <BrowserRouter basename="/">
                 <div>
+                    <Welcome/>
                     <Header className={headerStyles.header}
                             isLoggedIn={this.state.isLoggedIn}
                             loginHandler={this.loginHandler}

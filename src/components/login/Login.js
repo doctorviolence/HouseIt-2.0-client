@@ -68,7 +68,7 @@ class Login extends Component {
                         <input name="password" type="password" placeholder="Password" value={this.state.password}
                                required="true" minLength="6"
                                onChange={this.userInputHandler}/>
-                        <input className={styles["login-button"]} type="submit" value="Login"/>
+                        <input className={styles["login-button"]} type="submit" value="Sign in"/>
                     </form>
                 </div>
             );

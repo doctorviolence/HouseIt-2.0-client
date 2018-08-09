@@ -85,7 +85,7 @@ class Tasks extends Component {
                                 taskDate={t.taskDate}
                                 fixDate={t.fixDate}
                                 clicked={() => this.taskSelectedHandler(t.taskNo)}
-                                removeBuilding={() => this.removeFromTasks(t.taskNo)}/>
+                                removeTask={() => this.removeFromTasks(t.taskNo)}/>
                         </div>
                     )
                 }
