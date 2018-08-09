@@ -31,30 +31,30 @@ class AddApartment extends Component {
     }
 
     handleSubmit(event) {
-        const apartment = {
+        const data = {
             id: null,
             apartmentNo: this.state.apartmentNo,
             floorNo: this.state.floorNo,
             size: this.state.size,
             rent: this.state.rent,
-            buildingId: this.state.buildingId
+            building: {buildingId: this.state.buildingId}
         };
 
-        this.addApartment(apartment);
+        this.addApartment(data);
         event.preventDefault();
     }
 
-    addApartment(apartment) {
+    addApartment(data) {
         const queryToken = localStorage.getItem('token');
 
-        api.addApartment(apartment, queryToken).then(response => {
+        api.addApartment(data, queryToken).then(response => {
             if (response.status === 500 && response !== null) {
                 this.setState({error: 'Could not add apartment, please try again.'});
                 return;
             }
 
             // Cannot add to database due to data integrity violation (TO-DO)
-            this.props.addToApartments(apartment);
+            this.props.addToApartments(data);
         });
     }
 

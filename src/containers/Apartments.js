@@ -85,7 +85,7 @@ class Apartments extends Component {
                                 rent={a.rent}
                                 floorNo={a.floorNo}
                                 clicked={() => this.apartmentSelectedHandler(a.apartmentId)}
-                                removeBuilding={() => this.removeFromApartments(a.apartmentId)}/>
+                                removeApartment={() => this.removeFromApartments(a.apartmentId)}/>
                         </div>
                     )
                 }

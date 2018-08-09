@@ -12,9 +12,9 @@ export const getAllTaskMessages = (queryToken) => {
 //        .then(response => response.data);
 //};
 
-export const addTaskMessage = (taskMessage, queryToken) => {
+export const addTaskMessage = (data, queryToken) => {
     return axios
-        .post('/messages/create-message', taskMessage, {
+        .post('/messages/create-message', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -24,9 +24,9 @@ export const addTaskMessage = (taskMessage, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateTaskMessage = (taskMessage, queryToken) => {
+export const updateTaskMessage = (data, queryToken) => {
     return axios
-        .put('/messages/update-message', taskMessage, {
+        .put('/messages/update-message', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

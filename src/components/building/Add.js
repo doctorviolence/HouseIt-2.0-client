@@ -29,25 +29,25 @@ class AddBuilding extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        const building = {
+        const data = {
             id: null,
             address: this.state.streetAddress,
             floorLevels: this.state.floorLevels
         };
 
-        this.addBuilding(building);
+        this.addBuilding(data);
     }
 
-    addBuilding(building) {
+    addBuilding(data) {
         const queryToken = localStorage.getItem('token');
 
-        api.addBuilding(building, queryToken).then(response => {
+        api.addBuilding(data, queryToken).then(response => {
             if (response.status === 500 && response !== null) {
                 this.setState({error: 'Could not add building, please try again.'});
                 return;
             }
 
-            this.props.addToBuildings(building);
+            this.props.addToBuildings(data);
         });
     }
 

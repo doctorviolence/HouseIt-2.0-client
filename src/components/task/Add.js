@@ -12,6 +12,7 @@ class AddTask extends Component {
             resolved: '',
             taskDate: '',
             fixDate: '',
+            tenantId: '',
             error: null
         };
 
@@ -31,29 +32,30 @@ class AddTask extends Component {
     }
 
     handleSubmit(event) {
-        const task = {
+        const data = {
             taskNo: null,
             taskType: this.state.taskType,
             taskStatus: this.state.taskStatus,
             resolved: this.state.resolved,
             taskDate: this.state.taskDate,
-            fixDate: this.state.fixDate
+            fixDate: this.state.fixDate,
+            tenant: {tenantId: this.state.tenantId}
         };
 
-        this.addTask(task);
+        this.addTask(data);
         event.preventDefault();
     }
 
-    addTask(task) {
+    addTask(data) {
         const queryToken = localStorage.getItem('token');
 
-        api.addTask(task, queryToken).then(response => {
+        api.addTask(data, queryToken).then(response => {
             if (response.status === 500 && response !== null) {
                 this.setState({error: 'Could not add task, please try again.'});
                 return;
             }
 
-            this.props.addToTasks(task);
+            this.props.addToTasks(data);
         });
     }
 
@@ -85,6 +87,11 @@ class AddTask extends Component {
                 <label>
                     Fix Date:
                     <input name="fixDate" type="text" value={this.state.fixDate}
+                           onChange={this.handleChange}/>
+                </label>
+                <label>
+                    Tenant:
+                    <input name="tenantId" type="number" value={this.state.tenantId}
                            onChange={this.handleChange}/>
                 </label>
                 <input type="submit" value="Add Task" onClick={this.handleSubmit}/>

@@ -1,11 +1,11 @@
 import React from 'react';
 
 const taskMessage = (props) => (
-    <ul key={props.id} onClick={() => props.clicked()}>
-        <li key={props.id}>
+    <ul key={props.messageNo} onClick={() => props.clicked()}>
+        <li key={props.messageNo}>
             <b>Message No.: </b>{props.messageNo}
             <b>Text: </b>{props.text}
-            <button onClick={() => this.props.removeTaskMessage(props.id)}>Remove</button>
+            <button onClick={() => props.removeTaskMessage(props.messageNo)}>Remove</button>
         </li>
     </ul>
 );

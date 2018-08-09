@@ -16,11 +16,17 @@
 .footer {
     position: absolute;
     width: 100%;
-    bottom: 0;
+    bottom: 10px;
+    font-size: 10px;
+    color: #CC0033;
 }
 
 .sidebar div {
     list-style-type: none;
+}
+
+.sidebar label {
+    color: #000000;
 }
 
 .sidebar ul {
@@ -45,7 +51,7 @@
 .sidebar a:hover,
 .sidebar a:active,
 .sidebar a.active {
-    color: #007AFF;
+    color: #CC0033;
     height: 100%;
     display: block;
 }

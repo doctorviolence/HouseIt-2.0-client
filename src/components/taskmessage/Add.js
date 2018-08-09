@@ -7,8 +7,8 @@ class AddTaskMessage extends Component {
     constructor() {
         super();
         this.state = {
-            messageNo: '',
             text: '',
+            taskNo: '',
             error: null
         };
 
@@ -28,23 +28,26 @@ class AddTaskMessage extends Component {
     }
 
     handleSubmit(event) {
-        const taskMessage = {
+        const data = {
             messageNo: null,
-            text: this.state.text
+            messageText: this.state.text,
+            task: {taskNo: this.state.taskNo}
         };
 
-        this.addTaskMessage(taskMessage);
+        this.addTaskMessage(data);
         event.preventDefault();
     }
 
-    addTaskMessage(taskMessage) {
-        api.addTaskMessage(taskMessage).then(response => {
-            //if (response.status === 500 && response !== null) {
-            //    this.setState({error: 'Could not add taskMessage, please try again.'});
-            //    return;
-            //}
+    addTaskMessage(data) {
+        const queryToken = localStorage.getItem('token');
 
-            this.props.addToTasks(taskMessage);
+        api.addTaskMessage(data, queryToken).then(response => {
+            if (response.status === 500 && response !== null) {
+                this.setState({error: 'Could not add task message, please try again.'});
+                return;
+            }
+
+            this.props.addToTaskMessages(data);
         });
     }
 
@@ -54,13 +57,13 @@ class AddTaskMessage extends Component {
                 <h2>Add a new task message</h2>
                 <p>Enter the information about this task message</p>
                 <label>
-                    Message No:
-                    <input name="messageNo" type="number" value={this.state.messageNo}
+                    Text:
+                    <input name="text" type="text" value={this.state.text}
                            onChange={this.handleChange}/>
                 </label>
                 <label>
-                    Text:
-                    <input name="text" type="text" value={this.state.text}
+                    Task No:
+                    <input name="taskNo" type="number" value={this.state.taskNo}
                            onChange={this.handleChange}/>
                 </label>
                 <input type="submit" value="Add Task Message" onClick={this.handleSubmit}/>

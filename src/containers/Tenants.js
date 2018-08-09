@@ -85,7 +85,7 @@ class Tenants extends Component {
                                 lastName={t.lastName}
                                 phoneNo={t.phoneNo}
                                 clicked={() => this.tenantSelectedHandler(t.tenantId)}
-                                removeTenant={() => this.removeFromTenants}/>
+                                removeTenant={() => this.removeFromTenants(t.tenantId)}/>
                         </div>
                     )
                 }

@@ -12,9 +12,9 @@ export const getAllTenants = (queryToken) => {
 //        .then(response => response.data);
 //};
 
-export const addTenant = (tenant, queryToken) => {
+export const addTenant = (data, queryToken) => {
     return axios
-        .post('/tenants/create-tenant', tenant, {
+        .post('/tenants/create-tenant', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -24,9 +24,9 @@ export const addTenant = (tenant, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateTenant = (tenant, queryToken) => {
+export const updateTenant = (data, queryToken) => {
     return axios
-        .put('/tenants/update-tenant', tenant, {
+        .put('/tenants/update-tenant', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

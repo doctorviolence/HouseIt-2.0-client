@@ -29,7 +29,7 @@ class TaskMessages extends Component {
     }
 
     taskMessageSelectedHandler = (messageNo) => {
-        this.props.history.push('/tasks/' + messageNo)
+        this.props.history.push('/messages/' + messageNo)
     };
 
     loadData = () => {
@@ -44,26 +44,29 @@ class TaskMessages extends Component {
     };
 
     addToTaskMessages = (taskMessage) => {
-        // add api call here
         const updated = [...this.state.taskMessages];
         updated.push(taskMessage);
         this.setState({taskMessages: updated});
     };
 
     removeFromTaskMessages = (id) => {
-        // query.access_token = JSON.parse(localStorage.getItem('user')).access_token;
-        api.deleteTaskMessage(id).then(result => {
+        const queryToken = localStorage.getItem('token');
+
+        api.deleteTaskMessage(id, queryToken).then(result => {
+                if (result.status === 500 && result !== null) {
+                    console.log(result.error);
+                    return;
+                }
+
                 const taskMessages = [...this.state.taskMessages];
-                delete taskMessages[id];
                 const updated = taskMessages.filter(el => {
-                    return el.id !== id;
+                    return el.messageNo !== id;
                 });
                 this.setState({taskMessages: updated});
             }
         ).catch(e => {
             console.log(e);
         });
-        console.log('Task message removed');
     };
 
     render() {
@@ -77,7 +80,7 @@ class TaskMessages extends Component {
                                 messageNo={t.messageNo}
                                 text={t.messageText}
                                 clicked={() => this.taskMessageSelectedHandler(t.messageNo)}
-                                removeTaskMessage={() => this.removeFromTaskMessages}/>
+                                removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
                         </div>
                     )
                 }
@@ -86,7 +89,7 @@ class TaskMessages extends Component {
 
         return (
             <div className={styles.component}>
-                <h1>Tasks Messages</h1>
+                <h1>Task Messages</h1>
                 {taskMessages}
                 <Add addToTaskMessages={this.addToTaskMessages}/>
                 <Route path={this.props.match.url + '/:no'} exact component={Edit}/>

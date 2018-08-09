@@ -11,9 +11,9 @@ export const getAllApartments = (queryToken) => {
 //        .then(response => response.data);
 //};
 
-export const addApartment = (apartment, queryToken) => {
+export const addApartment = (data, queryToken) => {
     return axios
-        .post('/apartments/create-apartment', apartment, {
+        .post('/apartments/create-apartment', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -23,9 +23,9 @@ export const addApartment = (apartment, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateApartment = (apartment, queryToken) => {
+export const updateApartment = (data, queryToken) => {
     return axios
-        .put('/apartments/update-apartment', apartment, {
+        .put('/apartments/update-apartment', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
