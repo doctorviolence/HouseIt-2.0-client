@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import * as api from '../api/apiTask';
+import styled from "styled-components";
 
 import Task from "../components/task/Task";
 import Add from "../components/task/Add";
-import styles from "../assets/css/component.css";
 import {Route} from "react-router-dom";
 import Edit from "../components/building/Edit";
+
+const Container = styled.div`
+    align-items: flex-end;
+    justify-content: center;
+`;
 
 class Tasks extends Component {
     constructor() {
@@ -75,7 +80,7 @@ class Tasks extends Component {
         if (!this.state.error) {
             tasks = this.state.tasks.map(t => {
                     return (
-                        <div key={t.taskNo}>
+                        <Container key={t.taskNo}>
                             <Task
                                 key={t.taskNo}
                                 taskNo={t.taskNo}
@@ -86,19 +91,19 @@ class Tasks extends Component {
                                 fixDate={t.fixDate}
                                 clicked={() => this.taskSelectedHandler(t.taskNo)}
                                 removeTask={() => this.removeFromTasks(t.taskNo)}/>
-                        </div>
+                        </Container>
                     )
                 }
             );
         }
 
         return (
-            <div className={styles.component}>
+            <Container>
                 <h1>Tasks</h1>
                 {tasks}
                 <Add addToTasks={this.addToTasks}/>
                 <Route path={this.props.match.url + '/:no'} exact component={Edit}/>
-            </div>
+            </Container>
         );
     }
 }

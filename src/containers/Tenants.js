@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Route} from "react-router-dom";
 import * as api from '../api/apiTenant';
+import styled from "styled-components";
 
 import Tenant from "../components/tenant/Tenant";
 import Add from "../components/tenant/Add";
 import Edit from "../components/tenant/Edit";
-import styles from "../assets/css/component.css";
+
+const Container = styled.div`
+    align-items: flex-end;
+    justify-content: center;
+`;
 
 class Tenants extends Component {
     constructor() {
@@ -77,7 +82,7 @@ class Tenants extends Component {
         if (!this.state.error) {
             tenants = this.state.tenants.map(t => {
                     return (
-                        <div key={t.tenantId}>
+                        <Container key={t.tenantId}>
                             <Tenant
                                 key={t.tenantId}
                                 id={t.tenantId}
@@ -86,20 +91,20 @@ class Tenants extends Component {
                                 phoneNo={t.phoneNo}
                                 clicked={() => this.tenantSelectedHandler(t.tenantId)}
                                 removeTenant={() => this.removeFromTenants(t.tenantId)}/>
-                        </div>
+                        </Container>
                     )
                 }
             );
         }
 
         return (
-            <div className={styles.component}>
+            <Container>
                 <h1>Tenants</h1>
                 {tenants}
                 <Add addToTenants={this.addToTenants}/>
                 <Route path={this.props.match.url + '/:id'} exact component={Edit}/>
 
-            </div>
+            </Container>
         );
     }
 }

@@ -1,18 +1,31 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import styles from '../../../assets/css/header.css';
 import Menu from '../menu/Menu';
 import Login from '../../login/Login';
 
+const Container = styled.div`
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    height: 40px;
+    width: 100%;
+    color: #ffffff;
+    background: #0f0f12;
+    font-size: 14px;
+    display: flex;
+    padding: 0 20px;
+    box-sizing: border-box;
+`;
+
 const header = (props) => {
     return (
-        <header className={styles.header}>
+        <Container>
             <Menu display={props.display} clicked={props.toggle}/>
-            <nav>
                 <Login isLoggedIn={props.isLoggedIn} loginHandler={props.loginHandler}
                        logoutHandler={props.logoutHandler}/>
-            </nav>
-        </header>
+        </Container>
     )
 };
 

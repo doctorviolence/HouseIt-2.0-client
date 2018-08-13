@@ -1,25 +1,59 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import SideBarLink from './SideBarLink';
 import Backdrop from '../backdrop/Backdrop';
-import styles from '../../../assets/css/sidebar.css';
 
-const sideBar = (props) => {
-    let attachedStyles = [styles.sidebar, styles.close];
-    if (props.display) {
-        attachedStyles = [styles.sidebar, styles.open];
+const Container = styled.div`
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: ${props => props.show ? 'open' : 'none'};
+`;
+
+const SideBarContainer = styled.div`
+    position: absolute;
+    z-index: 1000;
+    width: 300px;
+    max-width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    animation: ${props => props.show ? 'open' : 'closed'} 0.5s;
+    
+    @keyframes open {
+        0% {
+            transform: translateX(-100%);
+        }
     }
+    
+    @keyframes closed {
+        100% {
+            transform: translateX(100%);
+        }
+    }
+`;
 
+const LinkContainer = styled.nav`
+    width: 100%;
+    height: 100%;
+    list-style-type: none;
+`;
+
+const SideBar = (props) => {
     return (
-        <div>
-            <div className={attachedStyles.join(' ')} onClick={props.closed}>
-                <nav>
+        <Container show={props.display} onClick={props.toggle}>
+            <SideBarContainer show={props.display}>
+                <LinkContainer>
                     <SideBarLink isLoggedIn={props.isLoggedIn}/>
-                </nav>
-            </div>
+                </LinkContainer>
+            </SideBarContainer>
             <Backdrop show={props.display} clicked={props.closed}/>
-        </div>
+        </Container>
     )
 };
 
-export default sideBar;
+export default SideBar;

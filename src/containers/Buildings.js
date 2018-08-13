@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Route} from 'react-router-dom';
+import styled from 'styled-components';
 import * as api from '../api/apiBuilding';
 
 import Building from '../components/building/Building';
 import Add from '../components/building/Add';
 import Edit from '../components/building/Edit';
-import styles from '../assets/css/component.css';
+
+const Container = styled.div`
+    align-items: flex-end;
+    justify-content: center;
+`;
 
 class Buildings extends Component {
     constructor() {
@@ -76,7 +81,7 @@ class Buildings extends Component {
         if (!this.state.error) {
             buildings = this.state.buildings.map(b => {
                     return (
-                        <div key={b.buildingId}>
+                        <Container key={b.buildingId}>
                             <Building
                                 key={b.buildingId}
                                 id={b.buildingId}
@@ -84,19 +89,19 @@ class Buildings extends Component {
                                 floorLevels={b.floorLevels}
                                 clicked={() => this.buildingSelectedHandler(b.buildingId)}
                                 removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
-                        </div>
+                        </Container>
                     )
                 }
             );
         }
 
         return (
-            <div className={styles.component}>
+            <Container>
                 <h1>Buildings</h1>
                 {buildings}
                 <Add addToBuildings={this.addToBuildings}/>
                 <Route path={this.props.match.url + '/:id'} exact component={Edit}/>
-            </div>
+            </Container>
         );
     }
 }

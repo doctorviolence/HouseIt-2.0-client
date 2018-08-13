@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import * as api from '../api/apiTaskMessage';
+import styled from "styled-components";
 
 import TaskMessage from "../components/taskmessage/TaskMessage";
 import Add from "../components/taskmessage/Add";
-import styles from "../assets/css/component.css";
 import {Route} from "react-router-dom";
 import Edit from "../components/building/Edit";
+
+const Container = styled.div`
+    align-items: flex-end;
+    justify-content: center;
+`;
 
 class TaskMessages extends Component {
     constructor() {
@@ -74,26 +79,26 @@ class TaskMessages extends Component {
         if (!this.state.error) {
             taskMessages = this.state.taskMessages.map(t => {
                     return (
-                        <div key={t.messageNo}>
+                        <Container key={t.messageNo}>
                             <TaskMessage
                                 key={t.messageNo}
                                 messageNo={t.messageNo}
                                 text={t.messageText}
                                 clicked={() => this.taskMessageSelectedHandler(t.messageNo)}
                                 removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
-                        </div>
+                        </Container>
                     )
                 }
             );
         }
 
         return (
-            <div className={styles.component}>
+            <Container>
                 <h1>Task Messages</h1>
                 {taskMessages}
                 <Add addToTaskMessages={this.addToTaskMessages}/>
                 <Route path={this.props.match.url + '/:no'} exact component={Edit}/>
-            </div>
+            </Container>
         );
     }
 }

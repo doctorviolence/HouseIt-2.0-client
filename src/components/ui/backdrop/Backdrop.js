@@ -1,9 +1,18 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import styles from '../../../assets/css/backdrop.css';
+const Container = styled.div`
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-color: #333333;
+    opacity: 0.1;
+`;
 
-const backdrop = props => (
-    props.show ? <div className={styles.backdrop} onClick={props.clicked}></div> : null
+const Backdrop = props => (
+    props.show ? <Container onClick={props.clicked}></Container> : null
 );
 
-export default backdrop;
+export default Backdrop;

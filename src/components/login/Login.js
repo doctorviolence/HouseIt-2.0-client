@@ -1,7 +1,44 @@
 import React, {Component} from 'react';
 import * as api from "../../api/apiLogin";
+import styled from 'styled-components';
 
-import styles from '../../assets/css/login.css';
+const Container = styled.div`
+    position: absolute;
+    z-index: 90;
+    margin: auto;
+    padding: 10px;
+    right: 100px;
+    height: 40px;
+    width: 400px;
+    background-color: #0f0f12;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const LoginContainer = styled.form`
+    display: flex;
+    margin-right: 0;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+const Label = styled.label`
+    color: #ffffff;
+    font-size: 12px;
+`;
+
+const LogoutButton = styled.button`
+    margin-right: 0;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    outline: none;
+    color: #ffffff;
+    font-size: 12px;
+    width: 100%;
+`;
 
 class Login extends Component {
     constructor() {
@@ -58,25 +95,25 @@ class Login extends Component {
     render() {
         if (!this.props.isLoggedIn) {
             return (
-                <div className={styles.login}>
-                    <form onSubmit={this.handleSubmit}>
-                        <label>Username: </label>
+                <Container isLoggedIn={this.props.isLoggedIn}>
+                    <LoginContainer onSubmit={this.handleSubmit}>
+                        <Label>Username: </Label>
                         <input name="username" type="text" placeholder="Username" value={this.state.username}
                                required="true"
                                onChange={this.userInputHandler}/>
-                        <label>Password: </label>
+                        <Label>Password: </Label>
                         <input name="password" type="password" placeholder="Password" value={this.state.password}
                                required="true" minLength="6"
                                onChange={this.userInputHandler}/>
-                        <input className={styles["login-button"]} type="submit" value="Sign in"/>
-                    </form>
-                </div>
+                        <input type="submit" value="Sign in"/>
+                    </LoginContainer>
+                </Container>
             );
         }
         return (
-            <div className={styles.login}>
-                <button className={styles["login-button"]} onClick={this.props.logoutHandler}>Logout</button>
-            </div>
+            <Container>
+                <LogoutButton onClick={this.props.logoutHandler}>Logout</LogoutButton>
+            </Container>
         );
     }
 }

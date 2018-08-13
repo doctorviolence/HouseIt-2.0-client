@@ -1,12 +1,22 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {injectGlobal} from 'styled-components';
 
 import async from '../hoc/async';
 import Header from "../components/ui/header/Header";
 import SideBar from "../components/ui/sidebar/SideBar";
-import headerStyles from "../assets/css/header.css";
-import sidebarStyles from "../assets/css/sidebar.css";
 import Welcome from "../components/ui/welcome/Welcome";
+
+injectGlobal`
+   body {
+        padding: 0;
+        text-align: center;
+        margin-top: 72px;
+        background-color: #ffffff;
+        font-family: "Helvetica Neue", Helvetica Neue;
+        font-size: 14px;
+   }
+`;
 
 const AsyncBuildings = async(() => {
     return import('./Buildings');
@@ -35,7 +45,8 @@ const AsyncUsers = async(() => {
 class App extends Component {
     state = {
         isLoggedIn: false,
-        displaySideBar: false
+        displaySideBar: false,
+        hideSideBar: true
     };
 
     sideBarClosedHandler = () => {
@@ -63,14 +74,13 @@ class App extends Component {
             <BrowserRouter basename="/">
                 <div>
                     <Welcome/>
-                    <Header className={headerStyles.header}
-                            isLoggedIn={this.state.isLoggedIn}
+                    <Header isLoggedIn={this.state.isLoggedIn}
                             loginHandler={this.loginHandler}
                             logoutHandler={this.logoutHandler}
                             toggle={this.sideBarToggleHandler}
                             display={this.state.displaySideBar}/>
-                    <SideBar className={sidebarStyles.sidebar}
-                             isLoggedIn={this.state.isLoggedIn}
+                    <SideBar isLoggedIn={this.state.isLoggedIn}
+                             toggle={this.sideBarToggleHandler}
                              display={this.state.displaySideBar}
                              closed={this.sideBarClosedHandler}/>
                     <Switch>
