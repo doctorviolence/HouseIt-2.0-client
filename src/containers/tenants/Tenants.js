@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Route} from "react-router-dom";
-import * as api from '../api/apiTenant';
+import * as api from '../../api/tenant/apiTenant';
 import styled from "styled-components";
 
-import Tenant from "../components/tenant/Tenant";
-import Add from "../components/tenant/Add";
-import Edit from "../components/tenant/Edit";
+import Tenant from "../../components/tenant/Tenant";
+import Add from "../../components/tenant/Add";
+import Edit from "../../components/tenant/Edit";
 
 const Container = styled.div`
     align-items: flex-end;

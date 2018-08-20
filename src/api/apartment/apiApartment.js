@@ -1,20 +1,19 @@
-import axios from './axios-instance';
+import axios from '../axios-instance';
 
-export const getAllTaskMessages = (queryToken) => {
-    return axios
-        .get('/messages', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
+export const getAllApartments = (queryToken) => {
+    return axios.get('/apartments', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
-//export const getTaskMessages = no => {
+//export const getApartmentsInBuilding = id => {
 //    return axios
-//        .get('/messages/' + no)
+//        .get('/apartments/apartments-in-building' + id)
 //        .then(response => response.data);
 //};
 
-export const addTaskMessage = (data, queryToken) => {
+export const addApartment = (data, queryToken) => {
     return axios
-        .post('/messages/create-message', data, {
+        .post('/apartments/create-apartment', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -24,9 +23,9 @@ export const addTaskMessage = (data, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateTaskMessage = (data, queryToken) => {
+export const updateApartment = (data, queryToken) => {
     return axios
-        .put('/messages/update-message', data, {
+        .put('/apartments/update-apartment', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -36,9 +35,9 @@ export const updateTaskMessage = (data, queryToken) => {
         .catch(error => error.response);
 };
 
-export const deleteTaskMessage = (id, queryToken) => {
+export const deleteApartment = (id, queryToken) => {
     return axios
-        .delete('/messages/delete-message/' + id, {
+        .delete('/apartments/delete-apartment/' + id, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

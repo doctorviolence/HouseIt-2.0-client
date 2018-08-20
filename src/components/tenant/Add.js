@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import * as api from "../../api/apiTenant";
+import * as api from "../../api/tenant/apiTenant";
 
 import PropTypes from 'prop-types';
 

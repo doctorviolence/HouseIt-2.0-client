@@ -1,19 +1,20 @@
-import axios from './axios-instance';
+import axios from '../axios-instance';
 
-export const getAllApartments = (queryToken) => {
-    return axios.get('/apartments', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
+export const getAllTenants = (queryToken) => {
+    return axios
+        .get('/tenants', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
         .then(response => response.data);
 };
 
-//export const getApartmentsInBuilding = id => {
+//export const getTenantsInApartment = id => {
 //    return axios
-//        .get('/apartments/apartments-in-building' + id)
+//        .get('/manager/tenants-in-apartment/' + id)
 //        .then(response => response.data);
 //};
 
-export const addApartment = (data, queryToken) => {
+export const addTenant = (data, queryToken) => {
     return axios
-        .post('/apartments/create-apartment', data, {
+        .post('/tenants/create-tenant', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -23,9 +24,9 @@ export const addApartment = (data, queryToken) => {
         .catch(error => error.response);
 };
 
-export const updateApartment = (data, queryToken) => {
+export const updateTenant = (data, queryToken) => {
     return axios
-        .put('/apartments/update-apartment', data, {
+        .put('/tenants/update-tenant', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken
@@ -35,9 +36,9 @@ export const updateApartment = (data, queryToken) => {
         .catch(error => error.response);
 };
 
-export const deleteApartment = (id, queryToken) => {
+export const deleteTenant = (id, queryToken) => {
     return axios
-        .delete('/apartments/delete-apartment/' + id, {
+        .delete('/tenants/delete-tenant/' + id, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': queryToken

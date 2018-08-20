@@ -13,8 +13,15 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     background: #ffffff;
-    display: ${props => props.show ? 'block' : 'none'};
-    animation: ${props => props.hide ? 'fadeOut' : null} 0.5s;
+    transition: all 0.5s;
+    display: ${props => props.hide ? 'none' : 'flex'};
+    animation: ${props => props.show ? 'fadeIn' : 'fadeOut'};
+    
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+    }
 
     @keyframes fadeOut {
         100% {
@@ -23,30 +30,53 @@ const Container = styled.div`
     }
 `;
 
-const TextContainer = styled.div``;
-
-const WelcomeText = styled.h1`
-    margin-top: 30%;
-    color: #0f0f12;
-    font-size: 40px;
-    animation: ${'fadeIn'} 0.5s ease;
+const TextContainer = styled.div`
+    transition: all 0.5s;
+    animation: ${props => props.hide ? 'fadeOut' : 'fadeIn'} 0.3s ease;
     
     @keyframes fadeIn {
         0% {
             opacity: 0;
         }
     }
+
+    @keyframes fadeOut {
+        100% {
+            opacity: 0;
+        }
+    }
 `;
 
-const Subtitles = styled.h1`
-    color: #50505B;
-    font-size: 14px;
-    animation: ${'fadeIn'} 0.5s ease;
+const Logo = styled.h1`
+    position: relative;
+    color: #0f0f12;
+    font-size: 100px;
+    animation: ${'scale'} 0.3s ease;
     
-        @keyframes fadeIn {
+    @keyframes scale {
+        0% {
+            transform: scale(0)
+        }
+    }
+`;
+
+const WelcomeText = styled.h1`
+    position: relative;
+    margin-top: 60px;
+    margin-left: 10px;
+    color: #0f0f12;
+    font-size: 40px;
+    animation: ${'fadeIn'} 0.3s ease;
+    
+    @keyframes fadeIn {
         0% {
             opacity: 0;
         }
+    }
+    
+    @media screen and (max-width: 700px) {
+        margin-top: 30px;
+        font-size: 20px;
     }
 `;
 
@@ -54,36 +84,34 @@ class Welcome extends Component {
     state = {
         display: true,
         hide: false,
-        showText: false,
-        showSubtitles: false
+        showLogo: false,
+        showText: false
     };
 
     componentDidMount() {
         setTimeout(() => {
+            this.setState({showLogo: true});
+        }, 0);
+
+        setTimeout(() => {
             this.setState({showText: true});
-        }, 500);
+        }, 700);
 
         setTimeout(() => {
-            this.setState({showSubtitles: true});
-        }, 1200);
+            this.setState({showLogo: false, showText: false});
+        }, 1500);
 
         setTimeout(() => {
-            this.setState({showText: false, showSubtitles: false, hide: true});
-        }, 1800);
-
-        setTimeout(() => {
-            this.setState({display: false, hide: false});
+            this.setState({hide: true});
         }, 2000);
     }
 
     render() {
         return (
             <Container show={this.state.display} hide={this.state.hide}>
-                <TextContainer>
-                    <WelcomeText hidden={!this.state.showText}>Roth Management</WelcomeText>
-                </TextContainer>
-                <TextContainer>
-                    <Subtitles hidden={!this.state.showSubtitles}>BETA VERSION 1.0.0</Subtitles>
+                <Logo hidden={!this.state.showLogo}>⌂</Logo>
+                <TextContainer show={this.state.display} hide={!this.state.display}>
+                    <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER</WelcomeText>
                 </TextContainer>
             </Container>
         )

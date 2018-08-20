@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import * as api from '../api/apiTask';
+import * as api from '../../api/task/apiTask';
 import styled from "styled-components";
 
-import Task from "../components/task/Task";
-import Add from "../components/task/Add";
+import Task from "../../components/task/Task";
+import Add from "../../components/task/Add";
 import {Route} from "react-router-dom";
-import Edit from "../components/building/Edit";
+import Edit from "../../components/building/Edit";
 
 const Container = styled.div`
     align-items: flex-end;

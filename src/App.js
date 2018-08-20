@@ -2,10 +2,11 @@ import React, {Component} from 'react';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {injectGlobal} from 'styled-components';
 
-import async from '../hoc/async';
-import Header from "../components/ui/header/Header";
-import SideBar from "../components/ui/sidebar/SideBar";
-import Welcome from "../components/ui/welcome/Welcome";
+import async from './hoc/async';
+import Header from "./components/ui/header/Header";
+import SideBar from "./components/ui/sidebar/SideBar";
+import Welcome from "./components/ui/welcome/Welcome";
+import Login from "./containers/login/Login";
 
 injectGlobal`
    body {
@@ -19,27 +20,27 @@ injectGlobal`
 `;
 
 const AsyncBuildings = async(() => {
-    return import('./Buildings');
+    return import('./containers/buildings/Buildings');
 });
 
 const AsyncApartments = async(() => {
-    return import('./Apartments');
+    return import('./containers/apartments/Apartments');
 });
 
 const AsyncTenants = async(() => {
-    return import('./Tenants');
+    return import('./containers/tenants/Tenants');
 });
 
 const AsyncTasks = async(() => {
-    return import('./Tasks');
+    return import('./containers/tasks/Tasks');
 });
 
 const AsyncMessages = async(() => {
-    return import('./TaskMessages');
+    return import('./containers/taskMessages/TaskMessages');
 });
 
 const AsyncUsers = async(() => {
-    return import('./Users');
+    return import('./containers/users/Users');
 });
 
 class App extends Component {
@@ -74,15 +75,9 @@ class App extends Component {
             <BrowserRouter basename="/">
                 <div>
                     <Welcome/>
-                    <Header isLoggedIn={this.state.isLoggedIn}
-                            loginHandler={this.loginHandler}
-                            logoutHandler={this.logoutHandler}
-                            toggle={this.sideBarToggleHandler}
-                            display={this.state.displaySideBar}/>
-                    <SideBar isLoggedIn={this.state.isLoggedIn}
-                             toggle={this.sideBarToggleHandler}
-                             display={this.state.displaySideBar}
-                             closed={this.sideBarClosedHandler}/>
+                    <Header toggle={this.sideBarToggleHandler}
+                            display={this.state.displaySideBar}
+                            hide={this.state.hideSideBar}/>
                     <Switch>
                         <Route path="/buildings" component={AsyncBuildings}/>
                         <Route path="/apartments" component={AsyncApartments}/>
@@ -90,8 +85,13 @@ class App extends Component {
                         <Route path="/tasks" component={AsyncTasks}/>
                         <Route path="/messages" component={AsyncMessages}/>
                         <Route path="/users" component={AsyncUsers}/>
-                        <Route path="/" render={() => <div><p>Home page</p></div>}/>
+                        <Route path="/"
+                               render={() => <Login isLoggedIn={this.state.isLoggedIn} loginHandler={this.loginHandler}
+                                                    logoutHandler={this.logoutHandler}/>}/>
                     </Switch>
+                    <SideBar toggle={this.sideBarToggleHandler}
+                             display={this.state.displaySideBar}
+                             hide={this.sideBarClosedHandler}/>
                 </div>
             </BrowserRouter>
         );

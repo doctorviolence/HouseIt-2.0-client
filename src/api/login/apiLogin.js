@@ -1,4 +1,4 @@
-import axios from './axios-instance';
+import axios from '../axios-instance';
 
 export const login = (data) => {
     return axios.post('/auth/login', data);

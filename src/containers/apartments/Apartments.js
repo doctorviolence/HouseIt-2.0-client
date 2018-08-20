@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {Route} from "react-router-dom";
-import * as api from '../api/apiApartment';
+import * as api from '../../api/apartment/apiApartment';
 import styled from "styled-components";
 
-import Apartment from "../components/apartment/Apartment";
-import Add from "../components/apartment/Add";
-import Edit from "../components/apartment/Edit";
+import Apartment from "../../components/apartment/Apartment";
+import Add from "../../components/apartment/Add";
+import Edit from "../../components/apartment/Edit";
 
 const Container = styled.div`
     align-items: flex-end;

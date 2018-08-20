@@ -1,31 +1,21 @@
 import React, {Component} from 'react';
-import * as api from "../../api/apiLogin";
+import * as api from "../../api/login/apiLogin";
 import styled from 'styled-components';
 
 const Container = styled.div`
-    position: absolute;
-    z-index: 90;
     margin: auto;
     padding: 10px;
-    right: 100px;
-    height: 40px;
-    width: 400px;
-    background-color: #0f0f12;
-    box-sizing: border-box;
-    display: flex;
+    background: #ffffff;
     align-items: center;
     justify-content: center;
 `;
 
 const LoginContainer = styled.form`
-    display: flex;
-    margin-right: 0;
-    align-items: center;
-    justify-content: space-between;
+    display: block;
 `;
 
 const Label = styled.label`
-    color: #ffffff;
+    color: #000000;
     font-size: 12px;
 `;
 

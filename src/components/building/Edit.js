@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import * as api from "../../api/apiBuilding";
+import ApiBuilding from "../../api/building/apiBuilding";
 
 class EditBuilding extends Component {
     state = {
@@ -16,7 +16,7 @@ class EditBuilding extends Component {
             floorLevels: this.state.floorLevels
         };
 
-        api.updateBuilding(data).then(response => {
+        ApiBuilding.updateBuilding(data).then(response => {
             //if (response.status === 500 && response !== null) {
             //    this.setState({error: 'Could not update building, please try again.'});
             //    return;

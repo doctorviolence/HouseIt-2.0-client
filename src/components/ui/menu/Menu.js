@@ -24,6 +24,10 @@ const Container = styled.div`
             transform: translateY(-100%);
         }
     }
+    
+    @media screen and (min-width: 500px) {
+      display: none;
+    }
 `;
 
 const MenuNode = styled.div`

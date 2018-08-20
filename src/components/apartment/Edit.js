@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import * as api from "../../api/apiApartment";
+import * as api from "../../api/apartment/apiApartment";
 
 class EditApartment extends Component {
     state = {

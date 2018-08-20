@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 
 import PropTypes from 'prop-types';
-import * as api from "../../api/apiBuilding";
 
 class AddBuilding extends Component {
     constructor() {
@@ -35,20 +34,7 @@ class AddBuilding extends Component {
             floorLevels: this.state.floorLevels
         };
 
-        this.addBuilding(data);
-    }
-
-    addBuilding(data) {
-        const queryToken = localStorage.getItem('token');
-
-        api.addBuilding(data, queryToken).then(response => {
-            if (response.status === 500 && response !== null) {
-                this.setState({error: 'Could not add building, please try again.'});
-                return;
-            }
-
-            this.props.addToBuildings(data);
-        });
+        this.props.addToBuildings(data);
     }
 
     render() {

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import * as api from "../../api/apiTaskMessage";
+import * as api from "../../api/taskMessage/apiTaskMessage";
 
 import PropTypes from 'prop-types';
 
