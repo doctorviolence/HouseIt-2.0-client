@@ -1,12 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Route} from 'react-router-dom';
 import styled from 'styled-components';
 
 import * as actions from '../../api/actions';
-import Building from '../../components/building/Building';
+import Building from '../building/Building';
 import Add from '../../components/building/Add';
-import Edit from '../../components/building/Edit';
 
 const Container = styled.div`
     align-items: flex-end;
@@ -14,26 +12,15 @@ const Container = styled.div`
 `;
 
 class Buildings extends Component {
-    constructor() {
-        super();
-
-        this.addToBuildings = this.addToBuildings.bind(this);
-        this.buildingSelectedHandler = this.buildingSelectedHandler.bind(this);
-        this.removeFromBuildings = this.removeFromBuildings.bind(this);
-    }
-
     state = {
         buildings: null,
+        add: false,
         error: false
     };
 
     componentDidMount() {
         this.loadData();
     }
-
-    buildingSelectedHandler = (id) => {
-        this.props.history.push('/buildings/' + id)
-    };
 
     loadData = () => {
         if (!this.props.apiState.data.buildings.length) {
@@ -49,6 +36,12 @@ class Buildings extends Component {
         this.props.removeBuilding(id);
     };
 
+    toggleAdd = () => {
+        this.setState((prevState) => {
+            return {add: !prevState.add};
+        });
+    };
+
     render() {
         const buildings = this.props.apiState.data.buildings;
 
@@ -62,13 +55,10 @@ class Buildings extends Component {
                                 id={b.buildingId}
                                 streetAddress={b.address}
                                 floorLevels={b.floorLevels}
-                                clicked={() => this.buildingSelectedHandler(b.buildingId)}
                                 removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
                         )
                     })}
-
-                    <Add addToBuildings={this.addToBuildings}/>
-                    <Route path={this.props.match.url + '/:id'} exact component={Edit}/>
+                    <Add display={this.state.add} toggleAdd={this.toggleAdd} addToBuildings={this.addToBuildings}/>
                 </Container>
             );
         }

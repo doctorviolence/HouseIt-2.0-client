@@ -20,7 +20,7 @@ class ApiBuilding {
             .catch(error => error.response);
     };
 
-    updateBuilding = (data, queryToken) => {
+    editBuilding = (data, queryToken) => {
         return axios
             .put('/buildings/update-building', data, {
                 headers: {

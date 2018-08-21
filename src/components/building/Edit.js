@@ -1,37 +1,61 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ApiBuilding from "../../api/building/apiBuilding";
+import {FormContainer, Title, ButtonContainer, Button, Form} from "../constants/forms";
 
 class EditBuilding extends Component {
-    state = {
-        streetAddress: '',
-        floorLevels: '',
-        edited: false
-    };
-
-    editDataHandler = () => {
-        const data = {
-            id: this.state.id,
-            streetAddress: this.state.streetAddress,
-            floorLevels: this.state.floorLevels
+    constructor(props) {
+        super(props);
+        this.state = {
+            streetAddress: '',
+            floorLevels: ''
         };
 
-        ApiBuilding.updateBuilding(data).then(response => {
-            //if (response.status === 500 && response !== null) {
-            //    this.setState({error: 'Could not update building, please try again.'});
-            //    return;
-            //}
-            //this.setState({edited: true});
-            this.props.history.replace('/buildings');
-        });
-    };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        const value = event.target.value;
+        const name = event.target.name;
+
+        this.setState({[name]: value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        const data = {
+            buildingId: this.props.id,
+            address: this.state.streetAddress,
+            floorLevels: this.state.floorLevels
+        };
+        this.props.toggleEdit();
+        this.props.editBuilding(data);
+    }
 
     render() {
-        return (
-            <div>
-                <button onClick={this.editDataHandler}>Edit</button>
-            </div>
-        )
+        if (this.props.display) {
+            return (
+                <FormContainer>
+                    <ButtonContainer>
+                        <Button onClick={this.props.toggleEdit}> ‹ Cancel</Button>
+                        <Button onClick={this.handleSubmit}> Done</Button>
+                    </ButtonContainer>
+                    <Title>Edit building</Title>
+                    <Form onSubmit={this.handleSubmit}>
+                        <label>Street address:</label>
+                        <input name="streetAddress" type="text" placeholder={this.props.address} required="true"
+                               value={this.state.streetAddress}
+                               onChange={this.handleChange}/>
+                        <label>Floor levels:</label>
+                        <input name="floorLevels" type="number" placeholder={this.props.floors} required="true"
+                               value={this.state.floorLevels}
+                               onChange={this.handleChange}/>
+                    </Form>
+                </FormContainer>
+            );
+        }
+
+        return <Button onClick={this.props.toggleEdit}>Edit</Button>;
     }
 }
 

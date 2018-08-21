@@ -20,7 +20,7 @@ injectGlobal`
 `;
 
 const AsyncBuildings = async(() => {
-    return import('./containers/buildings/Buildings');
+    return import('./containers/buildings_list/Buildings');
 });
 
 const AsyncApartments = async(() => {

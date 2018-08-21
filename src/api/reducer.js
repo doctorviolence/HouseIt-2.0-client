@@ -26,6 +26,19 @@ const addBuilding = (state, action) => {
     };
 };
 
+const editBuilding = (state, action) => {
+    const updatedBuildings = state.data.buildings.map(b => {
+        if (b.buildingId === action.id) {
+            return {...b, ...action.building}
+        }
+        return b
+    });
+    return {
+        ...state,
+        data: {...state.data, buildings: updatedBuildings}
+    };
+};
+
 const removeBuilding = (state, action) => {
     const updatedBuildings = state.data.buildings.filter(result => result.buildingId !== action.buildingId);
     return {
@@ -41,7 +54,7 @@ const reducer = (state = initialState, action) => {
         case 'BUILDING_ADDED_SUCCESS':
             return addBuilding(state, action);
         case 'BUILDING_UPDATED_SUCCESS':
-            return;
+            return editBuilding(state, action);
         case 'BUILDING_REMOVED_SUCCESS':
             return removeBuilding(state, action);
         default:

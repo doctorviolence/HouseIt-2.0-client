@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-
 import PropTypes from 'prop-types';
+import {FormContainer, Title, ButtonContainer, Button, Form} from "../constants/forms";
 
 class AddBuilding extends Component {
     constructor() {
@@ -19,11 +19,7 @@ class AddBuilding extends Component {
         const value = event.target.value;
         const name = event.target.name;
 
-        this.setState(
-            {
-                [name]: value
-            }
-        );
+        this.setState({[name]: value});
     }
 
     handleSubmit(event) {
@@ -33,28 +29,34 @@ class AddBuilding extends Component {
             address: this.state.streetAddress,
             floorLevels: this.state.floorLevels
         };
-
+        this.props.toggleAdd();
         this.props.addToBuildings(data);
     }
 
     render() {
-        return (
-            <form>
-                <h2>Add a new building</h2>
-                <p>Enter the information about this building</p>
-                <label>
-                    Street address:
-                    <input name="streetAddress" type="text" value={this.state.streetAddress}
-                           onChange={this.handleChange}/>
-                </label>
-                <label>
-                    Floor levels:
-                    <input name="floorLevels" type="number" value={this.state.floorLevels}
-                           onChange={this.handleChange}/>
-                </label>
-                <input type="submit" value="Add Building" onClick={this.handleSubmit}/>
-            </form>
-        );
+        if (this.props.display) {
+            return (
+                <FormContainer>
+                    <ButtonContainer>
+                        <Button onClick={this.props.toggleAdd}> ‹ Cancel</Button>
+                        <Button onClick={this.handleSubmit}> Done</Button>
+                    </ButtonContainer>
+                    <Title>Add new building</Title>
+                    <Form onSubmit={this.handleSubmit}>
+                        <label>Street address:</label>
+                        <input name="streetAddress" type="text" placeholder="Street address" required="true"
+                               value={this.state.streetAddress}
+                               onChange={this.handleChange}/>
+                        <label>Floor levels:</label>
+                        <input name="floorLevels" type="number" placeholder="Floor levels" required="true"
+                               value={this.state.floorLevels}
+                               onChange={this.handleChange}/>
+                    </Form>
+                </FormContainer>
+            );
+        }
+
+        return <Button onClick={this.props.toggleAdd}>Add new building</Button>;
     }
 }
 

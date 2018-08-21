@@ -3,31 +3,53 @@ import * as api from "../../api/login/apiLogin";
 import styled from 'styled-components';
 
 const Container = styled.div`
-    margin: auto;
-    padding: 10px;
-    background: #ffffff;
+    position: relative;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    background: #ffffff;
 `;
 
-const LoginContainer = styled.form`
-    display: block;
-`;
-
-const Label = styled.label`
+const Title = styled.h2`
     color: #000000;
-    font-size: 12px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 50px;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
-const LogoutButton = styled.button`
-    margin-right: 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    outline: none;
-    color: #ffffff;
-    font-size: 12px;
-    width: 100%;
+const FormContainer = styled.form`
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin: auto;
+    font-size: 14px;
+    
+    label {
+        font-weight: bold;
+        color: #000000;
+    }
+    
+    input {
+        outline: none;
+        padding: 7px;
+        border: 1px solid #f2f2f2;
+        background: transparent;
+        margin-bottom: 10px;
+        
+        &:focus {
+            background: #f2f2f2;
+        }
+        &:hover {
+            background: #f2f2f2;
+        }
+    } 
+    
+    @media screen and (max-width: 700px) {
+        max-width: 80%;
+    }
 `;
 
 class Login extends Component {
@@ -85,24 +107,25 @@ class Login extends Component {
     render() {
         if (!this.props.isLoggedIn) {
             return (
-                <Container isLoggedIn={this.props.isLoggedIn}>
-                    <LoginContainer onSubmit={this.handleSubmit}>
-                        <Label>Username: </Label>
+                <Container>
+                    <Title>Log in</Title>
+                    <FormContainer onSubmit={this.handleSubmit}>
+                        <label>Username: </label>
                         <input name="username" type="text" placeholder="Username" value={this.state.username}
                                required="true"
                                onChange={this.userInputHandler}/>
-                        <Label>Password: </Label>
+                        <label>Password: </label>
                         <input name="password" type="password" placeholder="Password" value={this.state.password}
                                required="true" minLength="6"
                                onChange={this.userInputHandler}/>
                         <input type="submit" value="Sign in"/>
-                    </LoginContainer>
+                    </FormContainer>
                 </Container>
             );
         }
         return (
             <Container>
-                <LogoutButton onClick={this.props.logoutHandler}>Logout</LogoutButton>
+                <Title>You are now logged in.</Title>
             </Container>
         );
     }
