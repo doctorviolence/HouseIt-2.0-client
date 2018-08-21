@@ -10,14 +10,19 @@ const initialState = {
 };
 
 const retrieveBuildings = (state, action) => {
-    return {...state, data: {buildings: action.buildings}};
+    return {
+        ...state,
+        data: {
+            ...state.data, buildings: [...action.buildings]
+        }
+    };
 };
 
 const addBuilding = (state, action) => {
     const updatedBuildings = state.data.buildings.concat(action.result);
     return {
         ...state,
-        data: {buildings: updatedBuildings}
+        data: {...state.data, buildings: updatedBuildings}
     };
 };
 
@@ -25,7 +30,7 @@ const removeBuilding = (state, action) => {
     const updatedBuildings = state.data.buildings.filter(result => result.buildingId !== action.buildingId);
     return {
         ...state,
-        data: {buildings: updatedBuildings}
+        data: {...state.data, buildings: updatedBuildings}
     };
 };
 
