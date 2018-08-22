@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 
-import * as actions from '../../api/actions';
+import * as apiActions from '../../api/actions';
+import * as viewActions from '../../containers/actions';
 import Building from '../building/Building';
 import Add from '../../components/add/Add';
+import Popup from '../../components/ui/popup/Popup';
 import {validation} from '../../components/constants/validation';
 
 const Container = styled.div`
@@ -47,7 +49,8 @@ class Buildings extends Component {
         },
         formIsValid: false,
         add: false,
-        error: false
+        error: false,
+        buildingSelectedId: null
     };
 
     componentDidMount() {
@@ -60,6 +63,10 @@ class Buildings extends Component {
         this.setState((prevState) => {
             return {add: !prevState.add};
         });
+    };
+
+    viewApartments = () => {
+        this.props.viewApartments();
     };
 
     changeAddFormHandler = (event) => {
@@ -93,11 +100,17 @@ class Buildings extends Component {
     };
 
     removeFromBuildings = (id) => {
+        this.props.viewPopup({
+            title: 'Building deleted!'
+        });
         this.props.removeBuilding(id);
     };
 
     render() {
         const buildings = this.props.apiState.data.buildings;
+        const showPopup = this.props.viewState.showPopup;
+        const popupTitle = this.props.viewState.popupTitle;
+        const popupActions = this.props.viewState.popupActions;
 
         return (
             <Container>
@@ -107,7 +120,8 @@ class Buildings extends Component {
                             key={b.buildingId}
                             id={b.buildingId}
                             streetAddress={b.address}
-                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
+                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}
+                            onClick={this.viewApartments}/>
                     )
                 })}
                 <Add display={this.state.add}
@@ -116,6 +130,10 @@ class Buildings extends Component {
                      toggleAdd={this.toggleAdd}
                      submitData={this.addToBuildings}
                      addFormChanged={(event) => this.changeAddFormHandler(event)}/>
+                <Popup show={showPopup}
+                       close={() => this.props.closePopup()}
+                       title={popupTitle}
+                       actions={popupActions}/>
             </Container>
         );
     }
@@ -123,15 +141,19 @@ class Buildings extends Component {
 
 const mapStateToProps = state => {
     return {
-        apiState: state.apiState
+        apiState: state.apiState,
+        viewState: state.containerState
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveBuildings: () => dispatch(actions.retrieveBuildings()),
-        addBuilding: (building) => dispatch(actions.addBuilding(building)),
-        removeBuilding: (id) => dispatch(actions.removeBuilding(id))
+        retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
+        addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
+        removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
+        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
+        closePopup: () => dispatch(viewActions.closePopup()),
+        viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 
