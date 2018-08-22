@@ -21,19 +21,6 @@ const SideBarContainer = styled.div`
     justify-content: center;
     align-items: center;
     background: #0f0f12;
-    animation: ${props => props.show ? 'open' : 'closed'} 0.5s;
-    
-    @keyframes open {
-        0% {
-            transform: translateY(-100%);
-        }
-    }
-    
-    @keyframes closed {
-        100% {
-            transform: translateY(100%);
-        }
-    }
 `;
 
 const LinkContainer = styled.nav`

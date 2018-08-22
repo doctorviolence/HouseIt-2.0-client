@@ -32,7 +32,7 @@ const AsyncTenants = async(() => {
 });
 
 const AsyncTasks = async(() => {
-    return import('./containers/tasks/Tasks');
+    return import('./containers/tasks_list/Tasks');
 });
 
 const AsyncMessages = async(() => {

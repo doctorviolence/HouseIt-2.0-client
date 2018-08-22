@@ -1,13 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Container, TextContainer, Button} from "../../components/constants/components";
 
+import {Container, TextContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
-import EditBuilding from "../../components/building/Edit";
+import {validation} from "../../components/constants/validation";
+import Edit from "../../components/edit/Edit";
 
 class Building extends Component {
     state = {
-        edit: false
+        editForm: {
+            streetAddress: {
+                formType: 'input',
+                description: 'Address',
+                formConfig: {
+                    type: 'text',
+                    name: 'streetAddress',
+                    placeholder: 'Address'
+                },
+                value: this.props.streetAddress,
+                validation: {
+                    required: false
+                },
+                valid: true
+            }
+        },
+        formIsValid: false,
+        edit: false,
+        error: false
     };
 
     toggleEdit = () => {
@@ -16,21 +35,50 @@ class Building extends Component {
         });
     };
 
+    changeEditFormHandler = (event) => {
+        event.preventDefault();
+        const updatedEditForm = {...this.state.editForm};
+        const updatedForm = {...updatedEditForm[event.target.name]};
+        updatedForm.value = event.target.value;
+        updatedForm.valid = validation(event.target.value, updatedForm.validation);
+        updatedEditForm[event.target.name] = updatedForm;
+
+        let isValid = true;
+        for (let i in updatedEditForm) {
+            isValid = updatedEditForm[i].valid && isValid;
+        }
+
+        this.setState({editForm: updatedEditForm, formIsValid: isValid});
+    };
+
+    editData = () => {
+        const id = this.props.id;
+        const data = {
+            buildingId: id,
+            address: this.state.editForm.streetAddress.value
+        };
+
+        if (this.state.formIsValid) {
+            this.toggleEdit();
+            this.props.editBuilding(data, id);
+        } else {
+            // Replacing this with error message, eventually...
+        }
+    };
+
     render() {
         return (
             <Container key={this.props.id}>
                 <TextContainer>
-                    <b>ID: </b>{this.props.id}
-                    <b>Address: </b>{this.props.streetAddress}
-                    <b>Floor levels: </b>{this.props.floorLevels}
-                    <EditBuilding id={this.props.id}
-                                  address={this.props.streetAddress}
-                                  floors={this.props.floorLevels}
-                                  display={this.state.edit}
-                                  toggleEdit={this.toggleEdit}
-                                  editBuilding={(building) => this.props.editBuilding(building, this.props.id)}/>
-                    <Button onClick={() => this.props.removeBuilding(this.props.id)}>Remove</Button>
+                    {this.props.streetAddress}
                 </TextContainer>
+                <Edit display={this.state.edit}
+                      title={"Edit building"}
+                      editForm={this.state.editForm}
+                      toggleEdit={this.toggleEdit}
+                      submitData={this.editData}
+                      editFormChanged={(event) => this.changeEditFormHandler(event)}/>
+                <Button onClick={() => this.props.removeBuilding(this.props.id)}>Remove</Button>
             </Container>
         )
     }

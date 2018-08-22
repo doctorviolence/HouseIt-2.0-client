@@ -11,19 +11,6 @@ const Container = styled.div`
     padding: 10px 0;
     box-sizing: border-box;
     cursor: pointer;
-    animation: ${props => props.show ? 'open' : 'closed'} 0.5s;
-    
-    @keyframes open {
-        0% {
-            transform: translateY(-100%);
-        }
-    }
-    
-    @keyframes closed {
-        100% {
-            transform: translateY(-100%);
-        }
-    }
     
     @media screen and (min-width: 500px) {
       display: none;

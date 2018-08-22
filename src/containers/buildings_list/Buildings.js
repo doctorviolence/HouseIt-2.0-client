@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import * as actions from '../../api/actions';
 import Building from '../building/Building';
-import Add from '../../components/building/Add';
+import Add from '../../components/add/Add';
+import {validation} from '../../components/constants/validation';
 
 const Container = styled.div`
     align-items: flex-end;
@@ -13,28 +14,47 @@ const Container = styled.div`
 
 class Buildings extends Component {
     state = {
-        buildings: null,
+        addForm: {
+            streetAddress: {
+                formType: 'input',
+                description: 'Address',
+                formConfig: {
+                    type: 'text',
+                    name: 'streetAddress',
+                    placeholder: 'Address'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
+            },
+            floors: {
+                formType: 'input',
+                description: 'Floors',
+                formConfig: {
+                    type: 'number',
+                    name: 'floors',
+                    placeholder: 'Floors'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    number: true
+                },
+                valid: false
+            }
+        },
+        formIsValid: false,
         add: false,
         error: false
     };
 
     componentDidMount() {
-        this.loadData();
-    }
-
-    loadData = () => {
         if (!this.props.apiState.data.buildings.length) {
             this.props.retrieveBuildings();
         }
-    };
-
-    addToBuildings = (building) => {
-        this.props.addBuilding(building);
-    };
-
-    removeFromBuildings = (id) => {
-        this.props.removeBuilding(id);
-    };
+    }
 
     toggleAdd = () => {
         this.setState((prevState) => {
@@ -42,28 +62,62 @@ class Buildings extends Component {
         });
     };
 
+    changeAddFormHandler = (event) => {
+        event.preventDefault();
+        const updatedAddForm = {...this.state.addForm};
+        const updatedForm = {...updatedAddForm[event.target.name]};
+        updatedForm.value = event.target.value;
+        updatedForm.valid = validation(event.target.value, updatedForm.validation);
+        updatedAddForm[event.target.name] = updatedForm;
+
+        let isValid = true;
+        for (let i in updatedAddForm) {
+            isValid = updatedAddForm[i].valid && isValid;
+        }
+
+        this.setState({addForm: updatedAddForm, formIsValid: isValid});
+    };
+
+    addToBuildings = () => {
+        const data = {
+            id: null,
+            address: this.state.addForm.streetAddress.value
+        };
+
+        if (this.state.formIsValid) {
+            this.toggleAdd();
+            this.props.addBuilding(data);
+        } else {
+            // Replacing this with error message, eventually...
+        }
+    };
+
+    removeFromBuildings = (id) => {
+        this.props.removeBuilding(id);
+    };
+
     render() {
         const buildings = this.props.apiState.data.buildings;
 
-        if (buildings) {
-            return (
-                <Container>
-                    {buildings.map((b) => {
-                        return (
-                            <Building
-                                key={b.buildingId}
-                                id={b.buildingId}
-                                streetAddress={b.address}
-                                floorLevels={b.floorLevels}
-                                removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
-                        )
-                    })}
-                    <Add display={this.state.add} toggleAdd={this.toggleAdd} addToBuildings={this.addToBuildings}/>
-                </Container>
-            );
-        }
-
-        return <p>There are no buildings currently available.</p>;
+        return (
+            <Container>
+                {buildings.map((b) => {
+                    return (
+                        <Building
+                            key={b.buildingId}
+                            id={b.buildingId}
+                            streetAddress={b.address}
+                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
+                    )
+                })}
+                <Add display={this.state.add}
+                     title={"Add new building"}
+                     addForm={this.state.addForm}
+                     toggleAdd={this.toggleAdd}
+                     submitData={this.addToBuildings}
+                     addFormChanged={(event) => this.changeAddFormHandler(event)}/>
+            </Container>
+        );
     }
 }
 

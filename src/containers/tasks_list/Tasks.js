@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Task from "../../components/task/Task";
 import Add from "../../components/task/Add";
 import {Route} from "react-router-dom";
-import Edit from "../../components/building/Edit";
+import Edit from "../../components/edit/Edit";
 
 const Container = styled.div`
     align-items: flex-end;
