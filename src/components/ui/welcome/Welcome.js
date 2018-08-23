@@ -49,7 +49,7 @@ const TextContainer = styled.div`
 
 const Logo = styled.h1`
     position: relative;
-    color: #0f0f12;
+    color: #9BB42C;
     font-size: 100px;
     animation: ${'scale'} 0.3s ease;
     
@@ -64,7 +64,7 @@ const WelcomeText = styled.h1`
     position: relative;
     margin-top: 60px;
     margin-left: 10px;
-    color: #0f0f12;
+    color: #9BB42C;
     font-size: 40px;
     animation: ${'fadeIn'} 0.3s ease;
     

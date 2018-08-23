@@ -45,7 +45,6 @@ const AsyncUsers = async(() => {
 
 class App extends Component {
     state = {
-        isLoggedIn: false,
         displaySideBar: false,
         hideSideBar: true
     };
@@ -58,16 +57,6 @@ class App extends Component {
         this.setState((prevState) => {
             return {displaySideBar: !prevState.displaySideBar};
         });
-    };
-
-    loginHandler = (token) => {
-        localStorage.setItem('token', token);
-        this.setState({isLoggedIn: true});
-    };
-
-    logoutHandler = () => {
-        localStorage.removeItem('token');
-        this.setState({isLoggedIn: false});
     };
 
     render() {
@@ -86,8 +75,7 @@ class App extends Component {
                         <Route path="/messages" component={AsyncMessages}/>
                         <Route path="/users" component={AsyncUsers}/>
                         <Route path="/"
-                               render={() => <Login isLoggedIn={this.state.isLoggedIn} loginHandler={this.loginHandler}
-                                                    logoutHandler={this.logoutHandler}/>}/>
+                               render={() => <Login/>}/>
                     </Switch>
                     <SideBar toggle={this.sideBarToggleHandler}
                              display={this.state.displaySideBar}

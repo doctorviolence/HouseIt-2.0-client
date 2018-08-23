@@ -1,12 +1,16 @@
 import React, {Component} from 'react';
-import * as api from "../../api/login/apiLogin";
+import {connect} from 'react-redux';
 import styled from 'styled-components';
+
+import * as viewActions from '../../containers/actions';
+import {validation} from "../../components/constants/validation";
+import Forms from "../../components/ui/forms/Forms";
+import Views from "../Views";
 
 const Container = styled.div`
     position: relative;
     align-items: center;
     justify-content: space-between;
-    background: #ffffff;
 `;
 
 const Title = styled.h2`
@@ -52,83 +56,149 @@ const FormContainer = styled.form`
     }
 `;
 
-class Login extends Component {
-    constructor() {
-        super();
-        this.state = {
-            username: '',
-            password: ''
-        };
-
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.userInputHandler = this.userInputHandler.bind(this);
-        this.login = this.login.bind(this);
+const Button = styled.button`
+    color: #000000;
+    background: #ffffff;
+    border: 1px solid #f2f2f2;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    
+    &:hover {
+        background: #f2f2f2;
     }
+    
+    @media screen and (max-width: 700px) {
+        font-size: 15px;
+    }
+`;
+
+const ErrorMessage = styled.label`
+    margin-top: 20px;
+    color: #CC0033;
+    font-size: 12px;
+    font-weight: bold;
+`;
+
+class Login extends Component {
+    state = {
+        loginForm: {
+            username: {
+                formType: 'input',
+                description: 'Username',
+                formConfig: {
+                    type: 'text',
+                    name: 'username',
+                    placeholder: 'Username'
+                },
+                value: '',
+                validation: {
+                    required: true
+                },
+                valid: false
+            },
+            password: {
+                formType: 'input',
+                description: 'Password',
+                formConfig: {
+                    type: 'password',
+                    name: 'password',
+                    placeholder: 'Password'
+                },
+                value: '',
+                validation: {
+                    required: true,
+                    minLength: 8
+                },
+                valid: false
+            }
+        },
+    };
 
     userInputHandler = (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
+        event.preventDefault();
+        const updatedLoginForm = {...this.state.loginForm};
+        const updatedForm = {...updatedLoginForm[event.target.name]};
+        updatedForm.value = event.target.value;
+        updatedForm.valid = validation(event.target.value, updatedForm.validation);
+        updatedLoginForm[event.target.name] = updatedForm;
 
-        this.setState(
-            {
-                [name]: value
-            }
-        );
+        let isValid = true;
+        for (let i in updatedLoginForm) {
+            isValid = updatedLoginForm[i].valid && isValid;
+        }
+
+        this.setState({loginForm: updatedLoginForm, formIsValid: isValid});
     };
 
     handleSubmit = (event) => {
         event.preventDefault();
+        const username = this.state.loginForm.username.value;
+        const password = this.state.loginForm.password.value;
 
-        const userCredentials = {
-            username: this.state.username,
-            password: this.state.password
-        };
-
-        this.login(userCredentials);
-
-        this.setState({username: '', password: ''})
-    };
-
-    login = (userCredentials) => {
-        api.login(userCredentials).then(result => {
-                if (result.status === 401) {
-                    console.log('Invalid credentials!');
-                    return;
-                }
-
-                const token = result.headers.authorization;
-                this.props.loginHandler(token);
-            }
-        ).catch(e => {
-            console.log(e);
-        });
+        if (this.state.formIsValid) {
+            this.props.login(username, password);
+        } else {
+            // Replacing this with error message, eventually...
+        }
     };
 
     render() {
-        if (!this.props.isLoggedIn) {
+        const isLoggedIn = this.props.isLoggedIn;
+        let errorMessage = null;
+        if (this.props.error) {
+            errorMessage = (<ErrorMessage>{this.props.error}</ErrorMessage>);
+        }
+        const loginFormInputs = [];
+        for (let key in this.state.loginForm) {
+            loginFormInputs.push({
+                id: key,
+                config: this.state.loginForm[key]
+            });
+        }
+
+        if (!isLoggedIn) {
             return (
                 <Container>
                     <Title>Log in</Title>
-                    <FormContainer onSubmit={this.handleSubmit}>
-                        <label>Username: </label>
-                        <input name="username" type="text" placeholder="Username" value={this.state.username}
-                               required="true"
-                               onChange={this.userInputHandler}/>
-                        <label>Password: </label>
-                        <input name="password" type="password" placeholder="Password" value={this.state.password}
-                               required="true" minLength="6"
-                               onChange={this.userInputHandler}/>
-                        <input type="submit" value="Sign in"/>
+                    <FormContainer>
+                        {loginFormInputs.map(input => (
+                            <Forms
+                                key={input.id}
+                                formType={input.config.formType}
+                                formConfig={input.config.formConfig}
+                                value={input.config.value}
+                                invalid={!input.invalid}
+                                description={input.config.description}
+                                changed={(event) => this.userInputHandler(event)}/>
+                        ))}
+                        <Button onClick={(event) => this.handleSubmit(event)}>Login</Button>
+                        {errorMessage}
                     </FormContainer>
                 </Container>
             );
         }
-        return (
-            <Container>
-                <Title>You are now logged in.</Title>
-            </Container>
-        );
+        return <Container>
+            <Views/>
+        </Container>
     }
 }
 
-export default Login;
+//<Button onClick={this.props.logout}>Logout</Button>
+
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.containerState.token !== null,
+        error: state.containerState.loginError
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        login: (username, password) => dispatch(viewActions.login(username, password)),
+        logout: () => dispatch(viewActions.logout())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,7 +1,43 @@
 const initialState = {
     frame: [{title: 'Dashboard', props: {}}],
     showPopup: false,
-    popupTitle: ''
+    popupTitle: '',
+    token: null,
+    tenantId: null,
+    loginError: null
+};
+
+const loginInit = (state, action) => {
+    return {
+        ...state,
+        loginError: null,
+        loading: true
+    }
+};
+
+const loginSuccess = (state, action) => {
+    return {
+        ...state,
+        token: action.token,
+        //tenant: action.tenant,
+        loginError: null,
+        loading: false
+    }
+};
+
+const loginFail = (state, action) => {
+    return {
+        ...state,
+        loginError: action.error,
+        loading: false
+    }
+};
+
+const logout = (state, action) => {
+    return {
+        ...state,
+        token: null
+    };
 };
 
 const viewPopup = (state, action) => {
@@ -40,6 +76,14 @@ const viewApartments = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'LOGIN_INIT':
+            return loginInit(state, action);
+        case 'LOGIN_SUCCESS':
+            return loginSuccess(state, action);
+        case 'LOGIN_FAIL':
+            return loginFail(state, action);
+        case 'LOGOUT':
+            return logout(state, action);
         case 'VIEW_BUILDINGS':
             return viewBuildings(state, action);
         case 'VIEW_APARTMENTS':
