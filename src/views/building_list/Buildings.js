@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Building from '../building/Building';
-import AddBuilding from '../building/BuildingData';
+import BuildingData from '../building/BuildingData';
 import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
@@ -63,22 +63,20 @@ class Buildings extends Component {
     };
 
     render() {
+        const {showPopup, popupTitle, popupActions} = this.props.viewState;
         const buildings = this.props.apiState.data.buildings;
-        const showPopup = this.props.viewState.showPopup;
-        const popupTitle = this.props.viewState.popupTitle;
-        const popupActions = this.props.viewState.popupActions;
 
         let addBuilding = null;
         if (this.state.add) {
-            addBuilding = <AddBuilding add={this.state.add}
+            addBuilding = <BuildingData add={this.state.add}
                                        title={"Add new building"}
                                        toggleAdd={this.toggleAdd}
-                                       addBuilding={this.addToBuildings}
-            />
+                                       addBuilding={this.addToBuildings}/>
         }
 
         return (
             <Container>
+                <Button onClick={this.props.goBack}>‹ Cancel</Button>
                 {buildings.map((b) => {
                     return (
                         <Building
@@ -103,19 +101,18 @@ class Buildings extends Component {
 const mapStateToProps = state => {
     return {
         apiState: state.apiState,
-        viewState: state.containerState
+        viewState: state.viewState
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        viewBuildings: (view) => dispatch(viewActions.viewBuildings(view)),
         retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
         addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
         removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
-        viewApartments: (view) => dispatch(viewActions.viewApartments(view))
+        //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 

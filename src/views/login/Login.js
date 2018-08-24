@@ -146,11 +146,14 @@ class Login extends Component {
 
     render() {
         const isLoggedIn = this.props.isLoggedIn;
+        const tokenExists = localStorage.getItem('token');
+        const loginFormInputs = [];
         let errorMessage = null;
+
         if (this.props.error) {
             errorMessage = (<ErrorMessage>{this.props.error}</ErrorMessage>);
         }
-        const loginFormInputs = [];
+
         for (let key in this.state.loginForm) {
             loginFormInputs.push({
                 id: key,
@@ -158,7 +161,7 @@ class Login extends Component {
             });
         }
 
-        if (!isLoggedIn) {
+        if (!isLoggedIn && !tokenExists) {
             return (
                 <Container>
                     <Title>Log in</Title>
@@ -189,8 +192,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.containerState.token !== null,
-        error: state.containerState.loginError
+        isLoggedIn: state.viewState.token !== null,
+        error: state.viewState.loginError
     };
 };
 

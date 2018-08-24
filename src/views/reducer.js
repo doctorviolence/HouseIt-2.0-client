@@ -1,6 +1,10 @@
 const initialState = {
-    frame: [{title: 'Dashboard', props: {}}],
     showBuildings: false,
+    showApartments: false,
+    showTenants: false,
+    showTasks: false,
+    showSettings: false,
+    showMessages: false,
     showPopup: false,
     popupTitle: '',
     token: null,
@@ -60,20 +64,17 @@ const closePopup = (state) => {
     };
 };
 
-const viewBuildings = (state, action) => {
+const viewFrame = (state, action) => {
     return {
         ...state,
-        showBuildings: true,
-        frame: state.frame.concat(action.view)
+        [action.view]: true
     };
 };
 
-const viewApartments = (state, action) => {
+const closeFrame = (state, action) => {
     return {
         ...state,
-        frame: {
-            ...state.frame.concat(...action.view)
-        }
+        [action.view]: false
     };
 };
 
@@ -87,10 +88,10 @@ const reducer = (state = initialState, action) => {
             return loginFail(state, action);
         case 'LOGOUT':
             return logout(state, action);
-        case 'VIEW_BUILDINGS':
-            return viewBuildings(state, action);
-        case 'VIEW_APARTMENTS':
-            return viewApartments(state, action);
+        case 'VIEW_FRAME':
+            return viewFrame(state, action);
+        case 'CLOSE_FRAME':
+            return closeFrame(state, action);
         case 'VIEW_POPUP':
             return viewPopup(state, action);
         case 'CLOSE_POPUP':

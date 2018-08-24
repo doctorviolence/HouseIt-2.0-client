@@ -3,7 +3,7 @@ import {validation} from "../../components/constants/validation";
 import Add from "../../components/add/Add";
 import Edit from "../../components/edit/Edit";
 
-class AddBuilding extends Component {
+class BuildingData extends Component {
     state = {
         dataForm: {
             streetAddress: {
@@ -94,4 +94,4 @@ class AddBuilding extends Component {
     }
 }
 
-export default AddBuilding;
+export default BuildingData;

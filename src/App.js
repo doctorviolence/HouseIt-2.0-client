@@ -20,7 +20,7 @@ injectGlobal`
 `;
 
 const AsyncBuildings = async(() => {
-    return import('./views/buildings_list/Buildings');
+    return import('./views/building_list/Buildings');
 });
 
 const AsyncApartments = async(() => {
@@ -32,7 +32,7 @@ const AsyncTenants = async(() => {
 });
 
 const AsyncTasks = async(() => {
-    return import('./views/tasks_list/Tasks');
+    return import('./views/task_list/Tasks');
 });
 
 const AsyncMessages = async(() => {

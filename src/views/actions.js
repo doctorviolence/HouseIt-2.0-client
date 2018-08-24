@@ -61,15 +61,14 @@ export const closePopup = () => {
     }
 };
 
-export const viewBuildings = (view) => {
+export const viewFrame = (view) => {
     return dispatch => {
-        //console.log('ACTION DISPATCHER: ', ' Title: ', view.title, ' Props: ', view.props);
-        dispatch({type: 'VIEW_BUILDINGS', view});
+        dispatch({type: 'VIEW_FRAME', view});
     }
 };
 
-export const viewApartments = (view) => {
+export const closeFrame = (view) => {
     return dispatch => {
-        dispatch({type: 'VIEW_APARTMENTS', view});
+        dispatch({type: 'CLOSE_FRAME', view});
     }
 };
