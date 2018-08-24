@@ -1,17 +1,5 @@
 import * as api from "../api/login/apiLogin";
 
-export const viewPopup = (popup) => {
-    return dispatch => {
-        dispatch({type: 'VIEW_POPUP', title: popup.title});
-    }
-};
-
-export const closePopup = () => {
-    return dispatch => {
-        dispatch({type: 'CLOSE_POPUP'});
-    }
-};
-
 export const loginInit = () => {
     return dispatch => {
         dispatch({type: 'LOGIN_INIT'});
@@ -27,10 +15,15 @@ export const login = (username, password) => {
                 dispatch(loginSuccess(token))
             }
         ).catch(e => {
-            if (e.response.status === 401) {
-                dispatch(loginFail('Wrong username and/or password!'))
-            }
-            else {
+            if (e && e.response !== undefined) {
+                switch (e.response.status) {
+                    case 401:
+                        dispatch(loginFail('Wrong username and/or password!'));
+                        break;
+                    default:
+                        dispatch(loginFail('Unable to log in at this time. Please try again later.'))
+                }
+            } else {
                 dispatch(loginFail('Unable to log in at this time. Please try again later.'))
             }
         });
@@ -56,8 +49,21 @@ export const logout = () => {
     }
 };
 
+export const viewPopup = (popup) => {
+    return dispatch => {
+        dispatch({type: 'VIEW_POPUP', title: popup.title});
+    }
+};
+
+export const closePopup = () => {
+    return dispatch => {
+        dispatch({type: 'CLOSE_POPUP'});
+    }
+};
+
 export const viewBuildings = (view) => {
     return dispatch => {
+        //console.log('ACTION DISPATCHER: ', ' Title: ', view.title, ' Props: ', view.props);
         dispatch({type: 'VIEW_BUILDINGS', view});
     }
 };

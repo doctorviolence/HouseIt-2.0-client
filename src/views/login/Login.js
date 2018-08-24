@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 
-import * as viewActions from '../../containers/actions';
+import * as viewActions from '../actions';
 import {validation} from "../../components/constants/validation";
 import Forms from "../../components/ui/forms/Forms";
 import Views from "../Views";
@@ -169,7 +169,7 @@ class Login extends Component {
                                 formType={input.config.formType}
                                 formConfig={input.config.formConfig}
                                 value={input.config.value}
-                                invalid={!input.invalid}
+                                invalid={!input.valid}
                                 description={input.config.description}
                                 changed={(event) => this.userInputHandler(event)}/>
                         ))}

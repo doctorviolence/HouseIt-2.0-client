@@ -6,7 +6,7 @@ import async from './hoc/async';
 import Header from "./components/ui/header/Header";
 import SideBar from "./components/ui/sidebar/SideBar";
 import Welcome from "./components/ui/welcome/Welcome";
-import Login from "./containers/login/Login";
+import Login from "./views/login/Login";
 
 injectGlobal`
    body {
@@ -20,27 +20,27 @@ injectGlobal`
 `;
 
 const AsyncBuildings = async(() => {
-    return import('./containers/buildings_list/Buildings');
+    return import('./views/buildings_list/Buildings');
 });
 
 const AsyncApartments = async(() => {
-    return import('./containers/apartments/Apartments');
+    return import('./views/apartments/Apartments');
 });
 
 const AsyncTenants = async(() => {
-    return import('./containers/tenants/Tenants');
+    return import('./views/tenants/Tenants');
 });
 
 const AsyncTasks = async(() => {
-    return import('./containers/tasks_list/Tasks');
+    return import('./views/tasks_list/Tasks');
 });
 
 const AsyncMessages = async(() => {
-    return import('./containers/taskMessages/TaskMessages');
+    return import('./views/taskMessages/TaskMessages');
 });
 
 const AsyncUsers = async(() => {
-    return import('./containers/users/Users');
+    return import('./views/users/Users');
 });
 
 class App extends Component {

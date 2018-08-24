@@ -1,9 +1,13 @@
 const initialState = {
     frame: [{title: 'Dashboard', props: {}}],
+    showBuildings: false,
     showPopup: false,
     popupTitle: '',
     token: null,
+    buildingId: null,
+    apartmentId: null,
     tenantId: null,
+    taskId: null,
     loginError: null
 };
 
@@ -59,9 +63,8 @@ const closePopup = (state) => {
 const viewBuildings = (state, action) => {
     return {
         ...state,
-        frame: {
-            ...state.frame.concat(...action.view)
-        }
+        showBuildings: true,
+        frame: state.frame.concat(action.view)
     };
 };
 

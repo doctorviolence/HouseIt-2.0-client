@@ -83,20 +83,16 @@ const add = (props) => {
         </Form>
     );
 
-    if (props.display) {
-        return (
-            <FormContainer>
-                <ButtonContainer>
-                    <Button onClick={props.toggleAdd}> ‹ Cancel</Button>
-                    <Button onClick={props.submitData}> Done</Button>
-                </ButtonContainer>
-                <Title>{props.title}</Title>
-                {form}
-            </FormContainer>
-        );
-    }
-
-    return <Button onClick={props.toggleAdd}>+</Button>;
+    return (
+        <FormContainer>
+            <ButtonContainer>
+                <Button onClick={props.toggleAdd}> ‹ Cancel</Button>
+                <Button onClick={props.submitData}> Done</Button>
+            </ButtonContainer>
+            <Title>{props.title}</Title>
+            {form}
+        </FormContainer>
+    );
 };
 
 export default add;
