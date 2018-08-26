@@ -8,26 +8,26 @@ class ApiTask {
             .then(response => response.data);
     };
 
-    getTasksByTenant = id => {
-        return axios
-            .get('/tasks/tasks-by-tenant' + id)
-            .then(response => response.data)
-            .catch(error => error.response);
-    };
+    //getTasksByTenant = id => {
+    //    return axios
+    //        .get('/tasks/tasks-by-tenant' + id)
+    //        .then(response => response.data)
+    //        .catch(error => error.response);
+    //};
 
-    getTasksByType = type => {
-        return axios
-            .get('/tasks/tasks-by-type' + type)
-            .then(response => response.data)
-            .catch(error => error.response);
-    };
+    //getTasksByType = type => {
+    //    return axios
+    //        .get('/tasks/tasks-by-type' + type)
+    //        .then(response => response.data)
+    //        .catch(error => error.response);
+    //};
 
-    getTasksByFixDate = () => {
-        return axios
-            .get('/tasks/tasks-by-fix-date')
-            .then(response => response.data)
-            .catch(error => error.response);
-    };
+    //getTasksByFixDate = () => {
+    //    return axios
+    //        .get('/tasks/tasks-by-fix-date')
+    //        .then(response => response.data)
+    //        .catch(error => error.response);
+    //};
 
     addTask = (data, queryToken) => {
         return axios

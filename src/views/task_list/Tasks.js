@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
+import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Task from "../task/Task";
-import AddTask from '../task/TaskData';
+import TaskData from '../task/TaskData';
 import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
@@ -64,7 +65,7 @@ class Tasks extends Component {
 
         let addTask = null;
         if (this.state.add) {
-            addTask = <AddTask add={this.state.add}
+            addTask = <TaskData add={this.state.add}
                                title={"Add new task"}
                                toggleAdd={this.toggleAdd}
                                addTask={this.addToTasks}/>
@@ -114,6 +115,15 @@ const mapDispatchToProps = dispatch => {
         closePopup: () => dispatch(viewActions.closePopup()),
         //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
+};
+
+Tasks.propTypes = {
+    taskNo: PropTypes.number,
+    taskType: PropTypes.string,
+    taskStatus: PropTypes.string,
+    resolved: PropTypes.string,
+    taskDate: PropTypes.string,
+    fixDate: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tasks);

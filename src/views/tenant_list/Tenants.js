@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import Building from '../building/Building';
-import BuildingData from '../building/BuildingData';
+import Tenant from "../tenant/Tenant";
+import TenantData from '../tenant/TenantData';
 import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
@@ -28,22 +28,18 @@ const Button = styled.button`
     }
 `;
 
-class Buildings extends Component {
+class Tenants extends Component {
     state = {
         add: false,
         error: false,
-        buildingSelectedId: null
+        tenantSelectedId: null
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.buildings.length) {
-            this.props.retrieveBuildings();
+        if (!this.props.apiState.data.tenants.length) {
+            this.props.retrieveTenants();
         }
     }
-
-    //viewApartments = () => {
-    //    this.props.viewApartments();
-    //};
 
     toggleAdd = () => {
         this.setState((prevState) => {
@@ -51,45 +47,46 @@ class Buildings extends Component {
         });
     };
 
-    addToBuildings = (data) => {
+    addToTenants = (data) => {
         this.toggleAdd();
-        this.props.addBuilding(data);
+        this.props.addTenant(data);
     };
 
-    removeFromBuildings = (id) => {
+    removeFromTenants = (id) => {
         this.props.viewPopup({
-            title: 'Building deleted!'
+            title: 'Tenant deleted!'
         });
-        this.props.removeBuilding(id);
+        this.props.removeTenant(id);
     };
 
     render() {
         const {showPopup, popupTitle, popupActions} = this.props.viewState;
-        const buildings = this.props.apiState.data.buildings;
+        const tenants = this.props.apiState.data.tenants;
 
-        let addBuilding = null;
+        let addTenant = null;
         if (this.state.add) {
-            addBuilding = <BuildingData add={this.state.add}
-                                       title={"Add new building"}
-                                       toggleAdd={this.toggleAdd}
-                                       addBuilding={this.addToBuildings}/>
+            addTenant = <TenantData add={this.state.add}
+                                    title={"Add new tenant"}
+                                    toggleAdd={this.toggleAdd}
+                                    addTenant={this.addToTenants}/>
         }
 
         return (
             <Container>
                 <Button onClick={this.props.goBack}>‹ Cancel</Button>
-                {buildings.map((b) => {
+                {tenants.map((t) => {
                     return (
-                        <Building
-                            key={b.buildingId}
-                            id={b.buildingId}
-                            streetAddress={b.address}
-                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}
-                            onClick={this.viewApartments}/>
+                        <Tenant
+                            key={t.tenantId}
+                            tenantId={t.tenantId}
+                            firstName={t.firstName}
+                            lastName={t.lastName}
+                            phoneNo={t.phoneNo}
+                            removeTenant={() => this.removeFromTenants(t.tenantId)}/>
                     )
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
-                {addBuilding}
+                {addTenant}
                 <Popup show={showPopup}
                        close={() => this.props.closePopup()}
                        title={popupTitle}
@@ -108,17 +105,19 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
-        addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
-        removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
+        retrieveTenants: () => dispatch(apiActions.retrieveTenants()),
+        addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
+        removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
-        //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 
-Buildings.propTypes = {
-    streetAddress: PropTypes.string
+Tenants.propTypes = {
+    tenantId: PropTypes.number,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string,
+    phoneNo: PropTypes.string
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Buildings);
+export default connect(mapStateToProps, mapDispatchToProps)(Tenants);

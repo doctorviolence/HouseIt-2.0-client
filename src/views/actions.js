@@ -1,10 +1,6 @@
 import * as api from "../api/login/apiLogin";
 
-export const loginInit = () => {
-    return dispatch => {
-        dispatch({type: 'LOGIN_INIT'});
-    }
-};
+export const loginInit = () => ({type: 'LOGIN_INIT'});;
 
 export const login = (username, password) => {
     return dispatch => {
@@ -33,12 +29,17 @@ export const login = (username, password) => {
 export const loginSuccess = (token) => {
     return dispatch => {
         dispatch({type: 'LOGIN_SUCCESS', token: token});
+        dispatch(tokenExpiration());
     }
 };
 
-export const loginFail = (error) => {
+export const loginFail = (error) => ({type: 'LOGIN_FAIL', error: error});
+
+export const tokenExpiration = () => {
     return dispatch => {
-        dispatch({type: 'LOGIN_FAIL', error: error});
+        setTimeout(() => {
+            dispatch(logout());
+        }, 3600000);
     }
 };
 
@@ -49,26 +50,7 @@ export const logout = () => {
     }
 };
 
-export const viewPopup = (popup) => {
-    return dispatch => {
-        dispatch({type: 'VIEW_POPUP', title: popup.title});
-    }
-};
-
-export const closePopup = () => {
-    return dispatch => {
-        dispatch({type: 'CLOSE_POPUP'});
-    }
-};
-
-export const viewFrame = (view) => {
-    return dispatch => {
-        dispatch({type: 'VIEW_FRAME', view});
-    }
-};
-
-export const closeFrame = (view) => {
-    return dispatch => {
-        dispatch({type: 'CLOSE_FRAME', view});
-    }
-};
+export const viewPopup = (popup) => ({type: 'VIEW_POPUP', title: popup.title});
+export const closePopup = () => ({type: 'CLOSE_POPUP'});
+export const viewFrame = (view) => ({type: 'VIEW_FRAME', view});
+export const closeFrame = (view) => ({type: 'CLOSE_FRAME', view});

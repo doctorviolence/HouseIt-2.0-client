@@ -24,11 +24,11 @@ const AsyncBuildings = async(() => {
 });
 
 const AsyncApartments = async(() => {
-    return import('./views/apartments/Apartments');
+    return import('./views/apartment_list/Apartments');
 });
 
 const AsyncTenants = async(() => {
-    return import('./views/tenants/Tenants');
+    return import('./views/tenant_list/Tenants');
 });
 
 const AsyncTasks = async(() => {
@@ -36,11 +36,11 @@ const AsyncTasks = async(() => {
 });
 
 const AsyncMessages = async(() => {
-    return import('./views/taskMessages/TaskMessages');
+    return import('./views/message_list/Messages');
 });
 
 const AsyncUsers = async(() => {
-    return import('./views/users/Users');
+    return import('./views/settings/users/Users');
 });
 
 class App extends Component {

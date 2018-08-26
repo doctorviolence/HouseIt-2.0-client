@@ -3,86 +3,58 @@ import {validation} from "../../components/constants/validation";
 import Add from "../../components/add/Add";
 import Edit from "../../components/edit/Edit";
 
-class TaskData extends Component {
+class TenantData extends Component {
     state = {
         dataForm: {
-            taskType: {
+            firstName: {
                 formType: 'input',
-                description: 'Type',
+                description: 'First Name',
                 formConfig: {
                     type: 'text',
-                    name: 'taskType',
-                    placeholder: 'Type'
+                    name: 'firstName',
+                    placeholder: 'First Name'
                 },
-                value: this.props.taskType || '',
+                value: this.props.firstName || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            taskStatus: {
+            lastName: {
                 formType: 'input',
-                description: 'Status',
+                description: 'Last Name',
                 formConfig: {
                     type: 'text',
-                    name: 'taskStatus',
-                    placeholder: 'Status'
+                    name: 'lastName',
+                    placeholder: 'Last Name'
                 },
-                value: this.props.taskStatus || '',
+                value: this.props.lastName || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            resolved: {
+            phoneNo: {
                 formType: 'input',
-                description: 'Resolved',
+                description: 'Phone No.',
                 formConfig: {
                     type: 'text',
-                    name: 'resolved',
-                    placeholder: 'Resolved'
+                    name: 'phoneNo',
+                    placeholder: 'Phone No.'
                 },
-                value: this.props.resolved || '',
+                value: this.props.phoneNo || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            taskDate: {
+            apartmentId: {
                 formType: 'input',
-                description: 'Date',
-                formConfig: {
-                    type: 'text',
-                    name: 'taskDate',
-                    placeholder: 'Date'
-                },
-                value: this.props.taskDate || '',
-                validation: {
-                    required: true
-                },
-                valid: false
-            },
-            fixDate: {
-                formType: 'input',
-                description: 'Fix Date',
-                formConfig: {
-                    type: 'text',
-                    name: 'fixDate',
-                    placeholder: 'Fix Date'
-                },
-                value: this.props.fixDate || '',
-                validation: {
-                    required: true
-                },
-                valid: false
-            },
-            tenantId: {
-                formType: 'input',
-                description: 'Tenant',
+                description: 'Apartment',
                 formConfig: {
                     type: 'number',
-                    name: 'tenantId',
-                    placeholder: 'Tenant'
+                    name: 'apartmentId',
+                    placeholder: 'Apartment'
                 },
                 value: '',
                 validation: {
@@ -110,40 +82,36 @@ class TaskData extends Component {
         this.setState({dataForm: updatedDataForm, formIsValid: isValid});
     };
 
-    addTask = () => {
+    addTenant = () => {
         const data = {
-            taskNo: null,
-            taskType: this.state.dataForm.taskType.value,
-            taskStatus: this.state.dataForm.taskStatus.value,
-            resolved: this.state.dataForm.resolved.value,
-            taskDate: this.state.dataForm.taskDate.value,
-            fixDate: this.state.dataForm.fixDate.value,
-            tenant: {tenantId: this.state.dataForm.tenantId.value}
+            tenantId: null,
+            firstName: this.state.dataForm.firstName.value,
+            lastName: this.state.dataForm.lastName.value,
+            phoneNo: this.state.dataForm.phoneNo.value,
+            apartment: {apartmentId: this.state.dataForm.apartmentId.value}
         };
 
         if (this.state.formIsValid) {
             this.props.toggleAdd;
-            this.props.addTask(data);
+            this.props.addTenant(data);
         } else {
             // Replacing this with error message, eventually...
         }
     };
 
-    editTask = () => {
-        const no = this.props.id;
+    editTenant = () => {
+        const id = this.props.id;
         const data = {
-            taskNo: no,
-            taskType: this.state.dataForm.taskType.value,
-            taskStatus: this.state.dataForm.taskStatus.value,
-            resolved: this.state.dataForm.resolved.value,
-            taskDate: this.state.dataForm.taskDate.value,
-            fixDate: this.state.dataForm.fixDate.value,
-            tenant: {tenantId: this.state.dataForm.tenantId.value}
+            tenantId: id,
+            firstName: this.state.dataForm.firstName.value,
+            lastName: this.state.dataForm.lastName.value,
+            phoneNo: this.state.dataForm.phoneNo.value,
+            apartment: {apartmentId: this.state.dataForm.apartmentId.value}
         };
 
         if (this.state.formIsValid) {
             this.props.toggleEdit;
-            this.props.editTask(data, no);
+            this.props.editTenant(data, id);
         } else {
             // Replacing this with error message, eventually...
             console.log('Form is not valid');
@@ -154,20 +122,20 @@ class TaskData extends Component {
         if (this.props.add) {
             return (
                 <Add display={this.props.add}
-                     title={"Add new task"}
+                     title={"Add new tenant"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
-                     submitData={this.addTask}
+                     submitData={this.addTenant}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
         if (this.props.edit) {
             return (
                 <Edit display={this.props.edit}
-                      title={"Edit task"}
+                      title={"Edit tenant"}
                       editForm={this.state.dataForm}
                       toggleEdit={this.props.toggleEdit}
-                      submitData={this.editTask}
+                      submitData={this.editTenant}
                       editFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
@@ -175,4 +143,4 @@ class TaskData extends Component {
     }
 }
 
-export default TaskData;
+export default TenantData;

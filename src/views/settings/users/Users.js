@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import * as api from '../../api/user/apiUser';
+import * as api from '../../../api/user/apiUser';
 
-import User from "../../components/user/User";
-import Add from "../../components/user/Add";
+import User from "../user/User";
+import Add from "../user/Add";
 
 class Users extends Component {
     constructor() {

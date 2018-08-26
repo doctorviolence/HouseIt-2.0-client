@@ -3,86 +3,72 @@ import {validation} from "../../components/constants/validation";
 import Add from "../../components/add/Add";
 import Edit from "../../components/edit/Edit";
 
-class TaskData extends Component {
+class apartmentData extends Component {
     state = {
         dataForm: {
-            taskType: {
+            apartmentNo: {
                 formType: 'input',
-                description: 'Type',
+                description: 'Apartment No.',
                 formConfig: {
                     type: 'text',
-                    name: 'taskType',
-                    placeholder: 'Type'
+                    name: 'apartmentNo',
+                    placeholder: 'Apartment No.'
                 },
-                value: this.props.taskType || '',
+                value: this.props.apartmentNo || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            taskStatus: {
+            size: {
                 formType: 'input',
-                description: 'Status',
+                description: 'Size',
                 formConfig: {
                     type: 'text',
-                    name: 'taskStatus',
-                    placeholder: 'Status'
+                    name: 'size',
+                    placeholder: 'Size'
                 },
-                value: this.props.taskStatus || '',
+                value: this.props.size || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            resolved: {
+            rent: {
                 formType: 'input',
-                description: 'Resolved',
+                description: 'Rent',
                 formConfig: {
                     type: 'text',
-                    name: 'resolved',
-                    placeholder: 'Resolved'
+                    name: 'rent',
+                    placeholder: 'Rent'
                 },
-                value: this.props.resolved || '',
+                value: this.props.rent || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            taskDate: {
+            floorNo: {
                 formType: 'input',
-                description: 'Date',
+                description: 'Floor No.',
                 formConfig: {
                     type: 'text',
-                    name: 'taskDate',
-                    placeholder: 'Date'
+                    name: 'floorNo',
+                    placeholder: 'Floor No.'
                 },
-                value: this.props.taskDate || '',
+                value: this.props.floorNo || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            fixDate: {
+            buildingId: {
                 formType: 'input',
-                description: 'Fix Date',
-                formConfig: {
-                    type: 'text',
-                    name: 'fixDate',
-                    placeholder: 'Fix Date'
-                },
-                value: this.props.fixDate || '',
-                validation: {
-                    required: true
-                },
-                valid: false
-            },
-            tenantId: {
-                formType: 'input',
-                description: 'Tenant',
+                description: 'Building',
                 formConfig: {
                     type: 'number',
-                    name: 'tenantId',
-                    placeholder: 'Tenant'
+                    name: 'buildingId',
+                    placeholder: 'Building'
                 },
                 value: '',
                 validation: {
@@ -110,40 +96,40 @@ class TaskData extends Component {
         this.setState({dataForm: updatedDataForm, formIsValid: isValid});
     };
 
-    addTask = () => {
+    addApartment = () => {
         const data = {
-            taskNo: null,
-            taskType: this.state.dataForm.taskType.value,
-            taskStatus: this.state.dataForm.taskStatus.value,
-            resolved: this.state.dataForm.resolved.value,
-            taskDate: this.state.dataForm.taskDate.value,
+            apartmentId: null,
+            apartmentNo: this.state.dataForm.apartmentNo.value,
+            rent: this.state.dataForm.rent.value,
+            size: this.state.dataForm.size.value,
+            floorNo: this.state.dataForm.floorNo.value,
             fixDate: this.state.dataForm.fixDate.value,
-            tenant: {tenantId: this.state.dataForm.tenantId.value}
+            building: {buildingId: this.state.dataForm.buildingId.value}
         };
 
         if (this.state.formIsValid) {
             this.props.toggleAdd;
-            this.props.addTask(data);
+            this.props.addApartment(data);
         } else {
             // Replacing this with error message, eventually...
         }
     };
 
-    editTask = () => {
-        const no = this.props.id;
+    editApartment = () => {
+        const id = this.props.id;
         const data = {
-            taskNo: no,
-            taskType: this.state.dataForm.taskType.value,
-            taskStatus: this.state.dataForm.taskStatus.value,
-            resolved: this.state.dataForm.resolved.value,
-            taskDate: this.state.dataForm.taskDate.value,
+            apartmentId: id,
+            apartmentNo: this.state.dataForm.apartmentNo.value,
+            rent: this.state.dataForm.rent.value,
+            size: this.state.dataForm.size.value,
+            floorNo: this.state.dataForm.floorNo.value,
             fixDate: this.state.dataForm.fixDate.value,
-            tenant: {tenantId: this.state.dataForm.tenantId.value}
+            building: {buildingId: this.state.dataForm.buildingId.value}
         };
 
         if (this.state.formIsValid) {
             this.props.toggleEdit;
-            this.props.editTask(data, no);
+            this.props.editApartment(data, id);
         } else {
             // Replacing this with error message, eventually...
             console.log('Form is not valid');
@@ -154,20 +140,20 @@ class TaskData extends Component {
         if (this.props.add) {
             return (
                 <Add display={this.props.add}
-                     title={"Add new task"}
+                     title={"Add new apartment"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
-                     submitData={this.addTask}
+                     submitData={this.addApartment}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
         if (this.props.edit) {
             return (
                 <Edit display={this.props.edit}
-                      title={"Edit task"}
+                      title={"Edit apartment"}
                       editForm={this.state.dataForm}
                       toggleEdit={this.props.toggleEdit}
-                      submitData={this.editTask}
+                      submitData={this.editApartment}
                       editFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
@@ -175,4 +161,4 @@ class TaskData extends Component {
     }
 }
 
-export default TaskData;
+export default apartmentData;

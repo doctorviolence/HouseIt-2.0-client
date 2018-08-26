@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import Building from '../building/Building';
-import BuildingData from '../building/BuildingData';
+import TaskMessage from "../message/Message";
+import MessageData from '../message/MessageData';
 import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
@@ -28,22 +28,18 @@ const Button = styled.button`
     }
 `;
 
-class Buildings extends Component {
+class Messages extends Component {
     state = {
         add: false,
         error: false,
-        buildingSelectedId: null
+        taskMessageSelectedId: null
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.buildings.length) {
-            this.props.retrieveBuildings();
+        if (!this.props.apiState.data.taskMessages.length) {
+            this.props.retrieveTaskMessages();
         }
     }
-
-    //viewApartments = () => {
-    //    this.props.viewApartments();
-    //};
 
     toggleAdd = () => {
         this.setState((prevState) => {
@@ -51,45 +47,45 @@ class Buildings extends Component {
         });
     };
 
-    addToBuildings = (data) => {
+    addToTaskMessages = (data) => {
         this.toggleAdd();
-        this.props.addBuilding(data);
+        this.props.addTaskMessage(data);
     };
 
-    removeFromBuildings = (id) => {
+    removeFromTaskMessages = (id) => {
         this.props.viewPopup({
-            title: 'Building deleted!'
+            title: 'Task message deleted!'
         });
-        this.props.removeBuilding(id);
+        this.props.removeTaskMessage(id);
     };
 
     render() {
         const {showPopup, popupTitle, popupActions} = this.props.viewState;
-        const buildings = this.props.apiState.data.buildings;
+        const taskMessages = this.props.apiState.data.taskMessages;
 
-        let addBuilding = null;
+        let addTaskMessage = null;
         if (this.state.add) {
-            addBuilding = <BuildingData add={this.state.add}
-                                       title={"Add new building"}
-                                       toggleAdd={this.toggleAdd}
-                                       addBuilding={this.addToBuildings}/>
+            addTaskMessage = <MessageData add={this.state.add}
+                                          title={"Add new task message"}
+                                          toggleAdd={this.toggleAdd}
+                                          addTaskMessage={this.addToTaskMessages}/>
         }
 
         return (
             <Container>
                 <Button onClick={this.props.goBack}>‹ Cancel</Button>
-                {buildings.map((b) => {
+                {taskMessages.map((t) => {
                     return (
-                        <Building
-                            key={b.buildingId}
-                            id={b.buildingId}
-                            streetAddress={b.address}
-                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}
-                            onClick={this.viewApartments}/>
+                        <TaskMessage
+                            key={t.messageNo}
+                            id={t.messageNo}
+                            messageNo={t.messageNo}
+                            messageText={t.messageText}
+                            removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
                     )
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
-                {addBuilding}
+                {addTaskMessage}
                 <Popup show={showPopup}
                        close={() => this.props.closePopup()}
                        title={popupTitle}
@@ -108,17 +104,18 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
-        addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
-        removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
+        retrieveTaskMessages: () => dispatch(apiActions.retrieveTaskMessages()),
+        addTaskMessage: (taskMessage) => dispatch(apiActions.addTaskMessage(taskMessage)),
+        removeTaskMessage: (id) => dispatch(apiActions.removeTaskMessage(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
         //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 
-Buildings.propTypes = {
-    streetAddress: PropTypes.string
+Messages.propTypes = {
+    messageNo: PropTypes.number,
+    text: PropTypes.string
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Buildings);
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);

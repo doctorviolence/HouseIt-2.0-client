@@ -1,5 +1,8 @@
 import apiBuilding from './building/apiBuilding';
+import apiApartment from './apartment/apiApartment';
+import apiTenant from './tenant/apiTenant';
 import apiTask from './task/apiTask';
+import apiTaskMessage from './taskMessage/apiTaskMessage';
 
 export const retrieveBuildings = () => {
     return dispatch => {
@@ -51,6 +54,106 @@ export const removeBuilding = (id) => {
     }
 };
 
+export const retrieveApartments = () => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiApartment.getAllApartments(queryToken)
+            .then(apartments => {
+                    dispatch({type: 'APARTMENTS_RETRIEVED_SUCCESS', apartments})
+                }
+            ).catch(e => {
+                console.log('Error loading apartment_list:', e);
+            })
+    }
+};
+
+export const addApartment = (apartment) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiApartment.addApartment(apartment, queryToken)
+            .then(result => {
+                    dispatch({type: 'APARTMENT_ADDED_SUCCESS', result})
+                }
+            ).catch(e => {
+                console.log('Error adding apartment:', e);
+            })
+    }
+};
+
+export const editApartment = (apartment, id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiApartment.updateApartment(apartment, queryToken)
+            .then(
+                dispatch({type: 'APARTMENT_UPDATED_SUCCESS', apartment, id})
+            ).catch(e => {
+                console.log('Error updating apartment:', e);
+            })
+    }
+};
+
+export const removeApartment = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiApartment.deleteApartment(id, queryToken)
+            .then(
+                dispatch({type: 'APARTMENT_REMOVED_SUCCESS', apartmentId: id})
+            ).catch(e => {
+                console.log('Error deleting apartment:', e);
+            })
+    }
+};
+
+export const retrieveTenants = () => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTenant.getAllTenants(queryToken)
+            .then(tenants => {
+                    dispatch({type: 'TENANTS_RETRIEVED_SUCCESS', tenants})
+                }
+            ).catch(e => {
+                console.log('Error loading tenants:', e);
+            })
+    }
+};
+
+export const addTenant = (tenant) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTenant.addTenant(tenant, queryToken)
+            .then(result => {
+                    dispatch({type: 'TENANT_ADDED_SUCCESS', result})
+                }
+            ).catch(e => {
+                console.log('Error adding tenant:', e);
+            })
+    }
+};
+
+export const editTenant = (tenant, id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTenant.updateTenant(tenant, queryToken)
+            .then(
+                dispatch({type: 'TENANT_UPDATED_SUCCESS', tenant, id})
+            ).catch(e => {
+                console.log('Error updating tenant:', e);
+            })
+    }
+};
+
+export const removeTenant = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTenant.deleteTenant(id, queryToken)
+            .then(
+                dispatch({type: 'TENANT_REMOVED_SUCCESS', id})
+            ).catch(e => {
+                console.log('Error deleting tenant:', e);
+            })
+    }
+};
+
 export const retrieveTasks = () => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
@@ -97,6 +200,57 @@ export const removeTask = (id) => {
                 dispatch({type: 'TASK_REMOVED_SUCCESS', taskNo: id})
             ).catch(e => {
                 console.log('Error deleting task:', e);
+            })
+    }
+};
+
+// Changing this later to get messages pertaining to task instead
+export const retrieveTaskMessages = () => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTaskMessage.getAllTaskMessages(queryToken)
+            .then(taskMessages => {
+                    dispatch({type: 'MESSAGES_RETRIEVED_SUCCESS', taskMessages})
+                }
+            ).catch(e => {
+                console.log('Error loading messages:', e);
+            })
+    }
+};
+
+export const addTaskMessage = (taskMessage) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTaskMessage.addTaskMessage(taskMessage, queryToken)
+            .then(taskMessage => {
+                    dispatch({type: 'MESSAGE_ADDED_SUCCESS', taskMessage})
+                }
+            ).catch(e => {
+                console.log('Error adding message:', e);
+            })
+    }
+};
+
+export const editTaskMessage = (taskMessage, id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTaskMessage.updateTaskMessage(taskMessage, queryToken)
+            .then(
+                dispatch({type: 'MESSAGE_UPDATED_SUCCESS', taskMessage, id})
+            ).catch(e => {
+                console.log('Error updating message:', e);
+            })
+    }
+};
+
+export const removeTaskMessage = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTaskMessage.deleteTaskMessage(id, queryToken)
+            .then(
+                dispatch({type: 'MESSAGE_REMOVED_SUCCESS', messageNo: id})
+            ).catch(e => {
+                console.log('Error deleting message:', e);
             })
     }
 };
