@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, {Component} from 'react';
 import {validation} from "../../components/constants/validation";
 import Add from "../../components/add/Add";

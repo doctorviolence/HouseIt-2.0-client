@@ -1,14 +1,15 @@
 import * as api from "../api/login/apiLogin";
 
-export const loginInit = () => ({type: 'LOGIN_INIT'});;
+export const loginInit = () => ({type: 'LOGIN_INIT'});
 
 export const login = (username, password) => {
     return dispatch => {
         dispatch(loginInit());
         return api.login(username, password).then(result => {
                 const token = result.headers.authorization;
+                const tenant = result.headers.tenant;
                 localStorage.setItem('token', token);
-                dispatch(loginSuccess(token))
+                dispatch(loginSuccess(token, tenant))
             }
         ).catch(e => {
             if (e && e.response !== undefined) {
@@ -26,9 +27,9 @@ export const login = (username, password) => {
     }
 };
 
-export const loginSuccess = (token) => {
+export const loginSuccess = (token, tenant) => {
     return dispatch => {
-        dispatch({type: 'LOGIN_SUCCESS', token: token});
+        dispatch({type: 'LOGIN_SUCCESS', token: token, tenant: tenant});
         dispatch(tokenExpiration());
     }
 };

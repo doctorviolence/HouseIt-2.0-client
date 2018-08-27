@@ -77,7 +77,7 @@ class Buildings extends Component {
 
         return (
             <Container>
-                <Button onClick={this.props.goBack}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Cancel</Button>
                 {buildings.map((b) => {
                     return (
                         <Building
@@ -113,6 +113,7 @@ const mapDispatchToProps = dispatch => {
         removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
+        closeFrame: (view) => dispatch(viewActions.closeFrame(view))
         //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };

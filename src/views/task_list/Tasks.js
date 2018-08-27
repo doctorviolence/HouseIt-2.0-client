@@ -66,14 +66,14 @@ class Tasks extends Component {
         let addTask = null;
         if (this.state.add) {
             addTask = <TaskData add={this.state.add}
-                               title={"Add new task"}
-                               toggleAdd={this.toggleAdd}
-                               addTask={this.addToTasks}/>
+                                title={"Add new task"}
+                                toggleAdd={this.toggleAdd}
+                                addTask={this.addToTasks}/>
         }
 
         return (
             <Container>
-                <Button onClick={this.props.goBack}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Cancel</Button>
                 {tasks.map((t) => {
                     return (
                         <Task
@@ -113,6 +113,7 @@ const mapDispatchToProps = dispatch => {
         removeTask: (id) => dispatch(apiActions.removeTask(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
+        closeFrame: (view) => dispatch(viewActions.closeFrame(view))
         //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };

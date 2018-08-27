@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 
-import * as viewActions from '../actions';
-import {validation} from "../../components/constants/validation";
-import Forms from "../../components/ui/forms/Forms";
-import Views from "../Views";
+import * as viewActions from './actions';
+import {validation} from "../components/constants/validation";
+import Forms from "../components/ui/forms/Forms";
+import Views from "./Views";
 
 const Container = styled.div`
     position: relative;
@@ -146,7 +146,7 @@ class Login extends Component {
 
     render() {
         const isLoggedIn = this.props.isLoggedIn;
-        const tokenExists = localStorage.getItem('token');
+        //const tokenExists = localStorage.getItem('token');
         const loginFormInputs = [];
         let errorMessage = null;
 
@@ -161,7 +161,7 @@ class Login extends Component {
             });
         }
 
-        if (!isLoggedIn && !tokenExists) {
+        if (!isLoggedIn) {
             return (
                 <Container>
                     <Title>Log in</Title>
@@ -182,9 +182,7 @@ class Login extends Component {
                 </Container>
             );
         }
-        return <Container>
-            <Views/>
-        </Container>
+        return <Views/>
     }
 }
 

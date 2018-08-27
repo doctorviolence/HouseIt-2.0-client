@@ -1,17 +1,9 @@
 const initialState = {
-    showBuildings: false,
-    showApartments: false,
-    showTenants: false,
-    showTasks: false,
-    showSettings: false,
-    showMessages: false,
+    frame: 'Menu',
     showPopup: false,
     popupTitle: '',
     token: null,
-    buildingId: null,
-    apartmentId: null,
-    tenantId: null,
-    taskId: null,
+    tenant: null,
     loginError: null
 };
 
@@ -27,7 +19,7 @@ const loginSuccess = (state, action) => {
     return {
         ...state,
         token: action.token,
-        //tenant: action.tenant,
+        tenant: action.tenant,
         loginError: null,
         loading: false
     }
@@ -44,7 +36,8 @@ const loginFail = (state, action) => {
 const logout = (state, action) => {
     return {
         ...state,
-        token: null
+        token: null,
+        tenant: null
     };
 };
 
@@ -67,14 +60,14 @@ const closePopup = (state) => {
 const viewFrame = (state, action) => {
     return {
         ...state,
-        [action.view]: true
+        frame: action.view
     };
 };
 
 const closeFrame = (state, action) => {
     return {
         ...state,
-        [action.view]: false
+        frame: action.view
     };
 };
 
