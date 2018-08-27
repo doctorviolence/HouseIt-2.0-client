@@ -36,9 +36,7 @@ class Apartments extends Component {
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.apartments.length) {
-            this.props.retrieveApartments();
-        }
+        this.props.retrieveApartmentsInBuilding(this.props.buildingId);
     }
 
     toggleAdd = () => {
@@ -68,12 +66,13 @@ class Apartments extends Component {
             addApartment = <ApartmentData add={this.state.add}
                                           title={"Add new apartment"}
                                           toggleAdd={this.toggleAdd}
+                                          buildingId={this.props.buildingId}
                                           addApartment={this.addToApartments}/>
         }
 
         return (
             <Container>
-                <Button onClick={this.props.goBack}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeChildrenFrame('Buildings')}>‹ Apartments</Button>
                 {apartments.map((a) => {
                     return (
                         <Apartment
@@ -106,11 +105,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveApartments: () => dispatch(apiActions.retrieveApartments()),
+        //retrieveApartments: () => dispatch(apiActions.retrieveApartments()),
+        retrieveApartmentsInBuilding: (id) => dispatch(apiActions.retrieveApartmentsInBuilding(id)),
         addApartment: (apartment) => dispatch(apiActions.addApartment(apartment)),
         removeApartment: (id) => dispatch(apiActions.removeApartment(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
+        closeChildrenFrame: (view) => dispatch(viewActions.closeChildrenFrame(view))
     };
 };
 

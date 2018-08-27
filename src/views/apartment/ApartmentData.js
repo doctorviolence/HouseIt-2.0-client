@@ -62,20 +62,6 @@ class apartmentData extends Component {
                     required: true
                 },
                 valid: false
-            },
-            buildingId: {
-                formType: 'input',
-                description: 'Building',
-                formConfig: {
-                    type: 'number',
-                    name: 'buildingId',
-                    placeholder: 'Building'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
             }
         },
         formIsValid: false
@@ -104,8 +90,7 @@ class apartmentData extends Component {
             rent: this.state.dataForm.rent.value,
             size: this.state.dataForm.size.value,
             floorNo: this.state.dataForm.floorNo.value,
-            fixDate: this.state.dataForm.fixDate.value,
-            building: {buildingId: this.state.dataForm.buildingId.value}
+            building: {buildingId: this.props.buildingId}
         };
 
         if (this.state.formIsValid) {
@@ -124,8 +109,7 @@ class apartmentData extends Component {
             rent: this.state.dataForm.rent.value,
             size: this.state.dataForm.size.value,
             floorNo: this.state.dataForm.floorNo.value,
-            fixDate: this.state.dataForm.fixDate.value,
-            building: {buildingId: this.state.dataForm.buildingId.value}
+            building: {buildingId: this.props.buildingId}
         };
 
         if (this.state.formIsValid) {

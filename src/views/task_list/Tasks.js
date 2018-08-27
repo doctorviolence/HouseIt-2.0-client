@@ -36,8 +36,13 @@ class Tasks extends Component {
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.tasks.length) {
+        const {tenant} = this.props.viewState;
+
+        if (!tenant) {
             this.props.retrieveTasks();
+        }
+        else {
+            this.props.retrieveTasksByTenant(tenant);
         }
     }
 
@@ -60,20 +65,27 @@ class Tasks extends Component {
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions} = this.props.viewState;
+        const {showPopup, popupTitle, popupActions, tenant} = this.props.viewState;
         const tasks = this.props.apiState.data.tasks;
 
         let addTask = null;
-        if (this.state.add) {
+        if (this.state.add && !tenant) {
             addTask = <TaskData add={this.state.add}
                                 title={"Add new task"}
+                                toggleAdd={this.toggleAdd}
+                                addTask={this.addToTasks}/>
+        }
+        else {
+            addTask = <TaskData add={this.state.add}
+                                title={"Add new task"}
+                                tenant={tenant}
                                 toggleAdd={this.toggleAdd}
                                 addTask={this.addToTasks}/>
         }
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Tasks</Button>
                 {tasks.map((t) => {
                     return (
                         <Task
@@ -109,6 +121,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         retrieveTasks: () => dispatch(apiActions.retrieveTasks()),
+        retrieveTasksByTenant: (id) => dispatch(apiActions.retrieveTasksByTenant(id)),
         addTask: (task) => dispatch(apiActions.addTask(task)),
         removeTask: (id) => dispatch(apiActions.removeTask(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),

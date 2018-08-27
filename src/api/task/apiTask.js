@@ -8,6 +8,17 @@ class ApiTask {
             .then(response => response.data);
     };
 
+    getTasksByTenant = (id, queryToken) => {
+        return axios
+            .get('/tasks-by-tenant/' + id, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': queryToken
+                }
+            })
+            .then(response => response.data);
+    };
+
     //getTasksByTenant = id => {
     //    return axios
     //        .get('/tasks/tasks-by-tenant' + id)

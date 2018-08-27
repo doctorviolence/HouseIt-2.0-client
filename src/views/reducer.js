@@ -1,5 +1,7 @@
 const initialState = {
     frame: 'Menu',
+    parentId: null,
+    subParentId: null,
     showPopup: false,
     popupTitle: '',
     token: null,
@@ -64,10 +66,42 @@ const viewFrame = (state, action) => {
     };
 };
 
+const viewChildrenFrame = (state, action) => {
+    return {
+        ...state,
+        frame: action.view,
+        parentId: action.parentId
+    };
+};
+
+const viewSubChildrenFrame = (state, action) => {
+    return {
+        ...state,
+        frame: action.view,
+        subParentId: action.subParentId
+    };
+};
+
 const closeFrame = (state, action) => {
     return {
         ...state,
         frame: action.view
+    };
+};
+
+const closeChildrenFrame = (state, action) => {
+    return {
+        ...state,
+        frame: action.view,
+        parentId: null
+    };
+};
+
+const closeSubChildrenFrame = (state, action) => {
+    return {
+        ...state,
+        frame: action.view,
+        subParentId: null
     };
 };
 
@@ -85,6 +119,14 @@ const reducer = (state = initialState, action) => {
             return viewFrame(state, action);
         case 'CLOSE_FRAME':
             return closeFrame(state, action);
+        case 'VIEW_CHILDREN_FRAME':
+            return viewChildrenFrame(state, action);
+        case 'CLOSE_CHILDREN_FRAME':
+            return closeChildrenFrame(state, action);
+        case 'VIEW_SUB_CHILDREN_FRAME':
+            return viewSubChildrenFrame(state, action);
+        case 'CLOSE_SUB_CHILDREN_FRAME':
+            return closeSubChildrenFrame(state, action);
         case 'VIEW_POPUP':
             return viewPopup(state, action);
         case 'CLOSE_POPUP':

@@ -49,20 +49,20 @@ export const removeBuilding = (id) => {
             .then(
                 dispatch({type: 'BUILDING_REMOVED_SUCCESS', buildingId: id})
             ).catch(e => {
-                console.log('Error deleting building_list:', e);
+                console.log('Error deleting building:', e);
             })
     }
 };
 
-export const retrieveApartments = () => {
+export const retrieveApartmentsInBuilding = (id) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
-        return apiApartment.getAllApartments(queryToken)
+        return apiApartment.getApartmentsInBuilding(id, queryToken)
             .then(apartments => {
                     dispatch({type: 'APARTMENTS_RETRIEVED_SUCCESS', apartments})
                 }
             ).catch(e => {
-                console.log('Error loading apartment_list:', e);
+                console.log('Error loading apartments:', e);
             })
     }
 };
@@ -104,10 +104,10 @@ export const removeApartment = (id) => {
     }
 };
 
-export const retrieveTenants = () => {
+export const retrieveTenants = (apartmentId) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
-        return apiTenant.getAllTenants(queryToken)
+        return apiTenant.getTenantsInApartment(apartmentId, queryToken)
             .then(tenants => {
                     dispatch({type: 'TENANTS_RETRIEVED_SUCCESS', tenants})
                 }
@@ -147,7 +147,7 @@ export const removeTenant = (id) => {
         const queryToken = localStorage.getItem('token');
         return apiTenant.deleteTenant(id, queryToken)
             .then(
-                dispatch({type: 'TENANT_REMOVED_SUCCESS', id})
+                dispatch({type: 'TENANT_REMOVED_SUCCESS', tenantId: id})
             ).catch(e => {
                 console.log('Error deleting tenant:', e);
             })
@@ -158,6 +158,19 @@ export const retrieveTasks = () => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
         return apiTask.getAllTasks(queryToken)
+            .then(tasks => {
+                    dispatch({type: 'TASKS_RETRIEVED_SUCCESS', tasks})
+                }
+            ).catch(e => {
+                console.log('Error loading tasks:', e);
+            })
+    }
+};
+
+export const retrieveTasksByTenant = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTask.getTasksByTenant(id, queryToken)
             .then(tasks => {
                     dispatch({type: 'TASKS_RETRIEVED_SUCCESS', tasks})
                 }
@@ -204,11 +217,23 @@ export const removeTask = (id) => {
     }
 };
 
-// Changing this later to get messages pertaining to task instead
-export const retrieveTaskMessages = () => {
+//export const retrieveTaskMessages = () => {
+//    return dispatch => {
+//        const queryToken = localStorage.getItem('token');
+//        return apiTaskMessage.getAllTaskMessages(queryToken)
+//            .then(taskMessages => {
+//                    dispatch({type: 'MESSAGES_RETRIEVED_SUCCESS', taskMessages})
+//                }
+//            ).catch(e => {
+//                console.log('Error loading messages:', e);
+//            })
+//    }
+//};
+
+export const retrieveTaskMessages = (taskNo) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
-        return apiTaskMessage.getAllTaskMessages(queryToken)
+        return apiTaskMessage.getTaskMessages(taskNo, queryToken)
             .then(taskMessages => {
                     dispatch({type: 'MESSAGES_RETRIEVED_SUCCESS', taskMessages})
                 }

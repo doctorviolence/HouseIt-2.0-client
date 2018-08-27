@@ -37,9 +37,6 @@ class Message extends Component {
         return (
             <Container key={this.props.id}>
                 <TextContainer>
-                    {this.props.messageNo}
-                </TextContainer>
-                <TextContainer>
                     {this.props.messageText}
                 </TextContainer>
                 <Button onClick={this.toggleEdit}>Edit</Button>

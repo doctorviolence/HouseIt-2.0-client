@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Container, TextContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import TaskData from './TaskData';
+import * as viewActions from "../actions";
 
 class Task extends Component {
     state = {
@@ -55,6 +56,8 @@ class Task extends Component {
                 <TextContainer>
                     {this.props.resolved}
                 </TextContainer>
+                <Button onClick={() => this.props.viewChildrenFrame('Messages', this.props.id)}>Show
+                    Messages</Button>
                 <Button onClick={this.toggleEdit}>Edit</Button>
                 {editTask}
                 <Button onClick={() => this.props.removeTask(this.props.id)}>Remove</Button>
@@ -71,6 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        viewChildrenFrame: (view, parentId) => dispatch(viewActions.viewChildrenFrame(view, parentId)),
         editTask: (task, id) => dispatch(actions.editTask(task, id))
     };
 };

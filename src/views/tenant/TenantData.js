@@ -48,20 +48,6 @@ class TenantData extends Component {
                     required: true
                 },
                 valid: false
-            },
-            apartmentId: {
-                formType: 'input',
-                description: 'Apartment',
-                formConfig: {
-                    type: 'number',
-                    name: 'apartmentId',
-                    placeholder: 'Apartment'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
             }
         },
         formIsValid: false
@@ -89,7 +75,7 @@ class TenantData extends Component {
             firstName: this.state.dataForm.firstName.value,
             lastName: this.state.dataForm.lastName.value,
             phoneNo: this.state.dataForm.phoneNo.value,
-            apartment: {apartmentId: this.state.dataForm.apartmentId.value}
+            apartment: {apartmentId: this.props.apartmentId}
         };
 
         if (this.state.formIsValid) {
@@ -107,7 +93,7 @@ class TenantData extends Component {
             firstName: this.state.dataForm.firstName.value,
             lastName: this.state.dataForm.lastName.value,
             phoneNo: this.state.dataForm.phoneNo.value,
-            apartment: {apartmentId: this.state.dataForm.apartmentId.value}
+            apartment: {apartmentId: this.props.apartmentId}
         };
 
         if (this.state.formIsValid) {

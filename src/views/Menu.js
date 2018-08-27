@@ -23,7 +23,6 @@ const Title = styled.h2`
 `;
 
 const Button = styled.button`
-    margin-bottom: 100px;
     width: 400px;
     color: #CC0033;
     background: #ffffff;
@@ -39,6 +38,12 @@ const Button = styled.button`
 `;
 
 class Menu extends Component {
+
+    logOutHandler = () => {
+        this.props.logout();
+        this.props.viewFrame('Login');
+    };
+
     render() {
         const {tenant} = this.props.viewState;
 
@@ -49,7 +54,7 @@ class Menu extends Component {
                     <Button onClick={() => this.props.viewFrame('Buildings')}>Buildings</Button>
                     <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks</Button>
                     <Button onClick={() => this.props.viewFrame('Settings')}>Settings</Button>
-                    <Button onClick={() => this.props.logOut()}>Log out</Button>
+                    <Button onClick={this.logOutHandler}>Log out</Button>
                 </Container>
             );
         }
@@ -59,7 +64,7 @@ class Menu extends Component {
                 <Title>Menu</Title>
                 <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks</Button>
                 <Button onClick={() => this.props.viewFrame('Settings')}>Settings</Button>
-                <Button onClick={() => this.props.logOut()}>Log out</Button>
+                <Button onClick={this.logOutHandler}>Log out</Button>
             </Container>
         );
     };
@@ -76,7 +81,7 @@ const mapDispatchToProps = dispatch => {
     return {
         viewFrame: (view) => dispatch(viewActions.viewFrame(view)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view)),
-        logOut: () => dispatch(viewActions.logout())
+        logout: () => dispatch(viewActions.logout())
     };
 };
 

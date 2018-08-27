@@ -20,20 +20,6 @@ class MessageData extends Component {
                     required: true
                 },
                 valid: false
-            },
-            taskNo: {
-                formType: 'input',
-                description: 'Task',
-                formConfig: {
-                    type: 'number',
-                    name: 'taskNo',
-                    placeholder: 'Task'
-                },
-                value: '',
-                validation: {
-                    required: true
-                },
-                valid: false
             }
         },
         formIsValid: false
@@ -59,7 +45,7 @@ class MessageData extends Component {
         const data = {
             messageNo: null,
             messageText: this.state.dataForm.messageText.value,
-            task: {taskNo: this.state.dataForm.taskNo.value}
+            task: {taskNo: this.props.taskNo}
         };
 
         if (this.state.formIsValid) {
@@ -75,7 +61,7 @@ class MessageData extends Component {
         const data = {
             messageNo: no,
             messageText: this.state.dataForm.messageText.value,
-            task: {taskNo: this.state.dataForm.taskNo.value}
+            task: {taskNo: this.props.taskNo}
         };
 
         if (this.state.formIsValid) {

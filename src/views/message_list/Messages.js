@@ -36,9 +36,7 @@ class Messages extends Component {
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.taskMessages.length) {
-            this.props.retrieveTaskMessages();
-        }
+        this.props.retrieveTaskMessages(this.props.taskNo);
     }
 
     toggleAdd = () => {
@@ -68,12 +66,13 @@ class Messages extends Component {
             addTaskMessage = <MessageData add={this.state.add}
                                           title={"Add new task message"}
                                           toggleAdd={this.toggleAdd}
+                                          taskNo={this.props.taskNo}
                                           addTaskMessage={this.addToTaskMessages}/>
         }
 
         return (
             <Container>
-                <Button onClick={this.props.goBack}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeChildrenFrame('Tasks')}>‹ Messages</Button>
                 {taskMessages.map((t) => {
                     return (
                         <TaskMessage
@@ -104,12 +103,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveTaskMessages: () => dispatch(apiActions.retrieveTaskMessages()),
+        retrieveTaskMessages: (taskNo) => dispatch(apiActions.retrieveTaskMessages(taskNo)),
         addTaskMessage: (taskMessage) => dispatch(apiActions.addTaskMessage(taskMessage)),
         removeTaskMessage: (id) => dispatch(apiActions.removeTaskMessage(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
-        //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
+        closeChildrenFrame: (view) => dispatch(viewActions.closeChildrenFrame(view))
     };
 };
 

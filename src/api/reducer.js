@@ -78,7 +78,7 @@ const editApartment = (state, action) => {
 };
 
 const removeApartment = (state, action) => {
-    const updatedApartments = state.data.tasks.filter(result => result.apartmentId !== action.apartmentId);
+    const updatedApartments = state.data.apartments.filter(result => result.apartmentId !== action.apartmentId);
     return {
         ...state,
         data: {...state.data, apartments: updatedApartments}
@@ -202,7 +202,7 @@ const removeMessage = (state, action) => {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'BUILDINGS_RETRIEVED_SUCCESS': return retrieveBuildings(state, action);
-        case 'BUILDING_ADDED_SUCCESS':return addBuilding(state, action);
+        case 'BUILDING_ADDED_SUCCESS': return addBuilding(state, action);
         case 'BUILDING_UPDATED_SUCCESS': return editBuilding(state, action);
         case 'BUILDING_REMOVED_SUCCESS': return removeBuilding(state, action);
         case 'APARTMENTS_RETRIEVED_SUCCESS': return retrieveApartments(state, action);

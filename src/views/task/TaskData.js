@@ -85,7 +85,7 @@ class TaskData extends Component {
                     name: 'tenantId',
                     placeholder: 'Tenant'
                 },
-                value: '',
+                value: this.props.tenant || '',
                 validation: {
                     required: true
                 },

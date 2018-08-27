@@ -36,9 +36,7 @@ class Tenants extends Component {
     };
 
     componentDidMount() {
-        if (!this.props.apiState.data.tenants.length) {
-            this.props.retrieveTenants();
-        }
+        this.props.retrieveTenants(this.props.apartmentId);
     }
 
     toggleAdd = () => {
@@ -68,12 +66,13 @@ class Tenants extends Component {
             addTenant = <TenantData add={this.state.add}
                                     title={"Add new tenant"}
                                     toggleAdd={this.toggleAdd}
+                                    apartmentId={this.props.apartmentId}
                                     addTenant={this.addToTenants}/>
         }
 
         return (
             <Container>
-                <Button onClick={this.props.goBack}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeSubChildrenFrame('Apartments')}>‹ Tenants</Button>
                 {tenants.map((t) => {
                     return (
                         <Tenant
@@ -105,11 +104,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveTenants: () => dispatch(apiActions.retrieveTenants()),
+        retrieveTenants: (apartmentId) => dispatch(apiActions.retrieveTenants(apartmentId)),
         addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
         removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
+        closeSubChildrenFrame: (view) => dispatch(viewActions.closeSubChildrenFrame(view))
     };
 };
 

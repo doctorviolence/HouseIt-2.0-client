@@ -77,15 +77,14 @@ class Buildings extends Component {
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Cancel</Button>
+                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Buildings</Button>
                 {buildings.map((b) => {
                     return (
                         <Building
                             key={b.buildingId}
                             id={b.buildingId}
                             streetAddress={b.address}
-                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}
-                            onClick={this.viewApartments}/>
+                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
                     )
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
@@ -114,7 +113,6 @@ const mapDispatchToProps = dispatch => {
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
-        //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 

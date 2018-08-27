@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {injectGlobal} from 'styled-components';
 
 import Welcome from "./components/ui/welcome/Welcome";
-import Login from "./views/Login";
+import Views from "./views/Views";
 
 injectGlobal`
    body {
@@ -20,7 +20,7 @@ class App extends Component {
         return (
             <div className="App">
                 <Welcome/>
-                <Login/>
+                <Views/>
             </div>
         );
     }
