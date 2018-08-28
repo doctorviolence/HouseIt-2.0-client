@@ -8,12 +8,6 @@ class ApiTaskMessage {
             .then(response => response.data);
     };
 
-    //getTaskMessages = no => {
-    //    return axios
-    //        .get('/messages/' + no)
-    //        .then(response => response.data);
-    //};
-
     addTaskMessage = (data, queryToken) => {
         return axios
             .post('/messages/create-message', data, {
@@ -22,8 +16,7 @@ class ApiTaskMessage {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     updateTaskMessage = (data, queryToken) => {
@@ -34,8 +27,7 @@ class ApiTaskMessage {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     deleteTaskMessage = (id, queryToken) => {
@@ -46,8 +38,7 @@ class ApiTaskMessage {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 }
 

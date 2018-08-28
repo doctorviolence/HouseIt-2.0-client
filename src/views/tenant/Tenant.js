@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Container, TextContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import TenantData from "../tenant/TenantData";
+import * as viewActions from "../actions";
 
 class Tenant extends Component {
     state = {
@@ -66,6 +67,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editTenant: (tenant, id) => dispatch(actions.editTenant(tenant, id))
     };
 };

@@ -20,8 +20,7 @@ class ApiApartment {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     updateApartment = (data, queryToken) => {
@@ -32,8 +31,7 @@ class ApiApartment {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     deleteApartment = (id, queryToken) => {
@@ -44,8 +42,7 @@ class ApiApartment {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 }
 

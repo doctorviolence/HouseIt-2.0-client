@@ -8,7 +8,6 @@ import Forms from "../components/ui/forms/Forms";
 import Views from "./Views";
 
 const Container = styled.div`
-    position: relative;
     align-items: center;
     justify-content: space-between;
 `;
@@ -31,26 +30,6 @@ const FormContainer = styled.form`
     margin: auto;
     font-size: 14px;
     
-    label {
-        font-weight: bold;
-        color: #000000;
-    }
-    
-    input {
-        outline: none;
-        padding: 7px;
-        border: 1px solid #f2f2f2;
-        background: transparent;
-        margin-bottom: 10px;
-        
-        &:focus {
-            background: #f2f2f2;
-        }
-        &:hover {
-            background: #f2f2f2;
-        }
-    } 
-    
     @media screen and (max-width: 700px) {
         max-width: 80%;
     }
@@ -58,7 +37,7 @@ const FormContainer = styled.form`
 
 const Button = styled.button`
     color: #000000;
-    background: #ffffff;
+    background: #f2f2f2;
     border: 1px solid #f2f2f2;
     font-size: 20px;
     font-weight: bold;
@@ -113,7 +92,7 @@ class Login extends Component {
                 },
                 valid: false
             }
-        },
+        }, formIsValid: false
     };
 
     userInputHandler = (event) => {
@@ -139,8 +118,6 @@ class Login extends Component {
 
         if (this.state.formIsValid) {
             this.props.login(username, password);
-        } else {
-            // Replacing this with error message, eventually...
         }
     };
 
@@ -172,7 +149,7 @@ class Login extends Component {
                                 formType={input.config.formType}
                                 formConfig={input.config.formConfig}
                                 value={input.config.value}
-                                invalid={!input.valid}
+                                valid={input.config.valid}
                                 description={input.config.description}
                                 changed={(event) => this.userInputHandler(event)}/>
                         ))}

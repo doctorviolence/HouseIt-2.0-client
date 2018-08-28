@@ -53,7 +53,7 @@ class TaskData extends Component {
                 formType: 'input',
                 description: 'Date',
                 formConfig: {
-                    type: 'text',
+                    type: 'date',
                     name: 'taskDate',
                     placeholder: 'Date'
                 },
@@ -67,7 +67,7 @@ class TaskData extends Component {
                 formType: 'input',
                 description: 'Fix Date',
                 formConfig: {
-                    type: 'text',
+                    type: 'date',
                     name: 'fixDate',
                     placeholder: 'Fix Date'
                 },
@@ -142,13 +142,8 @@ class TaskData extends Component {
             tenant: {tenantId: this.state.dataForm.tenantId.value}
         };
 
-        if (this.state.formIsValid) {
-            this.props.toggleEdit;
-            this.props.editTask(data, no);
-        } else {
-            // Replacing this with error message, eventually...
-            console.log('Form is not valid');
-        }
+        this.props.toggleEdit;
+        this.props.editTask(data, no);
     };
 
     render() {
@@ -157,6 +152,7 @@ class TaskData extends Component {
                 <Add display={this.props.add}
                      title={"Add new task"}
                      addForm={this.state.dataForm}
+                     formValid={this.state.formIsValid}
                      toggleAdd={this.props.toggleAdd}
                      submitData={this.addTask}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>

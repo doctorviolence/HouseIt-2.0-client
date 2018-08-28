@@ -7,11 +7,21 @@ import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import TaskMessage from "../message/Message";
 import MessageData from '../message/MessageData';
-import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
     align-items: flex-end;
     justify-content: center;
+`;
+
+const Title = styled.h2`
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
 const Button = styled.button`
@@ -46,19 +56,21 @@ class Messages extends Component {
     };
 
     addToTaskMessages = (data) => {
+        this.props.viewPopup({
+            title: 'Message added...'
+        });
         this.toggleAdd();
         this.props.addTaskMessage(data);
     };
 
     removeFromTaskMessages = (id) => {
         this.props.viewPopup({
-            title: 'Task message deleted!'
+            title: 'Message deleted...'
         });
         this.props.removeTaskMessage(id);
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions} = this.props.viewState;
         const taskMessages = this.props.apiState.data.taskMessages;
 
         let addTaskMessage = null;
@@ -72,7 +84,7 @@ class Messages extends Component {
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeChildrenFrame('Tasks')}>‹ Messages</Button>
+                <Title onClick={() => this.props.closeChildrenFrame('Tasks')}>‹ Messages</Title>
                 {taskMessages.map((t) => {
                     return (
                         <TaskMessage
@@ -85,10 +97,6 @@ class Messages extends Component {
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
                 {addTaskMessage}
-                <Popup show={showPopup}
-                       close={() => this.props.closePopup()}
-                       title={popupTitle}
-                       actions={popupActions}/>
             </Container>
         );
     }

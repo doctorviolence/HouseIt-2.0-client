@@ -62,12 +62,8 @@ class BuildingData extends Component {
             address: this.state.dataForm.streetAddress.value
         };
 
-        if (this.state.formIsValid) {
-            this.props.toggleEdit;
-            this.props.editBuilding(data, id);
-        } else {
-            // Replacing this with error message, eventually...
-        }
+        this.props.toggleEdit;
+        this.props.editBuilding(data, id);
     };
 
     render() {
@@ -77,6 +73,7 @@ class BuildingData extends Component {
                      title={"Add new building"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
+                     formValid={this.state.formIsValid}
                      submitData={this.addBuilding}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );

@@ -96,13 +96,8 @@ class TenantData extends Component {
             apartment: {apartmentId: this.props.apartmentId}
         };
 
-        if (this.state.formIsValid) {
-            this.props.toggleEdit;
-            this.props.editTenant(data, id);
-        } else {
-            // Replacing this with error message, eventually...
-            console.log('Form is not valid');
-        }
+        this.props.toggleEdit;
+        this.props.editTenant(data, id);
     };
 
     render() {
@@ -112,6 +107,7 @@ class TenantData extends Component {
                      title={"Add new tenant"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
+                     formValid={this.state.formIsValid}
                      submitData={this.addTenant}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );

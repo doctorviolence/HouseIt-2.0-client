@@ -7,11 +7,21 @@ import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Building from '../building/Building';
 import BuildingData from '../building/BuildingData';
-import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
     align-items: flex-end;
     justify-content: center;
+`;
+
+const Title = styled.h2`
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
 const Button = styled.button`
@@ -41,10 +51,6 @@ class Buildings extends Component {
         }
     }
 
-    //viewApartments = () => {
-    //    this.props.viewApartments();
-    //};
-
     toggleAdd = () => {
         this.setState((prevState) => {
             return {add: !prevState.add};
@@ -52,32 +58,34 @@ class Buildings extends Component {
     };
 
     addToBuildings = (data) => {
+        this.props.viewPopup({
+            title: 'Building added...'
+        });
         this.toggleAdd();
         this.props.addBuilding(data);
     };
 
     removeFromBuildings = (id) => {
         this.props.viewPopup({
-            title: 'Building deleted!'
+            title: 'Building deleted...'
         });
         this.props.removeBuilding(id);
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions} = this.props.viewState;
         const buildings = this.props.apiState.data.buildings;
 
         let addBuilding = null;
         if (this.state.add) {
             addBuilding = <BuildingData add={this.state.add}
-                                       title={"Add new building"}
-                                       toggleAdd={this.toggleAdd}
-                                       addBuilding={this.addToBuildings}/>
+                                        title={"Add new building"}
+                                        toggleAdd={this.toggleAdd}
+                                        addBuilding={this.addToBuildings}/>
         }
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Buildings</Button>
+                <Title onClick={() => this.props.closeFrame('Menu')}>‹ Buildings</Title>
                 {buildings.map((b) => {
                     return (
                         <Building
@@ -89,10 +97,6 @@ class Buildings extends Component {
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
                 {addBuilding}
-                <Popup show={showPopup}
-                       close={() => this.props.closePopup()}
-                       title={popupTitle}
-                       actions={popupActions}/>
             </Container>
         );
     }
@@ -111,7 +115,6 @@ const mapDispatchToProps = dispatch => {
         addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
         removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closePopup: () => dispatch(viewActions.closePopup()),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };
 };

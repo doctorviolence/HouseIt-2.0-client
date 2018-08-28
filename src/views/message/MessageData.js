@@ -64,13 +64,8 @@ class MessageData extends Component {
             task: {taskNo: this.props.taskNo}
         };
 
-        if (this.state.formIsValid) {
-            this.props.toggleEdit;
-            this.props.editTaskMessage(data, no);
-        } else {
-            // Replacing this with error message, eventually...
-            console.log('Form is not valid');
-        }
+        this.props.toggleEdit;
+        this.props.editTaskMessage(data, no);
     };
 
     render() {
@@ -80,6 +75,7 @@ class MessageData extends Component {
                      title={"Write new message"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
+                     formValid={this.state.formIsValid}
                      submitData={this.addTaskMessage}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );

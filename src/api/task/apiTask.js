@@ -48,8 +48,7 @@ class ApiTask {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     updateTask = (data, queryToken) => {
@@ -60,8 +59,7 @@ class ApiTask {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     deleteTask = (id, queryToken) => {
@@ -72,8 +70,7 @@ class ApiTask {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 }
 

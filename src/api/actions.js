@@ -12,7 +12,7 @@ export const retrieveBuildings = () => {
                     dispatch({type: 'BUILDINGS_RETRIEVED_SUCCESS', buildings})
                 }
             ).catch(e => {
-                console.log('Error loading buildings:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -25,7 +25,7 @@ export const addBuilding = (building) => {
                     dispatch({type: 'BUILDING_ADDED_SUCCESS', result})
                 }
             ).catch(e => {
-                console.log('Error adding building:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -37,7 +37,7 @@ export const editBuilding = (building, id) => {
             .then(
                 dispatch({type: 'BUILDING_UPDATED_SUCCESS', building, id})
             ).catch(e => {
-                console.log('Error updating building:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -49,7 +49,7 @@ export const removeBuilding = (id) => {
             .then(
                 dispatch({type: 'BUILDING_REMOVED_SUCCESS', buildingId: id})
             ).catch(e => {
-                console.log('Error deleting building:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -62,7 +62,7 @@ export const retrieveApartmentsInBuilding = (id) => {
                     dispatch({type: 'APARTMENTS_RETRIEVED_SUCCESS', apartments})
                 }
             ).catch(e => {
-                console.log('Error loading apartments:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -75,7 +75,7 @@ export const addApartment = (apartment) => {
                     dispatch({type: 'APARTMENT_ADDED_SUCCESS', result})
                 }
             ).catch(e => {
-                console.log('Error adding apartment:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -87,7 +87,7 @@ export const editApartment = (apartment, id) => {
             .then(
                 dispatch({type: 'APARTMENT_UPDATED_SUCCESS', apartment, id})
             ).catch(e => {
-                console.log('Error updating apartment:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -99,7 +99,7 @@ export const removeApartment = (id) => {
             .then(
                 dispatch({type: 'APARTMENT_REMOVED_SUCCESS', apartmentId: id})
             ).catch(e => {
-                console.log('Error deleting apartment:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -112,7 +112,7 @@ export const retrieveTenants = (apartmentId) => {
                     dispatch({type: 'TENANTS_RETRIEVED_SUCCESS', tenants})
                 }
             ).catch(e => {
-                console.log('Error loading tenants:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -125,7 +125,7 @@ export const addTenant = (tenant) => {
                     dispatch({type: 'TENANT_ADDED_SUCCESS', result})
                 }
             ).catch(e => {
-                console.log('Error adding tenant:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -137,7 +137,7 @@ export const editTenant = (tenant, id) => {
             .then(
                 dispatch({type: 'TENANT_UPDATED_SUCCESS', tenant, id})
             ).catch(e => {
-                console.log('Error updating tenant:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -149,7 +149,7 @@ export const removeTenant = (id) => {
             .then(
                 dispatch({type: 'TENANT_REMOVED_SUCCESS', tenantId: id})
             ).catch(e => {
-                console.log('Error deleting tenant:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -162,7 +162,7 @@ export const retrieveTasks = () => {
                     dispatch({type: 'TASKS_RETRIEVED_SUCCESS', tasks})
                 }
             ).catch(e => {
-                console.log('Error loading tasks:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -175,7 +175,7 @@ export const retrieveTasksByTenant = (id) => {
                     dispatch({type: 'TASKS_RETRIEVED_SUCCESS', tasks})
                 }
             ).catch(e => {
-                console.log('Error loading tasks:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -188,7 +188,7 @@ export const addTask = (task) => {
                     dispatch({type: 'TASK_ADDED_SUCCESS', result})
                 }
             ).catch(e => {
-                console.log('Error adding task:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -200,7 +200,7 @@ export const editTask = (task, id) => {
             .then(
                 dispatch({type: 'TASK_UPDATED_SUCCESS', task, id})
             ).catch(e => {
-                console.log('Error updating task:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -212,23 +212,10 @@ export const removeTask = (id) => {
             .then(
                 dispatch({type: 'TASK_REMOVED_SUCCESS', taskNo: id})
             ).catch(e => {
-                console.log('Error deleting task:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
-
-//export const retrieveTaskMessages = () => {
-//    return dispatch => {
-//        const queryToken = localStorage.getItem('token');
-//        return apiTaskMessage.getAllTaskMessages(queryToken)
-//            .then(taskMessages => {
-//                    dispatch({type: 'MESSAGES_RETRIEVED_SUCCESS', taskMessages})
-//                }
-//            ).catch(e => {
-//                console.log('Error loading messages:', e);
-//            })
-//    }
-//};
 
 export const retrieveTaskMessages = (taskNo) => {
     return dispatch => {
@@ -238,7 +225,7 @@ export const retrieveTaskMessages = (taskNo) => {
                     dispatch({type: 'MESSAGES_RETRIEVED_SUCCESS', taskMessages})
                 }
             ).catch(e => {
-                console.log('Error loading messages:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -251,7 +238,7 @@ export const addTaskMessage = (taskMessage) => {
                     dispatch({type: 'MESSAGE_ADDED_SUCCESS', taskMessage})
                 }
             ).catch(e => {
-                console.log('Error adding message:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -263,7 +250,7 @@ export const editTaskMessage = (taskMessage, id) => {
             .then(
                 dispatch({type: 'MESSAGE_UPDATED_SUCCESS', taskMessage, id})
             ).catch(e => {
-                console.log('Error updating message:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };
@@ -275,7 +262,7 @@ export const removeTaskMessage = (id) => {
             .then(
                 dispatch({type: 'MESSAGE_REMOVED_SUCCESS', messageNo: id})
             ).catch(e => {
-                console.log('Error deleting message:', e);
+                dispatch({type: 'SHOW_ERROR', error: e})
             })
     }
 };

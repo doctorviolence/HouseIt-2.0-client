@@ -8,8 +8,7 @@ export const addUser = (user, queryToken) => {
                 'Authorization': queryToken
             }
         })
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const updateUser = (user, queryToken) => {
@@ -20,8 +19,7 @@ export const updateUser = (user, queryToken) => {
                 'Authorization': queryToken
             }
         })
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };
 
 export const deleteUser = (id, queryToken) => {
@@ -32,6 +30,5 @@ export const deleteUser = (id, queryToken) => {
                 'Authorization': queryToken
             }
         })
-        .then(response => response.data)
-        .catch(error => error.response);
+        .then(response => response.data);
 };

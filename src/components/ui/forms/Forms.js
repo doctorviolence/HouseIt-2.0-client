@@ -15,32 +15,41 @@ const Input = styled.input`
     outline: none;
     padding: 7px;
     border: 1px solid #f2f2f2;
-    background: transparent;
     margin-bottom: 10px;
     
     &:focus {
         background: #f2f2f2;
+        border: ${props => props.valid ? '1px solid #f2f2f2' : '1px solid #CC0033'};
     }
+    
+    &:focus:hover {
+        background: #f2f2f2;
+        border: ${props => props.valid ? '1px solid #f2f2f2' : '1px solid #CC0033'};
+    }
+    
     &:hover {
         background: #f2f2f2;
     }
-
 `;
 
 const TextArea = styled.textarea`
     outline: none;
     padding: 7px;
-    border: 1px solid #f2f2f2;
-    background: transparent;
     margin-bottom: 10px;
     
     &:focus {
         background: #f2f2f2;
+        border: ${props => props.valid ? '1px solid #5d9451' : '1px solid #fda49a'};
     }
+    
+    &:focus:hover {
+        background: #f2f2f2;
+        border: ${props => props.valid ? '1px solid #5d9451' : '1px solid #fda49a'};
+    }
+    
     &:hover {
         background: #f2f2f2;
     }
-
 `;
 
 const forms = (props) => {
@@ -48,19 +57,19 @@ const forms = (props) => {
 
     switch (props.formType) {
         case('input'):
-            formInput = <Input {...props.formConfig} value={props.value} onChange={props.changed}/>;
+            formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
             break;
         case ('number'):
-            formInput = <Input {...props.formConfig} value={props.value} onChange={props.changed}/>;
+            formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
             break;
         case ('date'):
-            formInput = <Input {...props.formConfig} value={props.value} onChange={props.changed}/>;
+            formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
             break;
         case ('textarea'):
-            formInput = <TextArea {...props.formConfig} value={props.value} onChange={props.changed}/>;
+            formInput = <TextArea {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
             break;
         default:
-            formInput = <Input {...props.formConfig} value={props.value} onChange={props.changed}/>;
+            formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
     }
 
     return (

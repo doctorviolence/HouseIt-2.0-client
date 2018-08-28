@@ -10,6 +10,7 @@ import Tasks from "./task_list/Tasks";
 import Messages from "./message_list/Messages";
 import Login from "./Login";
 import Menu from './Menu';
+import Popup from "../components/ui/popup/Popup";
 
 const ViewContainer = styled.div``;
 
@@ -64,6 +65,7 @@ class Views extends Component {
         const frame = this.props.viewState.frame;
         const parentId = this.props.viewState.parentId;
         const subParentId = this.props.viewState.subParentId;
+        const {showPopup, popupTitle} = this.props.viewState;
         const view = this.viewController(frame, parentId, subParentId);
 
         if (!isLoggedIn) {
@@ -73,6 +75,7 @@ class Views extends Component {
         return (
             <ViewContainer>
                 {view}
+                <Popup show={showPopup} title={popupTitle}/>
             </ViewContainer>
         );
     };

@@ -62,7 +62,8 @@ const closePopup = (state) => {
 const viewFrame = (state, action) => {
     return {
         ...state,
-        frame: action.view
+        frame: action.view,
+        showPopup: false
     };
 };
 
@@ -70,7 +71,8 @@ const viewChildrenFrame = (state, action) => {
     return {
         ...state,
         frame: action.view,
-        parentId: action.parentId
+        parentId: action.parentId,
+        showPopup: false
     };
 };
 
@@ -78,14 +80,16 @@ const viewSubChildrenFrame = (state, action) => {
     return {
         ...state,
         frame: action.view,
-        subParentId: action.subParentId
+        subParentId: action.subParentId,
+        showPopup: false
     };
 };
 
 const closeFrame = (state, action) => {
     return {
         ...state,
-        frame: action.view
+        frame: action.view,
+        showPopup: false
     };
 };
 
@@ -93,7 +97,8 @@ const closeChildrenFrame = (state, action) => {
     return {
         ...state,
         frame: action.view,
-        parentId: null
+        parentId: null,
+        showPopup: false
     };
 };
 
@@ -101,7 +106,8 @@ const closeSubChildrenFrame = (state, action) => {
     return {
         ...state,
         frame: action.view,
-        subParentId: null
+        subParentId: null,
+        showPopup: false
     };
 };
 

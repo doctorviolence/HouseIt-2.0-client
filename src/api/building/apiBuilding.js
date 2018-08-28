@@ -16,8 +16,7 @@ class ApiBuilding {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     editBuilding = (data, queryToken) => {
@@ -28,8 +27,7 @@ class ApiBuilding {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     deleteBuilding = (id, queryToken) => {
@@ -40,8 +38,7 @@ class ApiBuilding {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 }
 

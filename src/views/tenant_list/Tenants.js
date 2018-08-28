@@ -7,11 +7,21 @@ import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Tenant from "../tenant/Tenant";
 import TenantData from '../tenant/TenantData';
-import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
     align-items: flex-end;
     justify-content: center;
+`;
+
+const Title = styled.h2`
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
 const Button = styled.button`
@@ -46,19 +56,21 @@ class Tenants extends Component {
     };
 
     addToTenants = (data) => {
+        this.props.viewPopup({
+            title: 'Tenant added...'
+        });
         this.toggleAdd();
         this.props.addTenant(data);
     };
 
     removeFromTenants = (id) => {
         this.props.viewPopup({
-            title: 'Tenant deleted!'
+            title: 'Tenant deleted...'
         });
         this.props.removeTenant(id);
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions} = this.props.viewState;
         const tenants = this.props.apiState.data.tenants;
 
         let addTenant = null;
@@ -72,7 +84,7 @@ class Tenants extends Component {
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeSubChildrenFrame('Apartments')}>‹ Tenants</Button>
+                <Title onClick={() => this.props.closeSubChildrenFrame('Apartments')}>‹ Tenants</Title>
                 {tenants.map((t) => {
                     return (
                         <Tenant
@@ -86,10 +98,6 @@ class Tenants extends Component {
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
                 {addTenant}
-                <Popup show={showPopup}
-                       close={() => this.props.closePopup()}
-                       title={popupTitle}
-                       actions={popupActions}/>
             </Container>
         );
     }
@@ -108,7 +116,6 @@ const mapDispatchToProps = dispatch => {
         addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
         removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closePopup: () => dispatch(viewActions.closePopup()),
         closeSubChildrenFrame: (view) => dispatch(viewActions.closeSubChildrenFrame(view))
     };
 };

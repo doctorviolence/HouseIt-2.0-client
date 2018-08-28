@@ -70,6 +70,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         viewSubChildrenFrame: (view, subParentId) => dispatch(viewActions.viewSubChildrenFrame(view, subParentId)),
+        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editApartment: (apartment, id) => dispatch(actions.editApartment(apartment, id))
     };
 };

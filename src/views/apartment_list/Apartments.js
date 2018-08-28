@@ -7,11 +7,21 @@ import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Apartment from "../apartment/Apartment";
 import ApartmentData from "../apartment/ApartmentData";
-import Popup from "../../components/ui/popup/Popup";
 
 const Container = styled.div`
     align-items: flex-end;
     justify-content: center;
+`;
+
+const Title = styled.h2`
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
 const Button = styled.button`
@@ -46,19 +56,21 @@ class Apartments extends Component {
     };
 
     addToApartments = (data) => {
+        this.props.viewPopup({
+            title: 'Apartment added...'
+        });
         this.toggleAdd();
         this.props.addApartment(data);
     };
 
     removeFromApartments = (id) => {
         this.props.viewPopup({
-            title: 'Apartment deleted!'
+            title: 'Apartment deleted...'
         });
         this.props.removeApartment(id);
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions} = this.props.viewState;
         const apartments = this.props.apiState.data.apartments;
 
         let addApartment = null;
@@ -72,7 +84,7 @@ class Apartments extends Component {
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeChildrenFrame('Buildings')}>‹ Apartments</Button>
+                <Title onClick={() => this.props.closeChildrenFrame('Buildings')}>‹ Apartments</Title>
                 {apartments.map((a) => {
                     return (
                         <Apartment
@@ -87,10 +99,6 @@ class Apartments extends Component {
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
                 {addApartment}
-                <Popup show={showPopup}
-                       close={() => this.props.closePopup()}
-                       title={popupTitle}
-                       actions={popupActions}/>
             </Container>
         );
     }
@@ -110,7 +118,6 @@ const mapDispatchToProps = dispatch => {
         addApartment: (apartment) => dispatch(apiActions.addApartment(apartment)),
         removeApartment: (id) => dispatch(apiActions.removeApartment(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closePopup: () => dispatch(viewActions.closePopup()),
         closeChildrenFrame: (view) => dispatch(viewActions.closeChildrenFrame(view))
     };
 };

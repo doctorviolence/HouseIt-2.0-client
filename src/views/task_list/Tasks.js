@@ -7,11 +7,21 @@ import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import Task from "../task/Task";
 import TaskData from '../task/TaskData';
-import Popup from '../../components/ui/popup/Popup';
 
 const Container = styled.div`
     align-items: flex-end;
     justify-content: center;
+`;
+
+const Title = styled.h2`
+    color: #000000;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 20px;
+    }
 `;
 
 const Button = styled.button`
@@ -53,19 +63,22 @@ class Tasks extends Component {
     };
 
     addToTasks = (data) => {
+        this.props.viewPopup({
+            title: 'Task added...'
+        });
         this.toggleAdd();
         this.props.addTask(data);
     };
 
     removeFromTasks = (id) => {
         this.props.viewPopup({
-            title: 'Task deleted!'
+            title: 'Task deleted...'
         });
         this.props.removeTask(id);
     };
 
     render() {
-        const {showPopup, popupTitle, popupActions, tenant} = this.props.viewState;
+        const {tenant} = this.props.viewState;
         const tasks = this.props.apiState.data.tasks;
 
         let addTask = null;
@@ -85,7 +98,7 @@ class Tasks extends Component {
 
         return (
             <Container>
-                <Button onClick={() => this.props.closeFrame('Menu')}>‹ Tasks</Button>
+                <Title onClick={() => this.props.closeFrame('Menu')}>‹ Tasks</Title>
                 {tasks.map((t) => {
                     return (
                         <Task
@@ -102,10 +115,6 @@ class Tasks extends Component {
                 })}
                 <Button onClick={this.toggleAdd}>+</Button>
                 {addTask}
-                <Popup show={showPopup}
-                       close={() => this.props.closePopup()}
-                       title={popupTitle}
-                       actions={popupActions}/>
             </Container>
         );
     }
@@ -125,9 +134,7 @@ const mapDispatchToProps = dispatch => {
         addTask: (task) => dispatch(apiActions.addTask(task)),
         removeTask: (id) => dispatch(apiActions.removeTask(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closePopup: () => dispatch(viewActions.closePopup()),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
-        //viewApartments: (view) => dispatch(viewActions.viewApartments(view))
     };
 };
 

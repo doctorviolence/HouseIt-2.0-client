@@ -14,6 +14,20 @@ const FormContainer = styled.div`
     width: 100%;
     height: 100%;
     background: #ffffff;
+    animation: ${props => (props.show ? 'slideOut' : 'slideIn')} 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    
+    @keyframes slideOut {
+      0% {
+         transform: translateY(100vw);
+      }
+   }
+   
+    @keyframes slideIn {
+      100% {
+         transform: translateY(100vw);
+      }
+    }
 `;
 
 const Title = styled.h2`
@@ -33,7 +47,7 @@ const ButtonContainer = styled.div`
     justify-content: space-between;
 `;
 
-const Button = styled.button`
+const CancelButton = styled.button`
     color: #CC0033;
     background: #ffffff;
     border: none;
@@ -41,6 +55,21 @@ const Button = styled.button`
     font-weight: bold;
     cursor: pointer;
     user-select: none;
+        
+    @media screen and (max-width: 700px) {
+        font-size: 15px;
+    }
+`;
+
+const SubmitButton = styled.button`
+    color: #CC0033;
+    background: #ffffff;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    display: ${props => props.formValid ? 'flex' : 'none'};
     
     @media screen and (max-width: 700px) {
         font-size: 15px;
@@ -76,7 +105,7 @@ const add = (props) => {
                     formType={input.config.formType}
                     formConfig={input.config.formConfig}
                     value={input.config.value}
-                    invalid={!input.invalid}
+                    valid={input.config.valid}
                     description={input.config.description}
                     changed={props.addFormChanged}/>
             ))}
@@ -84,10 +113,10 @@ const add = (props) => {
     );
 
     return (
-        <FormContainer>
+        <FormContainer show={props.display}>
             <ButtonContainer>
-                <Button onClick={props.toggleAdd}> ‹ Cancel</Button>
-                <Button onClick={props.submitData}> Done</Button>
+                <CancelButton onClick={props.toggleAdd}> ‹ Cancel</CancelButton>
+                <SubmitButton formValid={props.formValid} onClick={props.submitData}> Done</SubmitButton>
             </ButtonContainer>
             <Title>{props.title}</Title>
             {form}

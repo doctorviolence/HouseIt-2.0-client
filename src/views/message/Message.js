@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {Container, TextContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import MessageData from './MessageData';
+import * as viewActions from "../actions";
 
 class Message extends Component {
     state = {
@@ -55,6 +56,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editTaskMessage: (taskMessage, id) => dispatch(actions.editTaskMessage(taskMessage, id))
     };
 };

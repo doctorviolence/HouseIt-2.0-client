@@ -20,8 +20,7 @@ class ApiTenant {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     updateTenant = (data, queryToken) => {
@@ -32,8 +31,7 @@ class ApiTenant {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 
     deleteTenant = (id, queryToken) => {
@@ -44,8 +42,7 @@ class ApiTenant {
                     'Authorization': queryToken
                 }
             })
-            .then(response => response.data)
-            .catch(error => error.response);
+            .then(response => response.data);
     };
 }
 
