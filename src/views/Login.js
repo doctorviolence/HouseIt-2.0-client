@@ -50,7 +50,7 @@ const LoginButton = styled.button`
 const Footer = styled.footer`
     position: absolute;
     width: 100%;
-    bottom: 5px;
+    bottom: 0;
     color: #444444;
     user-select: none;
     cursor: default;

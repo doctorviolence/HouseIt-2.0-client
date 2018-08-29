@@ -15,6 +15,31 @@ import Welcome from "../components/ui/welcome/Welcome";
 
 const ViewContainer = styled.div``;
 
+const FrameContainer = styled.div`
+    animation: 'fadeIn' 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    
+    @keyframes fadeIn {
+      0% {
+         opacity: 0;
+      }
+   }
+`;
+
+const Footer = styled.footer`
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: #444444;
+    background: #ffffff;
+    user-select: none;
+    cursor: default;
+    
+    @media screen and (max-width: 700px) {
+        display: none;
+    }
+`;
+
 class Views extends Component {
 
     shouldComponentUpdate(nextProps, nextState) {
@@ -26,7 +51,7 @@ class Views extends Component {
             let view = null;
             switch (name) {
                 case 'Buildings':
-                    view = <Buildings/>;
+                    view = <Buildings {...props}/>;
                     break;
                 case 'Apartments':
                     view = <Apartments {...props}/>;
@@ -35,25 +60,25 @@ class Views extends Component {
                     view = <Tenants {...props}/>;
                     break;
                 case 'Tasks':
-                    view = <Tasks/>;
+                    view = <Tasks {...props}/>;
                     break;
                 case 'Messages':
                     view = <Messages {...props}/>;
                     break;
                 case 'Settings':
-                    view = <Menu/>;
+                    view = <Menu {...props}/>;
                     break;
                 case 'Login':
-                    view = <Login/>;
+                    view = <Login {...props}/>;
                     break;
                 default:
-                    view = <Menu/>;
+                    view = <Menu {...props}/>;
             }
 
             return (
-                <ViewContainer>
+                <FrameContainer>
                     {view}
-                </ViewContainer>
+                </FrameContainer>
             );
         } catch (e) {
             console.log('Failed to load view ', e);
@@ -80,6 +105,7 @@ class Views extends Component {
             <ViewContainer>
                 {view}
                 <Popup show={showPopup} title={popupTitle}/>
+                <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
             </ViewContainer>
         );
     };
@@ -94,8 +120,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        viewFrame: (view) => dispatch(viewActions.viewFrame(view)),
-        closeFrame: (view) => dispatch(viewActions.closeFrame(view))
+        viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
+        closeFrame: (view, props) => dispatch(viewActions.closeFrame(view, props))
     };
 };
 

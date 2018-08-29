@@ -1,42 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
+import {
+    Container,
+    DetailsContainer,
+    DetailsTitle,
+    DetailsText,
+    PageContainer,
+    Menu,
+    Title,
+    AddButton
+} from "../../components/constants/views";
 import TaskMessage from "../message/Message";
 import MessageData from '../message/MessageData';
-
-const Container = styled.div`
-    align-items: flex-end;
-    justify-content: center;
-`;
-
-const Title = styled.h2`
-    color: #000000;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 20px;
-    }
-`;
-
-const Button = styled.button`
-    color: #CC0033;
-    background: #ffffff;
-    border: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 15px;
-    }
-`;
 
 class Messages extends Component {
     state = {
@@ -84,19 +63,43 @@ class Messages extends Component {
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeFrame('Tasks', {taskNo: this.props.taskNo})}>‹ Messages</Title>
-                {taskMessages.map((t) => {
-                    return (
-                        <TaskMessage
-                            key={t.messageNo}
-                            id={t.messageNo}
-                            messageNo={t.messageNo}
-                            messageText={t.messageText}
-                            taskNo={this.props.taskNo}
-                            removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
-                    )
-                })}
-                <Button onClick={this.toggleAdd}>+</Button>
+                <Menu onClick={() => this.props.closeFrame('Tasks', {taskNo: this.props.taskNo})}>‹ Tasks</Menu>
+                <DetailsContainer>
+                    <DetailsTitle>Task</DetailsTitle>
+                    <DetailsText>
+                        Task No.: {this.props.taskNo}
+                    </DetailsText>
+                    <DetailsText>
+                        Type: {this.props.type}
+                    </DetailsText>
+                    <DetailsText>
+                        Status: {this.props.status}
+                    </DetailsText>
+                    <DetailsText>
+                        Date posted: {this.props.date}
+                    </DetailsText>
+                    <DetailsText>
+                        Fix date: {this.props.fixDate}
+                    </DetailsText>
+                    <DetailsText>
+                        Resolved: {this.props.resolved}
+                    </DetailsText>
+                </DetailsContainer>
+                <PageContainer>
+                    <Title>Messages</Title>
+                    {taskMessages.map((t) => {
+                        return (
+                            <TaskMessage
+                                key={t.messageNo}
+                                id={t.messageNo}
+                                messageNo={t.messageNo}
+                                messageText={t.messageText}
+                                taskNo={this.props.taskNo}
+                                removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
+                        )
+                    })}
+                    <AddButton onClick={this.toggleAdd}>+</AddButton>
+                </PageContainer>
                 {addTaskMessage}
             </Container>
         );

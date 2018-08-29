@@ -9,6 +9,14 @@ const Container = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
+    animation: 'fadeIn' 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    
+    @keyframes fadeIn {
+      0% {
+         opacity: 0;
+      }
+   }
 `;
 
 const Title = styled.h2`
@@ -25,6 +33,7 @@ const Title = styled.h2`
 
 const Button = styled.button`
     width: 400px;
+    margin-bottom: 40px;
     color: #CC0033;
     background: #ffffff;
     border: none;
@@ -35,6 +44,10 @@ const Button = styled.button`
         
     @media screen and (max-width: 700px) {
         font-size: 15px;
+    }
+    
+    &:hover {
+        font-size: 25px;
     }
 `;
 

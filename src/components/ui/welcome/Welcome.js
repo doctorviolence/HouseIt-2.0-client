@@ -13,15 +13,9 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     background: #ffffff;
-    transition: all 0.5s;
-    display: ${props => props.hide ? 'none' : 'flex'};
-    animation: ${props => props.show ? 'fadeIn' : 'fadeOut'};
-    
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-    }
+    transition: all 0.3s ease-in-out;
+    display: ${props => props.show ? 'flex' : 'none'}
+    animation: ${props => props.show ? null : 'fadeOut'};
 
     @keyframes fadeOut {
         100% {
@@ -31,31 +25,19 @@ const Container = styled.div`
 `;
 
 const TextContainer = styled.div`
-    transition: all 0.5s;
-    animation: ${props => props.hide ? 'fadeOut' : 'fadeIn'} 0.3s ease;
-    
-    @keyframes fadeIn {
-        0% {
-            opacity: 0;
-        }
-    }
-
-    @keyframes fadeOut {
-        100% {
-            opacity: 0;
-        }
-    }
+    transition: all 0.3s ease-in-out;
 `;
 
 const Logo = styled.h1`
     position: relative;
     color: #444444;
     font-size: 100px;
-    animation: ${'scale'} 0.3s ease;
+    transition: all 0.3s ease-in-out;
+    animation: 'slideIn' 0.3s ease;
     
-    @keyframes scale {
+    @keyframes slideIn {
         0% {
-            transform: scale(0)
+            transform: translateX(50vw);
         }
     }
 `;
@@ -66,11 +48,12 @@ const WelcomeText = styled.h1`
     margin-left: 10px;
     color: #444444;
     font-size: 40px;
-    animation: ${'fadeIn'} 0.3s ease;
+    transition: all 0.3s ease-in-out;
+    animation: 'slideIn' 0.3s ease;
     
-    @keyframes fadeIn {
+    @keyframes slideIn {
         0% {
-            opacity: 0;
+            transform: translateX(50vw);
         }
     }
     
@@ -83,7 +66,6 @@ const WelcomeText = styled.h1`
 class Welcome extends Component {
     state = {
         display: true,
-        hide: false,
         showLogo: false,
         showText: false
     };
@@ -102,15 +84,15 @@ class Welcome extends Component {
         }, 1500);
 
         setTimeout(() => {
-            this.setState({hide: true});
-        }, 2000);
+            this.setState({display: false});
+        }, 1800);
     }
 
     render() {
         return (
-            <Container show={this.state.display} hide={this.state.hide}>
+            <Container show={this.state.display}>
                 <Logo hidden={!this.state.showLogo}>⌂</Logo>
-                <TextContainer show={this.state.display} hide={!this.state.display}>
+                <TextContainer>
                     <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER</WelcomeText>
                 </TextContainer>
             </Container>

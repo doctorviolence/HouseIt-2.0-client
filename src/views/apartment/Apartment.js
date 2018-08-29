@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Container, TextContainer, Button} from "../../components/constants/components";
+import {Container, TextContainer, ButtonContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import ApartmentData from './ApartmentData';
 import * as viewActions from "../actions";
@@ -40,26 +40,23 @@ class Apartment extends Component {
 
         return (
             <Container key={this.props.id}>
-                <TextContainer>
+                <TextContainer onClick={() => this.props.viewFrame('Tenants', {
+                    building: this.props.building,
+                    apartment: {
+                        apartmentId: this.props.id,
+                        apartmentNo: this.props.apartmentNo,
+                        size: this.props.size,
+                        rent: this.props.rent,
+                        floorNo: this.props.floorNo
+                    }
+                })}>
                     {this.props.apartmentNo}
                 </TextContainer>
-                <TextContainer>
-                    {this.props.size}
-                </TextContainer>
-                <TextContainer>
-                    {this.props.rent}
-                </TextContainer>
-                <TextContainer>
-                    {this.props.floorNo}
-                </TextContainer>
-                <Button onClick={() => this.props.viewFrame('Tenants', {
-                    buildingId: this.props.buildingId,
-                    apartmentId: this.props.id
-                })}>Show
-                    Tenants</Button>
-                <Button onClick={this.toggleEdit}>Edit</Button>
+                <ButtonContainer>
+                    <Button onClick={this.toggleEdit}>Edit</Button>
+                    <Button onClick={() => this.props.removeApartment(this.props.id)}>Remove</Button>
+                </ButtonContainer>
                 {editApartment}
-                <Button onClick={() => this.props.removeApartment(this.props.id)}>Remove</Button>
             </Container>
         )
     }

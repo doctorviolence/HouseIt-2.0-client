@@ -1,10 +1,63 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import styled from "styled-components";
 
-import {Container, TextContainer, Button} from "../../components/constants/components";
+import {Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import BuildingData from './BuildingData';
 import * as viewActions from "../actions";
+
+const BuildingElement = styled.div`
+    width: 200px;
+    max-width: 200px;
+    height: 200px;
+    max-height: 200px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #f2f2f2;
+    flex: 1 1 40%;
+    justify-content: center;
+    
+    @media screen and (max-width: 700px) {
+        width: 100px;
+        max-width: 100px;
+        height: 100px;
+        max-height: 100px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+`;
+
+const TextContainer = styled.div`
+    height: 160px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 12px;
+        height: 60px;
+    }
+    
+    &:hover {
+        font-size: 16px;
+    }
+`;
+
+const ButtonContainer = styled.div`
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    
+    @media screen and (max-width: 700px) {
+        height: 40px;
+    }
+`;
 
 class Building extends Component {
     state = {
@@ -35,16 +88,19 @@ class Building extends Component {
         }
 
         return (
-            <Container key={this.props.id}>
-                <TextContainer>
+            <BuildingElement key={this.props.id}>
+                <TextContainer onClick={() => this.props.viewFrame('Apartments', {
+                    buildingId: this.props.id,
+                    streetAddress: this.props.streetAddress
+                })}>
                     {this.props.streetAddress}
                 </TextContainer>
-                <Button onClick={() => this.props.viewFrame('Apartments', {buildingId: this.props.id})}>Show
-                    Apartments</Button>
-                <Button onClick={this.toggleEdit}>Edit</Button>
+                <ButtonContainer>
+                    <Button onClick={this.toggleEdit}>Edit</Button>
+                    <Button onClick={() => this.props.removeBuilding(this.props.id)}>Remove</Button>
+                </ButtonContainer>
                 {editBuilding}
-                <Button onClick={() => this.props.removeBuilding(this.props.id)}>Remove</Button>
-            </Container>
+            </BuildingElement>
         )
     }
 }

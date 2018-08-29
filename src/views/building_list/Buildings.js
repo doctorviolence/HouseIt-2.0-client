@@ -1,40 +1,53 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
+import {
+    Container,
+    DetailsContainer,
+    DetailsTitle,
+    PageContainer,
+    Menu,
+    AddButton
+} from "../../components/constants/views";
 import Building from '../building/Building';
 import BuildingData from '../building/BuildingData';
+import styled from "styled-components";
 
-const Container = styled.div`
-    align-items: flex-end;
+const BuildingContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    animation: 'fadeIn' 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    
+    @keyframes fadeIn {
+      0% {
+         opacity: 0;
+      }
+   }
+`;
+
+const BuildingElement = styled.div`
+    width: 200px;
+    max-width: 200px;
+    height: 200px;
+    max-height: 200px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #f2f2f2;
+    flex: 1 1 40%;
     justify-content: center;
-`;
-
-const Title = styled.h2`
-    color: #000000;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
     
     @media screen and (max-width: 700px) {
-        font-size: 20px;
-    }
-`;
-
-const Button = styled.button`
-    color: #CC0033;
-    background: #ffffff;
-    border: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 15px;
+        width: 100px;
+        max-width: 100px;
+        height: 100px;
+        max-height: 100px;
+        margin-right: auto;
+        margin-left: auto;
     }
 `;
 
@@ -85,17 +98,26 @@ class Buildings extends Component {
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeFrame('Menu')}>‹ Buildings</Title>
-                {buildings.map((b) => {
-                    return (
-                        <Building
-                            key={b.buildingId}
-                            id={b.buildingId}
-                            streetAddress={b.address}
-                            removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
-                    )
-                })}
-                <Button onClick={this.toggleAdd}>+</Button>
+                <Menu onClick={() => this.props.closeFrame('Menu')}>‹ Menu</Menu>
+                <DetailsContainer>
+                    <DetailsTitle>Buildings</DetailsTitle>
+                </DetailsContainer>
+                <PageContainer>
+                    <BuildingContainer>
+                        {buildings.map((b) => {
+                            return (
+                                <Building
+                                    key={b.buildingId}
+                                    id={b.buildingId}
+                                    streetAddress={b.address}
+                                    removeBuilding={() => this.removeFromBuildings(b.buildingId)}/>
+                            )
+                        })}
+                        <BuildingElement>
+                            <AddButton onClick={this.toggleAdd}>+</AddButton>
+                        </BuildingElement>
+                    </BuildingContainer>
+                </PageContainer>
                 {addBuilding}
             </Container>
         );

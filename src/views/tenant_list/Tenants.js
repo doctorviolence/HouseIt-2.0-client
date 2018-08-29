@@ -1,42 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import styled from 'styled-components';
 import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
+import {
+    Container,
+    DetailsContainer,
+    DetailsTitle,
+    DetailsText,
+    PageContainer,
+    Menu,
+    Title,
+    AddButton
+} from "../../components/constants/views";
 import Tenant from "../tenant/Tenant";
 import TenantData from '../tenant/TenantData';
-
-const Container = styled.div`
-    align-items: flex-end;
-    justify-content: center;
-`;
-
-const Title = styled.h2`
-    color: #000000;
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 20px;
-    }
-`;
-
-const Button = styled.button`
-    color: #CC0033;
-    background: #ffffff;
-    border: none;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    user-select: none;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 15px;
-    }
-`;
 
 class Tenants extends Component {
     state = {
@@ -46,7 +25,7 @@ class Tenants extends Component {
     };
 
     componentDidMount() {
-        this.props.retrieveTenants(this.props.apartmentId);
+        this.props.retrieveTenants(this.props.apartment.apartmentId);
     }
 
     toggleAdd = () => {
@@ -72,33 +51,53 @@ class Tenants extends Component {
 
     render() {
         const tenants = this.props.apiState.data.tenants;
-        const {buildingId} = this.props.viewState.frame.props;
+        const {building} = this.props.viewState.frame.props;
+        const {apartment} = this.props.viewState.frame.props;
 
         let addTenant = null;
         if (this.state.add) {
             addTenant = <TenantData add={this.state.add}
                                     title={"Add new tenant"}
                                     toggleAdd={this.toggleAdd}
-                                    apartmentId={this.props.apartmentId}
+                                    apartmentId={this.props.apartment.apartmentId}
                                     addTenant={this.addToTenants}/>
         }
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeFrame('Apartments', {buildingId: buildingId})}>‹ Tenants</Title>
-                {tenants.map((t) => {
-                    return (
-                        <Tenant
-                            key={t.tenantId}
-                            tenantId={t.tenantId}
-                            firstName={t.firstName}
-                            lastName={t.lastName}
-                            phoneNo={t.phoneNo}
-                            apartmentId={this.props.apartmentId}
-                            removeTenant={() => this.removeFromTenants(t.tenantId)}/>
-                    )
-                })}
-                <Button onClick={this.toggleAdd}>+</Button>
+                <Menu onClick={() => this.props.closeFrame('Apartments', {
+                    buildingId: building.buildingId,
+                    streetAddress: building.streetAddress
+                })
+                }>‹ Apartments</Menu>
+                <DetailsContainer>
+                    <DetailsTitle>Apartment {apartment.apartmentNo}</DetailsTitle>
+                    <DetailsText>
+                        SIZE: {apartment.size} SQUARE METRES
+                    </DetailsText>
+                    <DetailsText>
+                        RENT: {apartment.rent} SEK
+                    </DetailsText>
+                    <DetailsText>
+                        FLOOR: {apartment.floorNo}
+                    </DetailsText>
+                </DetailsContainer>
+                <PageContainer>
+                    <Title>Tenants in apartment</Title>
+                    {tenants.map((t) => {
+                        return (
+                            <Tenant
+                                key={t.tenantId}
+                                tenantId={t.tenantId}
+                                firstName={t.firstName}
+                                lastName={t.lastName}
+                                phoneNo={t.phoneNo}
+                                apartmentId={this.props.apartment.apartmentId}
+                                removeTenant={() => this.removeFromTenants(t.tenantId)}/>
+                        )
+                    })}
+                    <AddButton onClick={this.toggleAdd}>+</AddButton>
+                </PageContainer>
                 {addTenant}
             </Container>
         );

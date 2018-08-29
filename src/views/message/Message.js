@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Container, TextContainer, Button} from "../../components/constants/components";
+import {Container, TextContainer, ButtonContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import MessageData from './MessageData';
 import * as viewActions from "../actions";
@@ -41,9 +41,11 @@ class Message extends Component {
                 <TextContainer>
                     {this.props.messageText}
                 </TextContainer>
-                <Button onClick={this.toggleEdit}>Edit</Button>
+                <ButtonContainer>
+                    <Button onClick={this.toggleEdit}>Edit</Button>
+                    <Button onClick={() => this.props.removeTaskMessage(this.props.id)}>Remove</Button>
+                </ButtonContainer>
                 {editTaskMessage}
-                <Button onClick={() => this.props.removeTaskMessage(this.props.id)}>Remove</Button>
             </Container>
         )
     }

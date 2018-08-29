@@ -1,10 +1,27 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 
-import {Container, TextContainer, Button} from "../../components/constants/components";
+import {Container, ButtonContainer, Button} from "../../components/constants/components";
 import * as actions from '../../api/actions';
 import TenantData from "../tenant/TenantData";
 import * as viewActions from "../actions";
+import styled from "styled-components";
+
+export const TenantContainer = styled.div`
+    width: 100%;
+    margin: auto;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    
+    @media screen and (max-width: 700px) {
+        text-align: left;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+`;
 
 class Tenant extends Component {
     state = {
@@ -40,21 +57,16 @@ class Tenant extends Component {
 
         return (
             <Container key={this.props.id}>
-                <TextContainer>
-                    {this.props.tenantId}
-                </TextContainer>
-                <TextContainer>
-                    {this.props.firstName}
-                </TextContainer>
-                <TextContainer>
-                    {this.props.lastName}
-                </TextContainer>
-                <TextContainer>
-                    {this.props.phoneNo}
-                </TextContainer>
-                <Button onClick={this.toggleEdit}>Edit</Button>
+                <TenantContainer>
+                    <b>First name:</b> {this.props.firstName}
+                    <b>Last name:</b> {this.props.lastName}
+                    <b>Phone No.:</b> {this.props.phoneNo}
+                    <ButtonContainer>
+                        <Button onClick={this.toggleEdit}>Edit</Button>
+                        <Button onClick={() => this.props.removeTenant(this.props.tenantId)}>Remove</Button>
+                    </ButtonContainer>
+                </TenantContainer>
                 {editTenant}
-                <Button onClick={() => this.props.removeTenant(this.props.tenantId)}>Remove</Button>
             </Container>
         )
     }

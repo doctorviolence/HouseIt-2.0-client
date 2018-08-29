@@ -42,6 +42,8 @@ const Title = styled.h2`
 `;
 
 const ButtonContainer = styled.div`
+    width: 100%;
+    top: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;

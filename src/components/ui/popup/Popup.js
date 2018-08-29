@@ -16,9 +16,9 @@ const Container = styled.div`
     transition: all 0.3s ease-in-out;
       
     @media screen and (max-width: 700px) {
-        left: 5px;
-        right: 5px;
-        bottom: 5px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
     }
     
     @keyframes slideOut {
