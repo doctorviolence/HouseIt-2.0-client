@@ -11,6 +11,7 @@ import Messages from "./message_list/Messages";
 import Login from "./Login";
 import Menu from './Menu';
 import Popup from "../components/ui/popup/Popup";
+import Welcome from "../components/ui/welcome/Welcome";
 
 const ViewContainer = styled.div``;
 
@@ -20,7 +21,7 @@ class Views extends Component {
         return this.props.viewState.frame !== nextProps.viewState.frame;
     }
 
-    viewController = (name, parentId, subParentId) => {
+    viewController = (name, props) => {
         try {
             let view = null;
             switch (name) {
@@ -28,16 +29,16 @@ class Views extends Component {
                     view = <Buildings/>;
                     break;
                 case 'Apartments':
-                    view = <Apartments buildingId={parentId}/>;
+                    view = <Apartments {...props}/>;
                     break;
                 case 'Tenants':
-                    view = <Tenants apartmentId={subParentId}/>;
+                    view = <Tenants {...props}/>;
                     break;
                 case 'Tasks':
                     view = <Tasks/>;
                     break;
                 case 'Messages':
-                    view = <Messages taskNo={parentId}/>;
+                    view = <Messages {...props}/>;
                     break;
                 case 'Settings':
                     view = <Menu/>;
@@ -62,14 +63,17 @@ class Views extends Component {
 
     render() {
         const isLoggedIn = this.props.viewState.token !== null;
-        const frame = this.props.viewState.frame;
-        const parentId = this.props.viewState.parentId;
-        const subParentId = this.props.viewState.subParentId;
+        const {title, props} = this.props.viewState.frame;
         const {showPopup, popupTitle} = this.props.viewState;
-        const view = this.viewController(frame, parentId, subParentId);
+        const view = this.viewController(title, props);
 
         if (!isLoggedIn) {
-            return (<Login/>)
+            return (
+                <ViewContainer>
+                    <Welcome/>
+                    <Login/>
+                </ViewContainer>
+            )
         }
 
         return (

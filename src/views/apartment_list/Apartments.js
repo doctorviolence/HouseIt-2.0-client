@@ -84,7 +84,7 @@ class Apartments extends Component {
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeChildrenFrame('Buildings')}>‹ Apartments</Title>
+                <Title onClick={() => this.props.closeFrame('Buildings')}>‹ Apartments</Title>
                 {apartments.map((a) => {
                     return (
                         <Apartment
@@ -94,6 +94,7 @@ class Apartments extends Component {
                             size={a.size}
                             rent={a.rent}
                             floorNo={a.floorNo}
+                            buildingId={this.props.buildingId}
                             removeApartment={() => this.removeFromApartments(a.apartmentId)}/>
                     )
                 })}
@@ -118,7 +119,7 @@ const mapDispatchToProps = dispatch => {
         addApartment: (apartment) => dispatch(apiActions.addApartment(apartment)),
         removeApartment: (id) => dispatch(apiActions.removeApartment(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closeChildrenFrame: (view) => dispatch(viewActions.closeChildrenFrame(view))
+        closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };
 };
 

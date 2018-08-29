@@ -1,7 +1,5 @@
 const initialState = {
-    frame: 'Menu',
-    parentId: null,
-    subParentId: null,
+    frame: {title: 'Menu', props: null},
     showPopup: false,
     popupTitle: '',
     token: null,
@@ -62,25 +60,7 @@ const closePopup = (state) => {
 const viewFrame = (state, action) => {
     return {
         ...state,
-        frame: action.view,
-        showPopup: false
-    };
-};
-
-const viewChildrenFrame = (state, action) => {
-    return {
-        ...state,
-        frame: action.view,
-        parentId: action.parentId,
-        showPopup: false
-    };
-};
-
-const viewSubChildrenFrame = (state, action) => {
-    return {
-        ...state,
-        frame: action.view,
-        subParentId: action.subParentId,
+        frame: {title: action.view, props: action.props},
         showPopup: false
     };
 };
@@ -88,25 +68,7 @@ const viewSubChildrenFrame = (state, action) => {
 const closeFrame = (state, action) => {
     return {
         ...state,
-        frame: action.view,
-        showPopup: false
-    };
-};
-
-const closeChildrenFrame = (state, action) => {
-    return {
-        ...state,
-        frame: action.view,
-        parentId: null,
-        showPopup: false
-    };
-};
-
-const closeSubChildrenFrame = (state, action) => {
-    return {
-        ...state,
-        frame: action.view,
-        subParentId: null,
+        frame: {title: action.view, props: action.props},
         showPopup: false
     };
 };
@@ -125,14 +87,6 @@ const reducer = (state = initialState, action) => {
             return viewFrame(state, action);
         case 'CLOSE_FRAME':
             return closeFrame(state, action);
-        case 'VIEW_CHILDREN_FRAME':
-            return viewChildrenFrame(state, action);
-        case 'CLOSE_CHILDREN_FRAME':
-            return closeChildrenFrame(state, action);
-        case 'VIEW_SUB_CHILDREN_FRAME':
-            return viewSubChildrenFrame(state, action);
-        case 'CLOSE_SUB_CHILDREN_FRAME':
-            return closeSubChildrenFrame(state, action);
         case 'VIEW_POPUP':
             return viewPopup(state, action);
         case 'CLOSE_POPUP':

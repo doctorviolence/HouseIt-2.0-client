@@ -56,7 +56,7 @@ class Task extends Component {
                 <TextContainer>
                     {this.props.resolved}
                 </TextContainer>
-                <Button onClick={() => this.props.viewChildrenFrame('Messages', this.props.id)}>Show
+                <Button onClick={() => this.props.viewFrame('Messages', {taskNo: this.props.id})}>Show
                     Messages</Button>
                 <Button onClick={this.toggleEdit}>Edit</Button>
                 {editTask}
@@ -74,7 +74,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        viewChildrenFrame: (view, parentId) => dispatch(viewActions.viewChildrenFrame(view, parentId)),
+        viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editTask: (task, id) => dispatch(actions.editTask(task, id))
     };

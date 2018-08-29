@@ -15,13 +15,13 @@ export const login = (username, password) => {
             if (e && e.response !== undefined) {
                 switch (e.response.status) {
                     case 401:
-                        dispatch(loginFail('Wrong username and/or password!'));
+                        dispatch(loginFail('Invalid username and/or password...'));
                         break;
                     default:
-                        dispatch(loginFail('Unable to log in at this time. Please try again later.'))
+                        dispatch(loginFail('Not able to log in at this time. Please try again later...'))
                 }
             } else {
-                dispatch(loginFail('Unable to log in at this time. Please try again later.'))
+                dispatch(loginFail('Not able to log in at this time. Please try again later...'))
             }
         });
     }
@@ -53,9 +53,5 @@ export const logout = () => {
 
 export const viewPopup = (popup) => ({type: 'VIEW_POPUP', title: popup.title});
 export const closePopup = () => ({type: 'CLOSE_POPUP'});
-export const viewFrame = (view) => ({type: 'VIEW_FRAME', view});
-export const viewChildrenFrame = (view, parentId) => ({type: 'VIEW_CHILDREN_FRAME', view, parentId});
-export const viewSubChildrenFrame = (view, subParentId) => ({type: 'VIEW_SUB_CHILDREN_FRAME', view, subParentId});
-export const closeFrame = (view) => ({type: 'CLOSE_FRAME', view});
-export const closeChildrenFrame = (view) => ({type: 'CLOSE_CHILDREN_FRAME', view});
-export const closeSubChildrenFrame = (view) => ({type: 'CLOSE_SUB_CHILDREN_FRAME', view});
+export const viewFrame = (view, props) => ({type: 'VIEW_FRAME', view, props: props});
+export const closeFrame = (view, props) => ({type: 'CLOSE_FRAME', view, props: props});

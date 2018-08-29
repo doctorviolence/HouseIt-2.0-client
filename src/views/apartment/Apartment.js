@@ -34,7 +34,8 @@ class Apartment extends Component {
                                            apartmentNo={this.props.apartmentNo}
                                            size={this.props.size}
                                            rent={this.props.rent}
-                                           floorNo={this.props.floorNo}/>
+                                           floorNo={this.props.floorNo}
+                                           buildingId={this.props.buildingId}/>
         }
 
         return (
@@ -51,7 +52,10 @@ class Apartment extends Component {
                 <TextContainer>
                     {this.props.floorNo}
                 </TextContainer>
-                <Button onClick={() => this.props.viewSubChildrenFrame('Tenants', this.props.id)}>Show
+                <Button onClick={() => this.props.viewFrame('Tenants', {
+                    buildingId: this.props.buildingId,
+                    apartmentId: this.props.id
+                })}>Show
                     Tenants</Button>
                 <Button onClick={this.toggleEdit}>Edit</Button>
                 {editApartment}
@@ -69,7 +73,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        viewSubChildrenFrame: (view, subParentId) => dispatch(viewActions.viewSubChildrenFrame(view, subParentId)),
+        viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editApartment: (apartment, id) => dispatch(actions.editApartment(apartment, id))
     };

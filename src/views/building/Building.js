@@ -39,7 +39,7 @@ class Building extends Component {
                 <TextContainer>
                     {this.props.streetAddress}
                 </TextContainer>
-                <Button onClick={() => this.props.viewChildrenFrame('Apartments', this.props.id)}>Show
+                <Button onClick={() => this.props.viewFrame('Apartments', {buildingId: this.props.id})}>Show
                     Apartments</Button>
                 <Button onClick={this.toggleEdit}>Edit</Button>
                 {editBuilding}
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        viewChildrenFrame: (view, parentId) => dispatch(viewActions.viewChildrenFrame(view, parentId)),
+        viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         editBuilding: (building, id) => dispatch(actions.editBuilding(building, id))
     };

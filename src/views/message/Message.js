@@ -32,7 +32,8 @@ class Message extends Component {
                                            toggleEdit={this.toggleEdit}
                                            editTaskMessage={this.editTaskMessage}
                                            messageNo={this.props.messageNo}
-                                           messageText={this.props.messageText}/>
+                                           messageText={this.props.messageText}
+                                           taskNo={this.props.taskNo}/>
         }
 
         return (

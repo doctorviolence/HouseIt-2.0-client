@@ -34,7 +34,8 @@ class Tenant extends Component {
                                      tenantd={this.props.tenantId}
                                      firstName={this.props.firstName}
                                      lastName={this.props.lastName}
-                                     phoneNo={this.props.phoneNo}/>
+                                     phoneNo={this.props.phoneNo}
+                                     apartmentId={this.props.apartmentId}/>
         }
 
         return (

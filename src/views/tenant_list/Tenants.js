@@ -72,6 +72,7 @@ class Tenants extends Component {
 
     render() {
         const tenants = this.props.apiState.data.tenants;
+        const {buildingId} = this.props.viewState.frame.props;
 
         let addTenant = null;
         if (this.state.add) {
@@ -84,7 +85,7 @@ class Tenants extends Component {
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeSubChildrenFrame('Apartments')}>‹ Tenants</Title>
+                <Title onClick={() => this.props.closeFrame('Apartments', {buildingId: buildingId})}>‹ Tenants</Title>
                 {tenants.map((t) => {
                     return (
                         <Tenant
@@ -93,6 +94,7 @@ class Tenants extends Component {
                             firstName={t.firstName}
                             lastName={t.lastName}
                             phoneNo={t.phoneNo}
+                            apartmentId={this.props.apartmentId}
                             removeTenant={() => this.removeFromTenants(t.tenantId)}/>
                     )
                 })}
@@ -116,7 +118,7 @@ const mapDispatchToProps = dispatch => {
         addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
         removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
-        closeSubChildrenFrame: (view) => dispatch(viewActions.closeSubChildrenFrame(view))
+        closeFrame: (view, props) => dispatch(viewActions.closeFrame(view, props))
     };
 };
 

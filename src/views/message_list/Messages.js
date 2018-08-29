@@ -84,7 +84,7 @@ class Messages extends Component {
 
         return (
             <Container>
-                <Title onClick={() => this.props.closeChildrenFrame('Tasks')}>‹ Messages</Title>
+                <Title onClick={() => this.props.closeFrame('Tasks', {taskNo: this.props.taskNo})}>‹ Messages</Title>
                 {taskMessages.map((t) => {
                     return (
                         <TaskMessage
@@ -92,6 +92,7 @@ class Messages extends Component {
                             id={t.messageNo}
                             messageNo={t.messageNo}
                             messageText={t.messageText}
+                            taskNo={this.props.taskNo}
                             removeTaskMessage={() => this.removeFromTaskMessages(t.messageNo)}/>
                     )
                 })}
@@ -116,7 +117,7 @@ const mapDispatchToProps = dispatch => {
         removeTaskMessage: (id) => dispatch(apiActions.removeTaskMessage(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closePopup: () => dispatch(viewActions.closePopup()),
-        closeChildrenFrame: (view) => dispatch(viewActions.closeChildrenFrame(view))
+        closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };
 };
 

@@ -12,10 +12,11 @@ const Container = styled.div`
 `;
 
 const Title = styled.h2`
-    color: #000000;
-    font-size: 30px;
-    font-weight: bold;
     margin-bottom: 50px;
+    color: #444444;
+    font-size: 30px;
+    user-select: none;
+    cursor: default;
     
     @media screen and (max-width: 700px) {
         font-size: 20px;

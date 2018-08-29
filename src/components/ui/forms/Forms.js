@@ -14,17 +14,18 @@ const Description = styled.label`
 const Input = styled.input`
     outline: none;
     padding: 7px;
+    font-size: 14px;
     border: 1px solid #f2f2f2;
     margin-bottom: 10px;
     
     &:focus {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #f2f2f2' : '1px solid #CC0033'};
+        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
     }
     
     &:focus:hover {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #f2f2f2' : '1px solid #CC0033'};
+        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
     }
     
     &:hover {
@@ -39,12 +40,12 @@ const TextArea = styled.textarea`
     
     &:focus {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #5d9451' : '1px solid #fda49a'};
+        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
     }
     
     &:focus:hover {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #5d9451' : '1px solid #fda49a'};
+        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
     }
     
     &:hover {

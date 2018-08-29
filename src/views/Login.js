@@ -7,16 +7,13 @@ import {validation} from "../components/constants/validation";
 import Forms from "../components/ui/forms/Forms";
 import Views from "./Views";
 
-const Container = styled.div`
-    align-items: center;
-    justify-content: space-between;
-`;
+const Container = styled.div``;
 
 const Title = styled.h2`
-    color: #000000;
+    color: #444444;
     font-size: 30px;
-    font-weight: bold;
-    margin-bottom: 50px;
+    user-select: none;
+    cursor: default;
     
     @media screen and (max-width: 700px) {
         font-size: 20px;
@@ -35,28 +32,38 @@ const FormContainer = styled.form`
     }
 `;
 
-const Button = styled.button`
-    color: #000000;
-    background: #f2f2f2;
-    border: 1px solid #f2f2f2;
-    font-size: 20px;
+const LoginButton = styled.button`
+    height: 40px;
+    color: #ffffff;
+    background: #444444;
+    border: 1px solid #444444;
+    font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
     
     &:hover {
-        background: #f2f2f2;
+        background: #444444;
     }
+`;
+
+const Footer = styled.footer`
+    position: absolute;
+    width: 100%;
+    bottom: 5px;
+    color: #444444;
+    user-select: none;
+    cursor: default;
     
     @media screen and (max-width: 700px) {
-        font-size: 15px;
+        font-size: 10px;
     }
 `;
 
 const ErrorMessage = styled.label`
-    margin-top: 20px;
-    color: #CC0033;
-    font-size: 12px;
+    margin-bottom: 20px;
+    color: #fd5c63;
+    font-size: 14px;
     font-weight: bold;
 `;
 
@@ -92,7 +99,8 @@ class Login extends Component {
                 },
                 valid: false
             }
-        }, formIsValid: false
+        }, formIsValid: false,
+        error: false
     };
 
     userInputHandler = (event) => {
@@ -117,7 +125,10 @@ class Login extends Component {
         const password = this.state.loginForm.password.value;
 
         if (this.state.formIsValid) {
+            this.setState({error: false});
             this.props.login(username, password);
+        } else {
+            this.setState({error: true});
         }
     };
 
@@ -131,6 +142,10 @@ class Login extends Component {
             errorMessage = (<ErrorMessage>{this.props.error}</ErrorMessage>);
         }
 
+        if (this.state.error) {
+            errorMessage = (<ErrorMessage>Please fill out a valid username and/or password...</ErrorMessage>);
+        }
+
         for (let key in this.state.loginForm) {
             loginFormInputs.push({
                 id: key,
@@ -141,7 +156,7 @@ class Login extends Component {
         if (!isLoggedIn) {
             return (
                 <Container>
-                    <Title>Log in</Title>
+                    <Title>Welcome</Title>
                     <FormContainer>
                         {loginFormInputs.map(input => (
                             <Forms
@@ -150,12 +165,12 @@ class Login extends Component {
                                 formConfig={input.config.formConfig}
                                 value={input.config.value}
                                 valid={input.config.valid}
-                                description={input.config.description}
                                 changed={(event) => this.userInputHandler(event)}/>
                         ))}
-                        <Button onClick={(event) => this.handleSubmit(event)}>Login</Button>
                         {errorMessage}
+                        <LoginButton onClick={(event) => this.handleSubmit(event)}>Log in</LoginButton>
                     </FormContainer>
+                    <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
                 </Container>
             );
         }
