@@ -7,7 +7,24 @@ const initialState = {
         taskMessages: [],
         users: []
     },
+    entity: {
+        building: null,
+        apartment: null,
+        tenant: null,
+        task: null,
+        taskMessage: null
+    },
     error: false
+};
+
+const retrieveBuilding = (state, action) => {
+    return {
+        ...state,
+        entity: {
+            ...state.entity, building: [...action.building]
+        },
+        error: false
+    };
 };
 
 const retrieveBuildings = (state, action) => {
@@ -48,6 +65,16 @@ const removeBuilding = (state, action) => {
     return {
         ...state,
         data: {...state.data, buildings: updatedBuildings},
+        error: false
+    };
+};
+
+const retrieveApartment = (state, action) => {
+    return {
+        ...state,
+        entity: {
+            ...state.entity, apartment: [...action.apartment]
+        },
         error: false
     };
 };
@@ -94,6 +121,16 @@ const removeApartment = (state, action) => {
     };
 };
 
+const retrieveTenant = (state, action) => {
+    return {
+        ...state,
+        entity: {
+            ...state.entity, tenant: [...action.tenant]
+        },
+        error: false
+    };
+};
+
 const retrieveTenants = (state, action) => {
     return {
         ...state,
@@ -136,6 +173,16 @@ const removeTenant = (state, action) => {
     };
 };
 
+const retrieveTask = (state, action) => {
+    return {
+        ...state,
+        entity: {
+            ...state.entity, task: action.task
+        },
+        error: false
+    };
+};
+
 const retrieveTasks = (state, action) => {
     return {
         ...state,
@@ -147,6 +194,7 @@ const retrieveTasks = (state, action) => {
 };
 
 const addTask = (state, action) => {
+    console.log(action.result);
     const updatedTasks = state.data.tasks.concat(action.result);
     return {
         ...state,
@@ -174,6 +222,16 @@ const removeTask = (state, action) => {
     return {
         ...state,
         data: {...state.data, tasks: updatedTasks},
+        error: false
+    };
+};
+
+const retrieveMessage = (state, action) => {
+    return {
+        ...state,
+        entity: {
+            ...state.entity, taskMessage: [...action.taskMessage]
+        },
         error: false
     };
 };
@@ -229,6 +287,8 @@ const showError = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'BUILDING_RETRIEVED_SUCCESS':
+            return retrieveBuilding(state, action);
         case 'BUILDINGS_RETRIEVED_SUCCESS':
             return retrieveBuildings(state, action);
         case 'BUILDING_ADDED_SUCCESS':
@@ -237,6 +297,8 @@ const reducer = (state = initialState, action) => {
             return editBuilding(state, action);
         case 'BUILDING_REMOVED_SUCCESS':
             return removeBuilding(state, action);
+        case 'APARTMENT_RETRIEVED_SUCCESS':
+            return retrieveApartment(state, action);
         case 'APARTMENTS_RETRIEVED_SUCCESS':
             return retrieveApartments(state, action);
         case 'APARTMENT_ADDED_SUCCESS':
@@ -245,6 +307,8 @@ const reducer = (state = initialState, action) => {
             return editApartment(state, action);
         case 'APARTMENT_REMOVED_SUCCESS':
             return removeApartment(state, action);
+        case 'TENANT_RETRIEVED_SUCCESS':
+            return retrieveTenant(state, action);
         case 'TENANTS_RETRIEVED_SUCCESS':
             return retrieveTenants(state, action);
         case 'TENANT_ADDED_SUCCESS':
@@ -253,6 +317,8 @@ const reducer = (state = initialState, action) => {
             return editTenant(state, action);
         case 'TENANT_REMOVED_SUCCESS':
             return removeTenant(state, action);
+        case 'TASK_RETRIEVED_SUCCESS':
+            return retrieveTask(state, action);
         case 'TASKS_RETRIEVED_SUCCESS':
             return retrieveTasks(state, action);
         case 'TASK_ADDED_SUCCESS':
@@ -261,6 +327,8 @@ const reducer = (state = initialState, action) => {
             return editTask(state, action);
         case 'TASK_REMOVED_SUCCESS':
             return removeTask(state, action);
+        case 'MESSAGE_RETRIEVED_SUCCESS':
+            return retrieveMessage(state, action);
         case 'MESSAGES_RETRIEVED_SUCCESS':
             return retrieveMessages(state, action);
         case 'MESSAGE_ADDED_SUCCESS':

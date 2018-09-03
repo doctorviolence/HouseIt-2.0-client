@@ -8,8 +8,10 @@ export const login = (username, password) => {
         return api.login(username, password).then(result => {
                 const token = result.headers.authorization;
                 const tenant = result.headers.tenant;
+                const apartment = {apartmentId: result.headers.apartmentid, apartmentNo: result.headers.apartmentno};
+                const building = {buildingId: result.headers.buildingid, buildingName: result.headers.buildingname};
                 localStorage.setItem('token', token);
-                dispatch(loginSuccess(token, tenant))
+                dispatch(loginSuccess(token, tenant, apartment, building))
             }
         ).catch(e => {
             if (e && e.response !== undefined) {
@@ -27,9 +29,9 @@ export const login = (username, password) => {
     }
 };
 
-export const loginSuccess = (token, tenant) => {
+export const loginSuccess = (token, tenant, apartment, building) => {
     return dispatch => {
-        dispatch({type: 'LOGIN_SUCCESS', token: token, tenant: tenant});
+        dispatch({type: 'LOGIN_SUCCESS', token: token, tenant: tenant, apartment: apartment, building: building});
         dispatch(tokenExpiration());
     }
 };

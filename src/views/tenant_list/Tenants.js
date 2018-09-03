@@ -1,32 +1,44 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from "prop-types";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import {
     Container,
-    DetailsContainer,
-    DetailsTitle,
-    DetailsText,
     PageContainer,
     Menu,
     Title,
-    AddButton
-} from "../../components/constants/views";
-import Tenant from "../tenant/Tenant";
-import TenantData from '../tenant/TenantData';
+    AddButton,
+    MenuButton
+} from "../../components/constants/styles/views";
+import Tenant from "../../components/tenant/Tenant";
+import TenantData from "../../components/tenant/Data";
+import TenantDetails from "../../components/tenant/details/Details";
+
 
 class Tenants extends Component {
-    state = {
-        add: false,
-        error: false,
-        tenantSelectedId: null
-    };
+    constructor(props) {
+        super(props);
+
+        this.tenantSelectedHandler = this.tenantSelectedHandler.bind(this);
+        this.addToTenants = this.addToTenants.bind(this);
+        this.removeFromTenants = this.removeFromTenants.bind(this);
+        this.toggleAdd = this.toggleAdd.bind(this.props.buildingId);
+
+        this.state = {
+            add: false,
+            tenantSelectedId: null,
+            showDetails: false
+        };
+    }
 
     componentDidMount() {
         this.props.retrieveTenants(this.props.apartment.apartmentId);
     }
+
+    tenantSelectedHandler = (id) => {
+        this.setState({tenantSelectedId: id});
+    };
 
     toggleAdd = () => {
         this.setState((prevState) => {
@@ -54,51 +66,41 @@ class Tenants extends Component {
         const {building} = this.props.viewState.frame.props;
         const {apartment} = this.props.viewState.frame.props;
 
-        let addTenant = null;
-        if (this.state.add) {
-            addTenant = <TenantData add={this.state.add}
-                                    title={"Add new tenant"}
-                                    toggleAdd={this.toggleAdd}
-                                    apartmentId={this.props.apartment.apartmentId}
-                                    addTenant={this.addToTenants}/>
+        let tenantDetails = null;
+        if (this.state.tenantSelectedId) {
+            tenantDetails = <TenantDetails
+                id={this.state.tenantSelectedId}
+                apartment={apartment}
+                toggleTenantDetails={() => this.tenantSelectedHandler()}
+                removeTenant={() => this.removeFromTenants(this.state.tenantSelectedId)}/>;
         }
-
         return (
             <Container>
-                <Menu onClick={() => this.props.closeFrame('Apartments', {
-                    buildingId: building.buildingId,
-                    streetAddress: building.streetAddress
-                })
-                }>‹ Apartments</Menu>
-                <DetailsContainer>
-                    <DetailsTitle>Apartment {apartment.apartmentNo}</DetailsTitle>
-                    <DetailsText>
-                        SIZE: {apartment.size} SQUARE METRES
-                    </DetailsText>
-                    <DetailsText>
-                        RENT: {apartment.rent} SEK
-                    </DetailsText>
-                    <DetailsText>
-                        FLOOR: {apartment.floorNo}
-                    </DetailsText>
-                </DetailsContainer>
+                <Menu>
+                    <MenuButton onClick={() => this.props.closeFrame('Apartments',
+                        {buildingId: building.buildingId, name: building.name})
+                    }>‹ Apartments</MenuButton>
+                </Menu>
                 <PageContainer>
-                    <Title>Tenants in apartment</Title>
+                    <Title>Tenants in {apartment.apartmentNo}</Title>
+                    {tenantDetails}
                     {tenants.map((t) => {
                         return (
                             <Tenant
                                 key={t.tenantId}
-                                tenantId={t.tenantId}
+                                id={t.tenantId}
                                 firstName={t.firstName}
                                 lastName={t.lastName}
-                                phoneNo={t.phoneNo}
-                                apartmentId={this.props.apartment.apartmentId}
-                                removeTenant={() => this.removeFromTenants(t.tenantId)}/>
+                                clicked={() => this.tenantSelectedHandler(t.tenantId)}/>
                         )
                     })}
                     <AddButton onClick={this.toggleAdd}>+</AddButton>
                 </PageContainer>
-                {addTenant}
+                <TenantData add={this.state.add}
+                            title={"Add new tenant"}
+                            toggleAdd={this.toggleAdd}
+                            apartment={this.props.apartment}
+                            addTenant={this.addToTenants}/>
             </Container>
         );
     }
@@ -113,19 +115,12 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        retrieveTenants: (apartmentId) => dispatch(apiActions.retrieveTenants(apartmentId)),
+        retrieveTenants: (id) => dispatch(apiActions.retrieveTenants(id)),
         addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
         removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closeFrame: (view, props) => dispatch(viewActions.closeFrame(view, props))
     };
-};
-
-Tenants.propTypes = {
-    tenantId: PropTypes.number,
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    phoneNo: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tenants);

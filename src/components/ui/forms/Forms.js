@@ -69,6 +69,9 @@ const forms = (props) => {
         case ('textarea'):
             formInput = <TextArea {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
             break;
+        case ('file'):
+            formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
+            break;
         default:
             formInput = <Input {...props.formConfig} valid={props.valid} value={props.value} onChange={props.changed}/>;
     }

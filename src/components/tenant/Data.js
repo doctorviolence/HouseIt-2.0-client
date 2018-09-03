@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-expressions */
 import React, {Component} from 'react';
-import {validation} from "../../components/constants/validation";
-import Add from "../../components/add/Add";
-import Edit from "../../components/edit/Edit";
+import {validation} from "../constants/validation";
+import Add from "../add/Add";
+import Edit from "../edit/Edit";
 
-class TenantData extends Component {
+class Data extends Component {
     state = {
         dataForm: {
             firstName: {
@@ -48,6 +48,20 @@ class TenantData extends Component {
                     required: true
                 },
                 valid: false
+            },
+            email: {
+                formType: 'input',
+                description: 'Email',
+                formConfig: {
+                    type: 'email',
+                    name: 'email',
+                    placeholder: 'Email'
+                },
+                value: this.props.email || '',
+                validation: {
+                    required: true
+                },
+                valid: false
             }
         },
         formIsValid: false
@@ -69,13 +83,15 @@ class TenantData extends Component {
         this.setState({dataForm: updatedDataForm, formIsValid: isValid});
     };
 
-    addTenant = () => {
+    addTenant = (event) => {
+        event.preventDefault();
         const data = {
             tenantId: null,
             firstName: this.state.dataForm.firstName.value,
             lastName: this.state.dataForm.lastName.value,
             phoneNo: this.state.dataForm.phoneNo.value,
-            apartment: {apartmentId: this.props.apartmentId}
+            email: this.state.dataForm.email.value,
+            apartment: this.props.apartment
         };
 
         if (this.state.formIsValid) {
@@ -86,18 +102,22 @@ class TenantData extends Component {
         }
     };
 
-    editTenant = () => {
+    editTenant = (event) => {
+        event.preventDefault();
         const id = this.props.id;
         const data = {
             tenantId: id,
             firstName: this.state.dataForm.firstName.value,
             lastName: this.state.dataForm.lastName.value,
             phoneNo: this.state.dataForm.phoneNo.value,
-            apartment: {apartmentId: this.props.apartmentId}
+            email: this.state.dataForm.email.value,
+            apartment: this.props.apartment
         };
 
-        this.props.toggleEdit;
-        this.props.editTenant(data, id);
+        if (this.state.formIsValid) {
+            this.props.toggleEdit;
+            this.props.editTenant(data, id);
+        }
     };
 
     render() {
@@ -107,7 +127,7 @@ class TenantData extends Component {
                      title={"Add new tenant"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
-                     formValid={this.state.formIsValid}
+                     formIsValid={this.state.formIsValid}
                      submitData={this.addTenant}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
@@ -118,6 +138,7 @@ class TenantData extends Component {
                       title={"Edit tenant"}
                       editForm={this.state.dataForm}
                       toggleEdit={this.props.toggleEdit}
+                      formIsValid={this.state.formIsValid}
                       submitData={this.editTenant}
                       editFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
@@ -126,4 +147,4 @@ class TenantData extends Component {
     }
 }
 
-export default TenantData;
+export default Data;

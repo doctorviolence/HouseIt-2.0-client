@@ -2,6 +2,16 @@ import axios from '../axios-instance';
 
 class ApiTask {
 
+    getTask = (id, queryToken) => {
+        return axios.get('/tasks/find-by-id/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
+            .then(response => response.data);
+    };
+
     getAllTasks = (queryToken) => {
         return axios
             .get('/tasks', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})

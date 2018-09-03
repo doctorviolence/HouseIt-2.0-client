@@ -2,6 +2,16 @@ import axios from '../axios-instance';
 
 class ApiTaskMessage {
 
+    getMessage = (id, queryToken) => {
+        return axios.get('/messages/find-by-id/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
+            .then(response => response.data);
+    };
+
     getTaskMessages = (taskNo, queryToken) => {
         return axios
             .get('/messages/' + taskNo, {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})

@@ -19,13 +19,13 @@ const FormContainer = styled.div`
     
     @keyframes slideOut {
       0% {
-         transform: translateY(100vw);
+         transform: translateY(100vh);
       }
    }
    
     @keyframes slideIn {
       100% {
-         transform: translateY(100vw);
+         transform: translateY(100vh);
       }
     }
 `;
@@ -71,7 +71,8 @@ const SubmitButton = styled.button`
     font-weight: bold;
     cursor: pointer;
     user-select: none;
-    display: ${props => props.formValid ? 'flex' : 'none'};
+    color: ${props => props.formIsValid ? '#CC0033' : '#999999'};
+    pointer-events: ${props => props.formIsValid ? 'auto' : 'none'}; 
     
     @media screen and (max-width: 700px) {
         font-size: 15px;
@@ -116,10 +117,10 @@ const edit = (props) => {
 
     if (props.display) {
         return (
-            <FormContainer show={props.display}>
+            <FormContainer onSubmit={props.submitData} show={props.display}>
                 <ButtonContainer>
                     <Button onClick={props.toggleEdit}> ‹ Cancel</Button>
-                    <SubmitButton formValid={true} onClick={props.submitData}> Done</SubmitButton>
+                    <SubmitButton formIsValid={props.formIsValid} onClick={props.submitData}> Done</SubmitButton>
                 </ButtonContainer>
                 <Title>{props.title}</Title>
                 {form}

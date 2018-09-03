@@ -31,24 +31,30 @@ const Title = styled.h2`
     }
 `;
 
-const Button = styled.button`
-    width: 400px;
+const Button = styled.div`
+    width: 40vw;
     margin-bottom: 40px;
     color: #CC0033;
     background: #ffffff;
-    border: none;
     font-size: 20px;
     font-weight: bold;
+    display: flex;
+    text-align: left;
+    border-bottom: 1px solid #bdbebf;
+    align-items: center;
+    justify-content: space-between;
     cursor: pointer;
     user-select: none;
-        
-    @media screen and (max-width: 700px) {
-        font-size: 15px;
-    }
     
-    &:hover {
-        font-size: 25px;
+    @media screen and (max-width: 700px) {
+        width: 80vw;
+        font-size: 16px;
     }
+`;
+
+const ArrowContainer = styled.div`
+    font-size: 30px;
+    color: #bdbebf;
 `;
 
 class Menu extends Component {
@@ -65,10 +71,15 @@ class Menu extends Component {
             return (
                 <Container>
                     <Title>Menu</Title>
-                    <Button onClick={() => this.props.viewFrame('Buildings')}>Buildings</Button>
-                    <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks</Button>
-                    <Button onClick={() => this.props.viewFrame('Settings')}>Settings</Button>
-                    <Button onClick={this.logOutHandler}>Log out</Button>
+                    <Button
+                        onClick={() => this.props.viewFrame('Buildings')}>Buildings <ArrowContainer>›</ArrowContainer>
+                    </Button>
+                    <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks <ArrowContainer>›</ArrowContainer>
+                    </Button>
+                    <Button onClick={() => this.props.viewFrame('Settings')}>Settings <ArrowContainer>›</ArrowContainer>
+                    </Button>
+                    <Button onClick={this.logOutHandler}>Log out <ArrowContainer>›</ArrowContainer>
+                    </Button>
                 </Container>
             );
         }

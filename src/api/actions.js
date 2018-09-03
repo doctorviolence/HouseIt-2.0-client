@@ -4,6 +4,20 @@ import apiTenant from './tenant/apiTenant';
 import apiTask from './task/apiTask';
 import apiTaskMessage from './taskMessage/apiTaskMessage';
 
+export const retrieveBuilding = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        console.log('[Actions]: ', id);
+        return apiBuilding.getBuilding(id, queryToken)
+            .then(building => {
+                    dispatch({type: 'BUILDING_RETRIEVED_SUCCESS', building})
+                }
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
 export const retrieveBuildings = () => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
@@ -48,6 +62,19 @@ export const removeBuilding = (id) => {
         return apiBuilding.deleteBuilding(id, queryToken)
             .then(
                 dispatch({type: 'BUILDING_REMOVED_SUCCESS', buildingId: id})
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
+export const retrieveApartment = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiApartment.getApartment(id, queryToken)
+            .then(apartment => {
+                    dispatch({type: 'APARTMENT_RETRIEVED_SUCCESS', apartment})
+                }
             ).catch(e => {
                 dispatch({type: 'SHOW_ERROR', error: e})
             })
@@ -104,6 +131,19 @@ export const removeApartment = (id) => {
     }
 };
 
+export const retrieveTenant = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTenant.getTenant(id, queryToken)
+            .then(tenant => {
+                    dispatch({type: 'TENANT_RETRIEVED_SUCCESS', tenant})
+                }
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
 export const retrieveTenants = (apartmentId) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
@@ -148,6 +188,19 @@ export const removeTenant = (id) => {
         return apiTenant.deleteTenant(id, queryToken)
             .then(
                 dispatch({type: 'TENANT_REMOVED_SUCCESS', tenantId: id})
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
+export const retrieveTask = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTask.getTask(id, queryToken)
+            .then(task => {
+                    dispatch({type: 'TASK_RETRIEVED_SUCCESS', task});
+                }
             ).catch(e => {
                 dispatch({type: 'SHOW_ERROR', error: e})
             })
@@ -217,6 +270,19 @@ export const removeTask = (id) => {
     }
 };
 
+export const retrieveTaskMessage = (id) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiTaskMessage.getMessage(id, queryToken)
+            .then(taskMessage => {
+                    dispatch({type: 'MESSAGE_RETRIEVED_SUCCESS', taskMessage})
+                }
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
 export const retrieveTaskMessages = (taskNo) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
@@ -234,8 +300,8 @@ export const addTaskMessage = (taskMessage) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
         return apiTaskMessage.addTaskMessage(taskMessage, queryToken)
-            .then(taskMessage => {
-                    dispatch({type: 'MESSAGE_ADDED_SUCCESS', taskMessage})
+            .then(result => {
+                    dispatch({type: 'MESSAGE_ADDED_SUCCESS', taskMessage: result})
                 }
             ).catch(e => {
                 dispatch({type: 'SHOW_ERROR', error: e})

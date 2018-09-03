@@ -4,6 +4,8 @@ const initialState = {
     popupTitle: '',
     token: null,
     tenant: null,
+    apartment: null,
+    building: null,
     loginError: null
 };
 
@@ -20,6 +22,8 @@ const loginSuccess = (state, action) => {
         ...state,
         token: action.token,
         tenant: action.tenant,
+        apartment: action.apartment,
+        building: action.building,
         loginError: null,
         loading: false
     }

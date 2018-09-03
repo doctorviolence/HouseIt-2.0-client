@@ -15,11 +15,12 @@ const Container = styled.div`
     background: #ffffff;
     transition: all 0.3s ease-in-out;
     display: ${props => props.show ? 'flex' : 'none'}
-    animation: ${props => props.show ? null : 'fadeOut'};
+    animation: ${props => props.show ? null : 'hide'};
 
-    @keyframes fadeOut {
+    @keyframes hide {
         100% {
-            opacity: 0;
+             transform: scale(0);
+             opacity: 0;
         }
     }
 `;
@@ -93,7 +94,7 @@ class Welcome extends Component {
             <Container show={this.state.display}>
                 <Logo hidden={!this.state.showLogo}>⌂</Logo>
                 <TextContainer>
-                    <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER</WelcomeText>
+                    <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER AB</WelcomeText>
                 </TextContainer>
             </Container>
         )

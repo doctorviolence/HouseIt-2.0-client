@@ -9,7 +9,7 @@ injectGlobal`
         text-align: center;
         margin-top: 72px;
         background-color: #ffffff;
-        font-family: "Helvetica Neue", Helvetica Neue;
+        font-family: "Helvetica", Helvetica;
         font-size: 14px;
    }
 `;

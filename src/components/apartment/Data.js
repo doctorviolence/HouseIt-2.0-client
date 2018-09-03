@@ -1,8 +1,7 @@
-/* eslint-disable no-unused-expressions */
 import React, {Component} from 'react';
-import {validation} from "../../components/constants/validation";
-import Add from "../../components/add/Add";
-import Edit from "../../components/edit/Edit";
+import {validation} from "../constants/validation";
+import Add from "../add/Add";
+import Edit from "../edit/Edit";
 
 class apartmentData extends Component {
     state = {
@@ -83,7 +82,8 @@ class apartmentData extends Component {
         this.setState({dataForm: updatedDataForm, formIsValid: isValid});
     };
 
-    addApartment = () => {
+    addApartment = (event) => {
+        event.preventDefault();
         const data = {
             apartmentId: null,
             apartmentNo: this.state.dataForm.apartmentNo.value,
@@ -101,7 +101,8 @@ class apartmentData extends Component {
         }
     };
 
-    editApartment = () => {
+    editApartment = (event) => {
+        event.preventDefault();
         const id = this.props.id;
         const data = {
             apartmentId: id,
@@ -109,11 +110,13 @@ class apartmentData extends Component {
             rent: this.state.dataForm.rent.value,
             size: this.state.dataForm.size.value,
             floorNo: this.state.dataForm.floorNo.value,
-            building: {buildingId: this.props.buildingId}
+            building: this.props.building
         };
 
-        this.props.toggleEdit;
-        this.props.editApartment(data, id);
+        if (this.state.formIsValid) {
+            this.props.toggleEdit;
+            this.props.editApartment(data, id);
+        }
     };
 
     render() {
@@ -123,7 +126,7 @@ class apartmentData extends Component {
                      title={"Add new apartment"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
-                     formValid={this.state.formIsValid}
+                     formIsValid={this.state.formIsValid}
                      submitData={this.addApartment}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
@@ -133,6 +136,7 @@ class apartmentData extends Component {
                 <Edit display={this.props.edit}
                       title={"Edit apartment"}
                       editForm={this.state.dataForm}
+                      formIsValid={this.state.formIsValid}
                       toggleEdit={this.props.toggleEdit}
                       submitData={this.editApartment}
                       editFormChanged={(event) => this.changeDataFormHandler(event)}/>

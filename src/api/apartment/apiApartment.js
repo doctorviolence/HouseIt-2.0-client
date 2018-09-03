@@ -2,6 +2,16 @@ import axios from '../axios-instance';
 
 class ApiApartment {
 
+    getApartment = (id, queryToken) => {
+        return axios.get('/apartments/find-by-id/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
+            .then(response => response.data);
+    };
+
     getApartmentsInBuilding = (id, queryToken) => {
         return axios.get('/apartments/apartments-in-building/' + id, {
             headers: {

@@ -1,23 +1,22 @@
-/* eslint-disable no-unused-expressions */
 import React, {Component} from 'react';
-import {validation} from "../../components/constants/validation";
-import Add from "../../components/add/Add";
-import Edit from "../../components/edit/Edit";
+import {validation} from "../constants/validation";
+import Add from "../add/Add";
 
 class MessageData extends Component {
     state = {
         dataForm: {
             messageText: {
                 formType: 'textarea',
-                description: 'Message',
+                description: 'Message 0/250',
                 formConfig: {
-                    type: 'text',
+                    type: 'textarea',
                     name: 'messageText',
                     placeholder: 'Message'
                 },
                 value: this.props.messageText || '',
                 validation: {
-                    required: true
+                    required: true,
+                    maxLength: 250
                 },
                 valid: false
             }
@@ -29,6 +28,7 @@ class MessageData extends Component {
         event.preventDefault();
         const updatedDataForm = {...this.state.dataForm};
         const updatedForm = {...updatedDataForm[event.target.name]};
+        updatedForm.description = 'Message ' + event.target.value.length + '/250';
         updatedForm.value = event.target.value;
         updatedForm.valid = validation(event.target.value, updatedForm.validation);
         updatedDataForm[event.target.name] = updatedForm;
@@ -41,13 +41,18 @@ class MessageData extends Component {
         this.setState({dataForm: updatedDataForm, formIsValid: isValid});
     };
 
-    addTaskMessage = () => {
+    addTaskMessage = (event) => {
+        event.preventDefault();
+        const d = new Date();
+        const month = d.getMonth() + 1;
+        const datePosted = d.getFullYear() + "-" + month + "-" + d.getDate();
         const data = {
             messageNo: null,
+            datePosted: datePosted,
+            timePosted: datePosted + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
             messageText: this.state.dataForm.messageText.value,
-            task: {taskNo: this.props.taskNo}
+            task: this.props.taskNo
         };
-
         if (this.state.formIsValid) {
             this.props.toggleAdd;
             this.props.addTaskMessage(data);
@@ -56,17 +61,20 @@ class MessageData extends Component {
         }
     };
 
-    editTaskMessage = () => {
-        const no = this.props.id;
-        const data = {
-            messageNo: no,
-            messageText: this.state.dataForm.messageText.value,
-            task: {taskNo: this.props.taskNo}
-        };
-
-        this.props.toggleEdit;
-        this.props.editTaskMessage(data, no);
-    };
+    //editTaskMessage = (event) => {
+    //    event.preventDefault();
+    //    const no = this.props.id;
+    //    const data = {
+    //        messageNo: no,
+    //        messageText: this.state.dataForm.messageText.value,
+    //        task: {taskNo: this.props.taskNo}
+    //    };
+    //
+    //    if (this.state.formIsValid) {
+    //        this.props.toggleEdit;
+    //        this.props.editTaskMessage(data, no);
+    //    }
+    //};
 
     render() {
         if (this.props.add) {
@@ -75,21 +83,12 @@ class MessageData extends Component {
                      title={"Write new message"}
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
-                     formValid={this.state.formIsValid}
+                     formIsValid={this.state.formIsValid}
                      submitData={this.addTaskMessage}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
-        if (this.props.edit) {
-            return (
-                <Edit display={this.props.edit}
-                      title={"Edit message"}
-                      editForm={this.state.dataForm}
-                      toggleEdit={this.props.toggleEdit}
-                      submitData={this.editTaskMessage}
-                      editFormChanged={(event) => this.changeDataFormHandler(event)}/>
-            );
-        }
+
         return null;
     }
 }

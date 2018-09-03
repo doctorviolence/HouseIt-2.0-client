@@ -2,6 +2,17 @@ import axios from '../axios-instance';
 
 class ApiBuilding {
 
+    getBuilding = (id, queryToken) => {
+        console.log('[ApiBuilding]: ', id);
+        return axios.get('/buildings/find-by-id/' + id, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': queryToken
+            }
+        })
+            .then(response => response.data);
+    };
+
     getBuildings = (queryToken) => {
         return axios
             .get('/buildings', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})

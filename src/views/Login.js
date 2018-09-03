@@ -36,15 +36,10 @@ const LoginButton = styled.button`
     height: 40px;
     color: #ffffff;
     background: #444444;
-    border: 1px solid #444444;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
     user-select: none;
-    
-    &:hover {
-        background: #444444;
-    }
 `;
 
 const Footer = styled.footer`

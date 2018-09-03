@@ -1,31 +1,82 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import PropTypes from "prop-types";
+import styled from "styled-components";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import {
-    Container,
-    DetailsContainer,
-    DetailsTitle,
-    PageContainer,
-    Menu,
-    Title,
-    AddButton, DetailsText
-} from "../../components/constants/views";
-import Apartment from "../apartment/Apartment";
-import ApartmentData from "../apartment/ApartmentData";
+import {Menu, Title, AddButton, MenuButton} from "../../components/constants/styles/views";
+import Apartment from "../../components/apartment/Apartment";
+import ApartmentData from "../../components/apartment/Data";
+import ApartmentDetails from "../../components/apartment/details/Details";
+
+const Container = styled.div`
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    animation: 'fadeIn' 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+    
+    @keyframes fadeIn {
+      0% {
+         opacity: 0;
+      }
+   }
+    
+    @media screen and (max-width: 700px) {
+        flex-direction: column;
+    }
+`;
+
+const PageContainer = styled.div`
+    width: 80vw;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+        margin-bottom: 48px;
+    }
+`;
+
+const BuildingContainer = styled.div`
+    width: 200vw;
+    min-width: 200px;
+    max-width: 200px;
+    height: 200px;
+    min-height: 200px;    
+    max-height: 200px;
+    margin-left: 10px;
+    margin-right: 40px;
+    margin-bottom: 40px;
+    border: 1px solid #f2f2f2;
+    flex: 1 1 40%;
+    align-text: center;
+`;
 
 class Apartments extends Component {
-    state = {
-        add: false,
-        error: false,
-        apartmentSelectedId: null
-    };
+    constructor(props) {
+        super(props);
+
+        this.apartmentSelectedHandler = this.apartmentSelectedHandler.bind(this);
+        this.addToApartments = this.addToApartments.bind(this);
+        this.removeFromApartments = this.removeFromApartments.bind(this);
+        this.toggleAdd = this.toggleAdd.bind(this.props.buildingId);
+
+        this.state = {
+            add: false,
+            apartmentSelectedId: null,
+            showDetails: false
+        };
+    }
 
     componentDidMount() {
         this.props.retrieveApartmentsInBuilding(this.props.buildingId);
     }
+
+    apartmentSelectedHandler = (id) => {
+        this.setState({apartmentSelectedId: id});
+    };
 
     toggleAdd = () => {
         this.setState((prevState) => {
@@ -50,53 +101,60 @@ class Apartments extends Component {
 
     render() {
         const apartments = this.props.apiState.data.apartments;
-        const building = {buildingId: this.props.buildingId, streetAddress: this.props.streetAddress};
+        const building = {
+            buildingId: this.props.buildingId,
+            name: this.props.name,
+            address: this.props.streetAddress,
+            zipCode: this.props.zipCode,
+            yearBuilt: this.props.yearBuilt,
+            inspectionDate: this.props.inspectionDate
+        };
 
-        let addApartment = null;
-        if (this.state.add) {
-            addApartment = <ApartmentData add={this.state.add}
-                                          title={"Add new apartment"}
-                                          toggleAdd={this.toggleAdd}
-                                          buildingId={this.props.buildingId}
-                                          addApartment={this.addToApartments}/>
+        let apartmentDetails = null;
+        if (this.state.apartmentSelectedId) {
+            apartmentDetails = <ApartmentDetails
+                id={this.state.apartmentSelectedId}
+                building={building}
+                toggleApartmentDetails={() => this.apartmentSelectedHandler()}
+                removeApartment={() => this.removeFromApartments(this.state.apartmentSelectedId)}/>;
         }
-
         return (
             <Container>
-                <Menu onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</Menu>
-                <DetailsContainer>
-                    <DetailsTitle>{this.props.streetAddress}</DetailsTitle>
-                    <DetailsText>
-                        ADDRESS: TO-DO
-                    </DetailsText>
-                    <DetailsText>
-                        ZIP CODE: TO-DO
-                    </DetailsText>
-                    <DetailsText>
-                        BUILT IN YEAR: TO-DO
-                    </DetailsText>
-                    <DetailsText>
-                        LAST INSPECTED: TO-DO
-                    </DetailsText>
-                </DetailsContainer>
+                <Menu>
+                    <MenuButton onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</MenuButton>
+                </Menu>
+                <BuildingContainer>{this.props.name}</BuildingContainer>
                 <PageContainer>
-                    <Title>Apartments in building</Title>
+                    <Title>Apartments in {this.props.name}</Title>
+                    {apartmentDetails}
                     {apartments.map((a) => {
                         return (
                             <Apartment
                                 key={a.apartmentId}
                                 id={a.apartmentId}
                                 apartmentNo={a.apartmentNo}
-                                size={a.size}
-                                rent={a.rent}
-                                floorNo={a.floorNo}
-                                building={building}
-                                removeApartment={() => this.removeFromApartments(a.apartmentId)}/>
+                                name={this.props.name}
+                                viewTenants={() => this.props.viewFrame('Tenants', {
+                                        building: building,
+                                        apartment: {
+                                            apartmentId: a.apartmentId,
+                                            apartmentNo: a.apartmentNo,
+                                            size: a.size,
+                                            rent: a.rent,
+                                            floorNo: a.floorNo
+                                        }
+                                    }
+                                )}
+                                clicked={() => this.apartmentSelectedHandler(a.apartmentId)}/>
                         )
                     })}
                     <AddButton onClick={this.toggleAdd}>+</AddButton>
                 </PageContainer>
-                {addApartment}
+                <ApartmentData add={this.state.add}
+                               title={"Add new apartment"}
+                               toggleAdd={this.toggleAdd}
+                               buildingId={this.props.buildingId}
+                               addApartment={this.addToApartments}/>
             </Container>
         );
     }
@@ -111,21 +169,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        //retrieveApartments: () => dispatch(apiActions.retrieveApartments()),
         retrieveApartmentsInBuilding: (id) => dispatch(apiActions.retrieveApartmentsInBuilding(id)),
         addApartment: (apartment) => dispatch(apiActions.addApartment(apartment)),
         removeApartment: (id) => dispatch(apiActions.removeApartment(id)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
+        viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };
-};
-
-Apartments.propTypes = {
-    id: PropTypes.number,
-    apartmentNo: PropTypes.string,
-    floorLevels: PropTypes.number,
-    rent: PropTypes.number,
-    size: PropTypes.number
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Apartments);

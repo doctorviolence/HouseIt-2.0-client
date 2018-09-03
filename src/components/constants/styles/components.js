@@ -1,52 +1,58 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 80%;
-    margin: 24px auto;
+    width: 90vw;
     padding: 24px;
-    border-bottom: 1px solid #f2f2f2;
     display: flex;
+    align-items: center;
 `;
 
 export const TextContainer = styled.div`
-    width: 70%;
-    height: 100%;
-    margin: auto;
+    width: 90vw;
     display: flex;
     text-align: left;
-    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #bdbebf;
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
     user-select: none;
     
-    &:hover {
+    @media screen and (max-width: 700px) {
         font-size: 16px;
     }
 `;
 
+export const ArrowContainer = styled.div`
+    font-size: 30px;
+    color: #bdbebf;
+`;
+
 export const ButtonContainer = styled.div`
-    width: 20%;
-    height: 100%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 3px;
     align-items: right;
     justify-content: space-between;
-    display: flex;
+    
+    @media screen and (max-width: 700px) {
+        width: 100vw;
+    }
 `;
 
 export const Button = styled.button`
-    height: 100%;
+    width: 150px;
     color: #CC0033;
     background: #ffffff;
     border: none;
     font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     user-select: none;
     
     @media screen and (max-width: 700px) {
-        font-size: 10px;
-    }
-    
-    &:hover {
-        font-size: 16px;
+        font-size: 12px;
+        width: 100px;
     }
 `;

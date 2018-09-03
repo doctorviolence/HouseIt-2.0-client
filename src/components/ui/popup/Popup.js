@@ -58,12 +58,13 @@ const CloseSymbol = styled.div`
 `;
 
 const Popup = (props) => (
-    <Container onClick={props.closePopup} show={props.showPopup}>
-        <PopupContainer>
-            <PopupTitle>{props.popupTitle}</PopupTitle>
-            <CloseSymbol>&times;</CloseSymbol>
-        </PopupContainer>
-    </Container>
+    props.showPopup ? <Container onClick={props.closePopup} show={props.showPopup}>
+            <PopupContainer>
+                <PopupTitle>{props.popupTitle}</PopupTitle>
+                <CloseSymbol>&times;</CloseSymbol>
+            </PopupContainer>
+        </Container>
+        : null
 );
 
 const mapStateToProps = state => {
