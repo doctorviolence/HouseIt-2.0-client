@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-expressions */
 import React, {Component} from 'react';
 import {validation} from "../constants/validation";
 import Add from "../add/Add";
@@ -128,7 +127,7 @@ class Data extends Component {
                      addForm={this.state.dataForm}
                      toggleAdd={this.props.toggleAdd}
                      formIsValid={this.state.formIsValid}
-                     submitData={this.addTenant}
+                     submitData={(event) => this.addTenant(event)}
                      addFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }
@@ -139,7 +138,7 @@ class Data extends Component {
                       editForm={this.state.dataForm}
                       toggleEdit={this.props.toggleEdit}
                       formIsValid={this.state.formIsValid}
-                      submitData={this.editTenant}
+                      submitData={(event) => this.editTenant(event)}
                       editFormChanged={(event) => this.changeDataFormHandler(event)}/>
             );
         }

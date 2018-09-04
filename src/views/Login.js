@@ -67,15 +67,16 @@ class Login extends Component {
         loginForm: {
             username: {
                 formType: 'input',
-                description: 'Username',
+                description: 'Email',
                 formConfig: {
                     type: 'text',
                     name: 'username',
-                    placeholder: 'Username'
+                    placeholder: 'Email'
                 },
                 value: '',
                 validation: {
-                    required: true
+                    required: true,
+                    email: true
                 },
                 valid: false
             },
@@ -138,7 +139,7 @@ class Login extends Component {
         }
 
         if (this.state.error) {
-            errorMessage = (<ErrorMessage>Please fill out a valid username and/or password...</ErrorMessage>);
+            errorMessage = (<ErrorMessage>Please fill out a valid email and/or password...</ErrorMessage>);
         }
 
         for (let key in this.state.loginForm) {

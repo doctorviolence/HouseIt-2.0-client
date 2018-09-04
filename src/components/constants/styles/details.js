@@ -24,7 +24,7 @@ export const DetailsContainer = styled.div`
     background: #ffffff;
     right: 0;
     top: 0;
-    width: 30vw;
+    width: 40vw;
     height: 100vh;
     animation: 'slideIn' 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;

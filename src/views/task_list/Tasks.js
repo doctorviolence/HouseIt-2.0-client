@@ -72,11 +72,13 @@ class Tasks extends Component {
 
     componentDidMount() {
         const {tenant} = this.props.viewState;
-        if (!tenant) {
+        if (!tenant && !this.props.apiState.data.tasks.length) {
             this.props.retrieveTasks();
         }
         else {
-            this.props.retrieveTasksByTenant(tenant);
+            if (!this.props.apiState.data.tasks.length) {
+                this.props.retrieveTasksByTenant(tenant);
+            }
         }
     }
 
@@ -123,7 +125,7 @@ class Tasks extends Component {
             addTask = <AddButton onClick={this.toggleAdd}>+</AddButton>;
         }
 
-        const completedTasks = tasks.filter((t) => t.resolved === 'Yes').map((t) => {
+        const completedTasks = tasks.filter((t) => t.resolved === 'Yes').map(t => {
                 return (
                     <Task key={t.taskNo}
                           id={t.taskNo}
@@ -143,7 +145,7 @@ class Tasks extends Component {
             }
         );
 
-        const todoTasks = tasks.filter((t) => t.resolved === 'No').map((t) => {
+        const todoTasks = tasks.filter((t) => t.resolved === 'No').map(t => {
                 return (
                     <Task key={t.taskNo}
                           id={t.taskNo}

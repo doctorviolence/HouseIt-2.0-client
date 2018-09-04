@@ -16,6 +16,7 @@ import {
     Backdrop
 } from "../../constants/styles/details";
 import TenantData from "../Data";
+import UserData from "../../user/Data";
 
 class TenantDetails extends Component {
     constructor(props) {
@@ -26,9 +27,24 @@ class TenantDetails extends Component {
         this.removeTenant = this.removeTenant.bind(this);
 
         this.state = {
+            addUser: false,
             edit: false
         };
     }
+
+    toggleAddUser = () => {
+        this.setState((prevState) => {
+            return {addUser: !prevState.addUser};
+        });
+    };
+
+    addUser = (data) => {
+        this.props.viewPopup({
+            title: 'User added...'
+        });
+        this.toggleAddUser();
+        this.props.addUser(data);
+    };
 
     toggleEdit = () => {
         this.setState((prevState) => {
@@ -74,6 +90,7 @@ class TenantDetails extends Component {
                             <Text><Label>Email:</Label> {email}</Text>
                         </DetailsText>
                         <ButtonContainer>
+                            <Button onClick={this.toggleAddUser}>Add user</Button>
                             <Button onClick={this.toggleEdit}>Edit</Button>
                             <Button onClick={() => this.removeTenant(tenantId)}>Remove</Button>
                         </ButtonContainer>
@@ -89,6 +106,17 @@ class TenantDetails extends Component {
                                 phoneNo={phoneNo}
                                 email={email}
                                 apartment={this.props.apartment}/>
+                    <UserData id={tenantId}
+                              add={this.state.addUser}
+                              title={"Add user"}
+                              toggleAddUser={this.toggleAddUser}
+                              addUser={this.addUser}
+                              tenantId={tenantId}
+                              firstName={firstName}
+                              lastName={lastName}
+                              phoneNo={phoneNo}
+                              email={email}
+                              apartment={this.props.apartment}/>
                     <Backdrop onClick={() => this.props.toggleTenantDetails()}/>
                 </Container>
             );
@@ -106,6 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        addUser: (user) => dispatch(apiActions.addUser(user)),
         editTenant: (tenant, id) => dispatch(apiActions.editTenant(tenant, id)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),

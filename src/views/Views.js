@@ -16,11 +16,12 @@ import Welcome from "../components/ui/welcome/Welcome";
 const ViewContainer = styled.div``;
 
 const FrameContainer = styled.div`
-    animation: 'fadeIn' 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+    animation: 'fadeIn' 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     
     @keyframes fadeIn {
       0% {
+         transform: translateX(100vw);
          opacity: 0;
       }
    }

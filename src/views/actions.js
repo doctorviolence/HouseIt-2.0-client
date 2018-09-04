@@ -17,7 +17,7 @@ export const login = (username, password) => {
             if (e && e.response !== undefined) {
                 switch (e.response.status) {
                     case 401:
-                        dispatch(loginFail('Invalid username and/or password...'));
+                        dispatch(loginFail('Invalid email and/or password...'));
                         break;
                     default:
                         dispatch(loginFail('Not able to log in at this time. Please try again later...'))

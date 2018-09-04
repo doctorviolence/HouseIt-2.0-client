@@ -3,6 +3,7 @@ import apiApartment from './apartment/apiApartment';
 import apiTenant from './tenant/apiTenant';
 import apiTask from './task/apiTask';
 import apiTaskMessage from './taskMessage/apiTaskMessage';
+import apiUser from './user/apiUser';
 
 export const retrieveBuilding = (id) => {
     return dispatch => {
@@ -327,6 +328,18 @@ export const removeTaskMessage = (id) => {
         return apiTaskMessage.deleteTaskMessage(id, queryToken)
             .then(
                 dispatch({type: 'MESSAGE_REMOVED_SUCCESS', messageNo: id})
+            ).catch(e => {
+                dispatch({type: 'SHOW_ERROR', error: e})
+            })
+    }
+};
+
+export const addUser = (user) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiUser.addUser(user, queryToken)
+            .then(result => {
+                }
             ).catch(e => {
                 dispatch({type: 'SHOW_ERROR', error: e})
             })

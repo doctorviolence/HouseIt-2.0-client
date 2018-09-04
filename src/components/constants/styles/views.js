@@ -3,8 +3,8 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     align-items: center;
-    animation: 'fadeIn' 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+    animation: 'fadeIn' 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
     
     @keyframes fadeIn {
       0% {

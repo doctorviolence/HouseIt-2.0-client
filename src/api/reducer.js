@@ -194,7 +194,6 @@ const retrieveTasks = (state, action) => {
 };
 
 const addTask = (state, action) => {
-    console.log(action.result);
     const updatedTasks = state.data.tasks.concat(action.result);
     return {
         ...state,

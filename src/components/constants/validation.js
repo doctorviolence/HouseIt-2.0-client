@@ -13,5 +13,9 @@ export const validation = (value, validation) => {
     if (validation.maxLength) {
         isValid = value.length <= validation.maxLength && isValid;
     }
+    if (validation.email) {
+        const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+        isValid = pattern.test(value) && isValid;
+    }
     return isValid;
 };
