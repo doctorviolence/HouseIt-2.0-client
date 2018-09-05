@@ -58,7 +58,8 @@ class BuildingData extends Component {
                 },
                 value: this.props.yearBuilt || '',
                 validation: {
-                    required: true
+                    required: true,
+                    maxLength: 4
                 },
                 valid: false
             },

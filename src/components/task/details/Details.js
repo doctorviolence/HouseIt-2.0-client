@@ -70,9 +70,6 @@ class TaskDetails extends Component {
     };
 
     removeTask = (id) => {
-        this.props.viewPopup({
-            title: 'Task deleted...'
-        });
         this.props.removeTask(id);
         this.props.toggleTaskDetails();
     };
@@ -131,7 +128,6 @@ const mapDispatchToProps = dispatch => {
     return {
         retrieveTask: (id) => dispatch(apiActions.retrieveTask(id)),
         editTask: (task, id) => dispatch(apiActions.editTask(task, id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup))
     };
 };
 

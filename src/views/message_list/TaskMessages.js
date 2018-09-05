@@ -47,17 +47,11 @@ class TaskMessages extends Component {
     };
 
     addToTaskMessages = (data) => {
-        this.props.viewPopup({
-            title: 'Message added...'
-        });
         this.toggleAdd();
         this.props.addTaskMessage(data);
     };
 
     removeFromTaskMessages = (id) => {
-        this.props.viewPopup({
-            title: 'Message deleted...'
-        });
         this.props.removeTaskMessage(id);
     };
 
@@ -120,7 +114,6 @@ const mapDispatchToProps = dispatch => {
         retrieveTaskMessages: (taskNo) => dispatch(apiActions.retrieveTaskMessages(taskNo)),
         addTaskMessage: (taskMessage) => dispatch(apiActions.addTaskMessage(taskMessage)),
         removeTaskMessage: (id) => dispatch(apiActions.removeTaskMessage(id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };
 };

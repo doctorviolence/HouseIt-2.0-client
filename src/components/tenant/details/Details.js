@@ -39,9 +39,6 @@ class TenantDetails extends Component {
     };
 
     addUser = (data) => {
-        this.props.viewPopup({
-            title: 'User added...'
-        });
         this.toggleAddUser();
         this.props.addUser(data);
     };
@@ -58,9 +55,6 @@ class TenantDetails extends Component {
     };
 
     removeTenant = (id) => {
-        this.props.viewPopup({
-            title: 'Tenant deleted...'
-        });
         this.props.removeTenant(id);
         this.props.toggleTenantDetails();
     };
@@ -137,7 +131,6 @@ const mapDispatchToProps = dispatch => {
         addUser: (user) => dispatch(apiActions.addUser(user)),
         editTenant: (tenant, id) => dispatch(apiActions.editTenant(tenant, id)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
     };
 };
 

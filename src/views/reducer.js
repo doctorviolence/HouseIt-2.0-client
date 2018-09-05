@@ -1,7 +1,7 @@
 const initialState = {
     frame: {title: 'Menu', props: null},
-    showPopup: false,
-    popupTitle: '',
+    //showPopup: false,
+    //popupTitle: '',
     token: null,
     tenant: null,
     apartment: null,
@@ -45,21 +45,21 @@ const logout = (state, action) => {
     };
 };
 
-const viewPopup = (state, action) => {
-    return {
-        ...state,
-        showPopup: true,
-        popupTitle: action.title
-    };
-};
+//const viewPopup = (state, action) => {
+//    return {
+//        ...state,
+//        showPopup: true,
+//        popupTitle: action.title
+//    };
+//};
 
-const closePopup = (state) => {
-    return {
-        ...state,
-        showPopup: false,
-        popupTitle: ''
-    };
-};
+//const closePopup = (state) => {
+//    return {
+//        ...state,
+//        showPopup: false,
+//        popupTitle: ''
+//    };
+//};
 
 const viewFrame = (state, action) => {
     return {
@@ -91,10 +91,10 @@ const reducer = (state = initialState, action) => {
             return viewFrame(state, action);
         case 'CLOSE_FRAME':
             return closeFrame(state, action);
-        case 'VIEW_POPUP':
-            return viewPopup(state, action);
-        case 'CLOSE_POPUP':
-            return closePopup(state);
+        //case 'VIEW_POPUP':
+        //    return viewPopup(state, action);
+        //case 'CLOSE_POPUP':
+        //    return closePopup(state);
         default:
             return state;
     }

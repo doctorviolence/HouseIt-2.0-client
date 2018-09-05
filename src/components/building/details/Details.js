@@ -42,9 +42,6 @@ class BuildingDetails extends Component {
     };
 
     removeBuilding = (id) => {
-        this.props.viewPopup({
-            title: 'Building deleted...'
-        });
         this.props.removeBuilding(id);
         this.props.toggleBuildingDetails();
     };
@@ -106,7 +103,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         editBuilding: (building, id) => dispatch(apiActions.editBuilding(building, id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
     };
 };
 

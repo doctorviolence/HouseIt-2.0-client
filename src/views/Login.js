@@ -47,6 +47,7 @@ const Footer = styled.footer`
     width: 100%;
     bottom: 0;
     color: #444444;
+    font-weight: bold;
     user-select: none;
     cursor: default;
     
@@ -71,7 +72,7 @@ class Login extends Component {
                 formConfig: {
                     type: 'text',
                     name: 'username',
-                    placeholder: 'Email'
+                    placeholder: 'Username or email'
                 },
                 value: '',
                 validation: {

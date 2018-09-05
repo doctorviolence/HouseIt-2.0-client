@@ -89,17 +89,11 @@ class Buildings extends Component {
     };
 
     addToBuildings = (data, file) => {
-        this.props.viewPopup({
-            title: 'Building added...'
-        });
         this.toggleAdd();
         this.props.addBuilding(data, file);
     };
 
     removeFromBuildings = (id) => {
-        this.props.viewPopup({
-            title: 'Building deleted...'
-        });
         this.props.removeBuilding(id);
     };
 
@@ -167,7 +161,6 @@ const mapDispatchToProps = dispatch => {
         retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
         addBuilding: (building, file) => dispatch(apiActions.addBuilding(building, file)),
         removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };

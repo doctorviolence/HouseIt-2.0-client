@@ -13,9 +13,9 @@ class ApiUser {
             .then(response => response.data);
     };
 
-    updateUser = (data, queryToken) => {
+    updatePassword = (passwords, queryToken) => {
         return axios
-            .put('/users/update-user/', data, {
+            .put('/users/update-password/', passwords, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': queryToken

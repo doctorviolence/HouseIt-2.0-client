@@ -20,12 +20,12 @@ const Input = styled.input`
     
     &:focus {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
+        border: ${props => props.valid ? '1px solid #009900' : '1px solid #fd5c63'};
     }
     
     &:focus:hover {
         background: #f2f2f2;
-        border: ${props => props.valid ? '1px solid #00878C' : '1px solid #fd5c63'};
+        border: ${props => props.valid ? '1px solid #009900' : '1px solid #fd5c63'};
     }
     
     &:hover {

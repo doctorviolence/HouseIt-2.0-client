@@ -42,9 +42,6 @@ class ApartmentDetails extends Component {
     };
 
     removeApartment = (id) => {
-        this.props.viewPopup({
-            title: 'Apartment deleted...'
-        });
         this.props.removeApartment(id);
         this.props.toggleApartmentDetails();
     };
@@ -105,7 +102,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         editApartment: (apartment, id) => dispatch(apiActions.editApartment(apartment, id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
     };
 };
 

@@ -52,13 +52,14 @@ class Data extends Component {
                 formType: 'input',
                 description: 'Email',
                 formConfig: {
-                    type: 'email',
+                    type: 'text',
                     name: 'email',
                     placeholder: 'Email'
                 },
                 value: this.props.email || '',
                 validation: {
-                    required: true
+                    required: true,
+                    email: true
                 },
                 valid: false
             }

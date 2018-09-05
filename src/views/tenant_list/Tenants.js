@@ -47,17 +47,11 @@ class Tenants extends Component {
     };
 
     addToTenants = (data) => {
-        this.props.viewPopup({
-            title: 'Tenant added...'
-        });
         this.toggleAdd();
         this.props.addTenant(data);
     };
 
     removeFromTenants = (id) => {
-        this.props.viewPopup({
-            title: 'Tenant deleted...'
-        });
         this.props.removeTenant(id);
     };
 
@@ -118,7 +112,6 @@ const mapDispatchToProps = dispatch => {
         retrieveTenants: (id) => dispatch(apiActions.retrieveTenants(id)),
         addTenant: (tenant) => dispatch(apiActions.addTenant(tenant)),
         removeTenant: (id) => dispatch(apiActions.removeTenant(id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         closeFrame: (view, props) => dispatch(viewActions.closeFrame(view, props))
     };
 };

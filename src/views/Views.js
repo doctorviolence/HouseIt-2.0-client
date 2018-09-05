@@ -9,8 +9,10 @@ import Tenants from "./tenant_list/Tenants";
 import Tasks from "./task_list/Tasks";
 import Messages from "./message_list/TaskMessages";
 import Login from "./Login";
+import Settings from "./Settings";
 import Menu from './Menu';
 import Popup from "../components/ui/popup/Popup";
+import ErrorMessage from "../components/ui/errorMessage/ErrorMessage";
 import Welcome from "../components/ui/welcome/Welcome";
 
 const ViewContainer = styled.div``;
@@ -48,7 +50,7 @@ const viewController = (name, props) => {
                 view = <Messages {...props}/>;
                 break;
             case 'Settings':
-                view = <Menu {...props}/>;
+                view = <Settings {...props}/>;
                 break;
             case 'Login':
                 view = <Login {...props}/>;
@@ -77,7 +79,7 @@ class Views extends Component {
     render() {
         const isLoggedIn = this.props.viewState.token !== null;
         const {title, props} = this.props.viewState.frame;
-        const {showPopup, popupTitle} = this.props.viewState;
+        //const {showPopup, popupTitle} = this.props.viewState;
         const view = viewController(title, props);
 
         if (!isLoggedIn) {
@@ -92,7 +94,8 @@ class Views extends Component {
         return (
             <ViewContainer>
                 {view}
-                <Popup show={showPopup} title={popupTitle}/>
+                <Popup/>
+                <ErrorMessage/>
             </ViewContainer>
         );
     };

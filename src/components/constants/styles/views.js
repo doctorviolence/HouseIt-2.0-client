@@ -37,6 +37,7 @@ export const Menu = styled.div`
     right: 0;
     text-align: left;
     background: #ffffff;
+    user-select: none;
 `;
 
 export const MenuButton = styled.div`
@@ -49,6 +50,7 @@ export const MenuButton = styled.div`
     font-weight: bold;
     cursor: pointer;
     color: #CC0033;
+    user-select: none;
 `;
 
 export const Title = styled.h2`

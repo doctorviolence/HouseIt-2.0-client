@@ -14,7 +14,11 @@ const initialState = {
         task: null,
         taskMessage: null
     },
-    error: false
+    showPopup: false,
+    popupTitle: '',
+    error: null,
+    showError: false,
+    closeError: false
 };
 
 const retrieveBuilding = (state, action) => {
@@ -23,7 +27,8 @@ const retrieveBuilding = (state, action) => {
         entity: {
             ...state.entity, building: [...action.building]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -33,7 +38,8 @@ const retrieveBuildings = (state, action) => {
         data: {
             ...state.data, buildings: [...action.buildings]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -42,7 +48,8 @@ const addBuilding = (state, action) => {
     return {
         ...state,
         data: {...state.data, buildings: updatedBuildings},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -56,7 +63,8 @@ const editBuilding = (state, action) => {
     return {
         ...state,
         data: {...state.data, buildings: updatedBuildings},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -65,7 +73,8 @@ const removeBuilding = (state, action) => {
     return {
         ...state,
         data: {...state.data, buildings: updatedBuildings},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -75,7 +84,8 @@ const retrieveApartment = (state, action) => {
         entity: {
             ...state.entity, apartment: [...action.apartment]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -85,7 +95,8 @@ const retrieveApartments = (state, action) => {
         data: {
             ...state.data, apartments: [...action.apartments]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -94,7 +105,8 @@ const addApartment = (state, action) => {
     return {
         ...state,
         data: {...state.data, apartments: updatedApartments},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -108,7 +120,8 @@ const editApartment = (state, action) => {
     return {
         ...state,
         data: {...state.data, apartments: updatedApartments},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -117,7 +130,8 @@ const removeApartment = (state, action) => {
     return {
         ...state,
         data: {...state.data, apartments: updatedApartments},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -127,7 +141,8 @@ const retrieveTenant = (state, action) => {
         entity: {
             ...state.entity, tenant: [...action.tenant]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -137,7 +152,8 @@ const retrieveTenants = (state, action) => {
         data: {
             ...state.data, tenants: [...action.tenants]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -146,7 +162,8 @@ const addTenant = (state, action) => {
     return {
         ...state,
         data: {...state.data, tenants: updatedTenants},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -160,7 +177,8 @@ const editTenant = (state, action) => {
     return {
         ...state,
         data: {...state.data, tenants: updatedTenants},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -169,7 +187,8 @@ const removeTenant = (state, action) => {
     return {
         ...state,
         data: {...state.data, tenants: updatedTenants},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -179,7 +198,8 @@ const retrieveTask = (state, action) => {
         entity: {
             ...state.entity, task: action.task
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -189,7 +209,8 @@ const retrieveTasks = (state, action) => {
         data: {
             ...state.data, tasks: [...action.tasks]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -198,7 +219,8 @@ const addTask = (state, action) => {
     return {
         ...state,
         data: {...state.data, tasks: updatedTasks},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -212,7 +234,8 @@ const editTask = (state, action) => {
     return {
         ...state,
         data: {...state.data, tasks: updatedTasks},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -221,7 +244,8 @@ const removeTask = (state, action) => {
     return {
         ...state,
         data: {...state.data, tasks: updatedTasks},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -231,7 +255,8 @@ const retrieveMessage = (state, action) => {
         entity: {
             ...state.entity, taskMessage: [...action.taskMessage]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -241,7 +266,8 @@ const retrieveMessages = (state, action) => {
         data: {
             ...state.data, taskMessages: [...action.taskMessages]
         },
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -250,7 +276,8 @@ const addMessage = (state, action) => {
     return {
         ...state,
         data: {...state.data, taskMessages: updatedMessages},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -264,7 +291,8 @@ const editMessage = (state, action) => {
     return {
         ...state,
         data: {...state.data, taskMessages: updatedMessages},
-        error: false
+        error: null,
+        showError: false
     };
 };
 
@@ -273,14 +301,40 @@ const removeMessage = (state, action) => {
     return {
         ...state,
         data: {...state.data, taskMessages: updatedMessages},
-        error: false
+        error: null,
+        showError: false
+    };
+};
+
+const viewPopup = (state, action) => {
+    return {
+        ...state,
+        showPopup: true,
+        popupTitle: action.title
+    };
+};
+
+const closePopup = (state) => {
+    return {
+        ...state,
+        showPopup: false,
+        popupTitle: ''
     };
 };
 
 const showError = (state, action) => {
     return {
         ...state,
-        error: true
+        error: action.error,
+        showError: true
+    };
+};
+
+const closeError = (state, action) => {
+    return {
+        ...state,
+        error: null,
+        showError: false
     };
 };
 
@@ -338,6 +392,12 @@ const reducer = (state = initialState, action) => {
             return removeMessage(state, action);
         case 'SHOW_ERROR':
             return showError(state, action);
+        case 'CLOSE_ERROR':
+            return closeError(state, action);
+        case 'VIEW_POPUP':
+            return viewPopup(state, action);
+        case 'CLOSE_POPUP':
+            return closePopup(state);
         default:
             return state;
     }

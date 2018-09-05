@@ -93,17 +93,11 @@ class Tasks extends Component {
     };
 
     addToTasks = (data) => {
-        this.props.viewPopup({
-            title: 'Task added...'
-        });
         this.toggleAdd();
         this.props.addTask(data);
     };
 
     removeFromTasks = (id) => {
-        this.props.viewPopup({
-            title: 'Task deleted...'
-        });
         this.props.removeTask(id);
     };
 
@@ -208,7 +202,6 @@ const mapDispatchToProps = dispatch => {
         retrieveTasksByTenant: (id) => dispatch(apiActions.retrieveTasksByTenant(id)),
         addTask: (task) => dispatch(apiActions.addTask(task)),
         removeTask: (id) => dispatch(apiActions.removeTask(id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };

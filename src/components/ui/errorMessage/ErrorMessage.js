@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import styled from "styled-components";
-import * as viewActions from "../../../views/actions";
 import * as apiActions from "../../../api/actions";
 
 const Container = styled.div`
@@ -9,10 +8,10 @@ const Container = styled.div`
     z-index: 1000;
     right: 5px;
     bottom: 5px;
-    width: 320px;
+    width: 50vw;
     height: auto;
     margin: auto;
-    background: ${props => (props.show ? 'rgba(38, 38, 38, 0.8)' : '#ffffff')};
+    background: ${props => (props.show ? 'rgba(204, 0, 51, 0.8)' : '#ffffff')};
     animation: ${props => (props.show ? 'slideOut' : 'slideIn')} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
       
@@ -35,14 +34,14 @@ const Container = styled.div`
     }
 `;
 
-const PopupContainer = styled.div`
+const ErrorContainer = styled.div`
     display: flex;
     justify-content: space-between;
     margin-left: 15px;
     margin-right: 15px;
 `;
 
-const PopupTitle = styled.h3`
+const ErrorTitle = styled.h3`
     color: #ffffff;
     font-size: 15px;
     font-weight: bold;
@@ -58,12 +57,12 @@ const CloseSymbol = styled.div`
     font-weight: bold;
 `;
 
-const Popup = (props) => (
-    props.showPopup && !props.showError ? <Container onClick={props.closePopup} show={props.showPopup}>
-            <PopupContainer>
-                <PopupTitle>{props.popupTitle}</PopupTitle>
+const Error = (props) => (
+    props.showError ? <Container onClick={props.closeError} show={props.showError}>
+            <ErrorContainer>
+                <ErrorTitle>{props.error}</ErrorTitle>
                 <CloseSymbol>&times;</CloseSymbol>
-            </PopupContainer>
+            </ErrorContainer>
         </Container>
         : null
 );
@@ -71,15 +70,14 @@ const Popup = (props) => (
 const mapStateToProps = state => {
     return {
         showError: state.apiState.showError,
-        showPopup: state.apiState.showPopup,
-        popupTitle: state.apiState.popupTitle
+        error: state.apiState.error
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        closePopup: () => dispatch(apiActions.closePopup())
+        closeError: () => dispatch(apiActions.closeError())
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Popup);
+export default connect(mapStateToProps, mapDispatchToProps)(Error);

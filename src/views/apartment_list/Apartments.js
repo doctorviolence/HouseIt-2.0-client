@@ -85,17 +85,11 @@ class Apartments extends Component {
     };
 
     addToApartments = (data) => {
-        this.props.viewPopup({
-            title: 'Apartment added...'
-        });
         this.toggleAdd();
         this.props.addApartment(data);
     };
 
     removeFromApartments = (id) => {
-        this.props.viewPopup({
-            title: 'Apartment deleted...'
-        });
         this.props.removeApartment(id);
     };
 
@@ -172,7 +166,6 @@ const mapDispatchToProps = dispatch => {
         retrieveApartmentsInBuilding: (id) => dispatch(apiActions.retrieveApartmentsInBuilding(id)),
         addApartment: (apartment) => dispatch(apiActions.addApartment(apartment)),
         removeApartment: (id) => dispatch(apiActions.removeApartment(id)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))
     };

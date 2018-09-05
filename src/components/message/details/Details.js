@@ -41,9 +41,6 @@ class TaskMessageDetails extends Component {
     };
 
     removeTaskMessage = (id) => {
-        this.props.viewPopup({
-            title: 'TaskMessage deleted...'
-        });
         this.props.removeTaskMessage(id);
         this.props.toggleTaskMessageDetails();
     };
@@ -93,7 +90,6 @@ const mapDispatchToProps = dispatch => {
     return {
         editTaskMessage: (taskMessage, id) => dispatch(apiActions.editTaskMessage(taskMessage, id)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
-        viewPopup: (popup) => dispatch(viewActions.viewPopup(popup)),
     };
 };
 

@@ -75,11 +75,8 @@ class UserData extends Component {
         if (this.state.formIsValid) {
             this.props.toggleAddUser;
             this.props.addUser(data);
-        } else {
-            // Replacing this with error message, eventually...
         }
-    }
-    ;
+    };
 
     editUser = (event) => {
         event.preventDefault();
