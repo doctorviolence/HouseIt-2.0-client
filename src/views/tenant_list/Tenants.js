@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import {
-    Container,
     PageContainer,
     Menu,
     Title,
@@ -14,6 +13,34 @@ import {
 import Tenant from "../../components/tenant/Tenant";
 import TenantData from "../../components/tenant/Data";
 import TenantDetails from "../../components/tenant/details/Details";
+import styled from "styled-components";
+
+const Container = styled.div`
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+   
+    @keyframes slideOut {
+        0% {
+            opacity: 0;
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+             opacity: 0;
+             transform: translateX(100vw);
+        }  
+    }  
+    
+    @media screen and (max-width: 700px) {
+        flex-direction: column;
+    }
+`;
 
 
 class Tenants extends Component {
@@ -69,10 +96,10 @@ class Tenants extends Component {
                 removeTenant={() => this.removeFromTenants(this.state.tenantSelectedId)}/>;
         }
         return (
-            <Container>
+            <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Apartments',
-                        {buildingId: building.buildingId, name: building.name})
+                        {buildingId: building.buildingId, name: building.name, newFrame: false})
                     }>‹ Apartments</MenuButton>
                 </Menu>
                 <PageContainer>

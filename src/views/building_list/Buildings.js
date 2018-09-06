@@ -1,26 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import styled from "styled-components";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import {AddButton, Container, Menu, MenuButton, Title, PageContainer} from "../../components/constants/styles/views";
 import Building from '../../components/building/Building';
 import BuildingData from '../../components/building/Data';
-import styled from "styled-components";
 import BuildingDetails from "../../components/building/details/Details";
 
 const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-left: 10vw;
-    animation: 'fadeIn' 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-    
-    @keyframes fadeIn {
-      0% {
-         opacity: 0;
-      }
-    }
     
     @media screen and (max-width: 700px) {
         margin-left: 10vw;
@@ -99,7 +91,6 @@ class Buildings extends Component {
 
     render() {
         const buildings = this.props.apiState.data.buildings;
-
         let buildingDetails = null;
         if (this.state.buildingSelectedId) {
             buildingDetails = <BuildingDetails
@@ -108,6 +99,7 @@ class Buildings extends Component {
                 toggleBuildingDetails={() => this.buildingSelectedHandler()}
                 removeBuilding={() => this.removeFromBuildings(this.state.buildingSelectedId)}/>;
         }
+
         return (
             <Container>
                 <Menu>
@@ -131,7 +123,7 @@ class Buildings extends Component {
                                             yearBuilt: b.yearBuilt,
                                             inspectionDate: b.inspectionDate
                                         }
-                                    )}
+                                    ) && this}
                                     clicked={() => this.buildingSelectedHandler(b.buildingId)}/>
                             )
                         })}

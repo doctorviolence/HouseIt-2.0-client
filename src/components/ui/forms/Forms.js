@@ -9,12 +9,16 @@ const InputContainer = styled.div`
 const Description = styled.label` 
     font-weight: bold;
     color: #000000;
+    text-align: left;
+    margin-left: 5px;
+    margin-top: 5px;
 `;
 
 const Input = styled.input`
     outline: none;
     padding: 7px;
     font-size: 14px;
+    background: #f8f8f8;
     border: 1px solid #f2f2f2;
     margin-bottom: 10px;
     

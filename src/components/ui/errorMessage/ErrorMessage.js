@@ -19,6 +19,7 @@ const Container = styled.div`
         left: 0px;
         right: 0px;
         bottom: 0px;
+        width: 90vw;
     }
     
     @keyframes slideOut {

@@ -3,14 +3,21 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     align-items: center;
-    animation: 'fadeIn' 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
-    
-    @keyframes fadeIn {
-      0% {
-         opacity: 0;
-      }
-   }
+    transform: ${props => props.newFrame ? 'slideOut' : null} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+   
+    @keyframes slideOut {
+        0% {
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+            transform: translateX(100vw);
+        }  
+    }  
     
     @media screen and (max-width: 700px) {
         flex-direction: column;

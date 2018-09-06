@@ -41,6 +41,7 @@ class TenantDetails extends Component {
     addUser = (data) => {
         this.toggleAddUser();
         this.props.addUser(data);
+        this.props.toggleTenantDetails();
     };
 
     toggleEdit = () => {

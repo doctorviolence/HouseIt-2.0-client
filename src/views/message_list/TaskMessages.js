@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import {
-    Container,
     PageContainer,
     Menu,
     Title,
@@ -14,7 +13,34 @@ import {
 import TaskMessage from "../../components/message/TaskMessage";
 import TaskMessageData from "../../components/message/Data";
 import TaskMessageDetails from "../../components/message/details/Details";
+import styled from "styled-components";
 
+const Container = styled.div`
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+   
+    @keyframes slideOut {
+        0% {
+            opacity: 0;
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+            opacity: 0;
+            transform: translateX(100vw);
+        }  
+    }  
+    
+    @media screen and (max-width: 700px) {
+        flex-direction: column;
+    }
+`;
 
 class TaskMessages extends Component {
     constructor(props) {
@@ -73,7 +99,7 @@ class TaskMessages extends Component {
                 removeTaskMessage={() => this.removeFromTaskMessages(this.state.taskMessageSelectedId)}/>;
         }
         return (
-            <Container>
+            <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Tasks')}>‹ Tasks</MenuButton>
                 </Menu>

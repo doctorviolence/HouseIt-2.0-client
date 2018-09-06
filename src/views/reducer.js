@@ -1,7 +1,5 @@
 const initialState = {
-    frame: {title: 'Menu', props: null},
-    //showPopup: false,
-    //popupTitle: '',
+    frame: {title: 'Menu', props: null, newFrame: true},
     token: null,
     tenant: null,
     apartment: null,
@@ -12,8 +10,7 @@ const initialState = {
 const loginInit = (state, action) => {
     return {
         ...state,
-        loginError: null,
-        loading: true
+        loginError: null
     }
 };
 
@@ -24,16 +21,14 @@ const loginSuccess = (state, action) => {
         tenant: action.tenant,
         apartment: action.apartment,
         building: action.building,
-        loginError: null,
-        loading: false
+        loginError: null
     }
 };
 
 const loginFail = (state, action) => {
     return {
         ...state,
-        loginError: action.error,
-        loading: false
+        loginError: action.error
     }
 };
 
@@ -45,35 +40,17 @@ const logout = (state, action) => {
     };
 };
 
-//const viewPopup = (state, action) => {
-//    return {
-//        ...state,
-//        showPopup: true,
-//        popupTitle: action.title
-//    };
-//};
-
-//const closePopup = (state) => {
-//    return {
-//        ...state,
-//        showPopup: false,
-//        popupTitle: ''
-//    };
-//};
-
 const viewFrame = (state, action) => {
     return {
         ...state,
-        frame: {title: action.view, props: action.props},
-        showPopup: false
+        frame: {title: action.view, props: action.props, newFrame: true}
     };
 };
 
 const closeFrame = (state, action) => {
     return {
         ...state,
-        frame: {title: action.view, props: action.props},
-        showPopup: false
+        frame: {title: action.view, props: action.props, newFrame: false}
     };
 };
 
@@ -91,10 +68,6 @@ const reducer = (state = initialState, action) => {
             return viewFrame(state, action);
         case 'CLOSE_FRAME':
             return closeFrame(state, action);
-        //case 'VIEW_POPUP':
-        //    return viewPopup(state, action);
-        //case 'CLOSE_POPUP':
-        //    return closePopup(state);
         default:
             return state;
     }

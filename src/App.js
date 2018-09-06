@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {injectGlobal} from 'styled-components';
 
 import Views from "./views/Views";
+import Welcome from "./components/ui/welcome/Welcome";
 
 injectGlobal`
    body {
@@ -18,6 +19,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
+                <Welcome/>
                 <Views/>
             </div>
         );

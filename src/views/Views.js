@@ -13,24 +13,44 @@ import Settings from "./Settings";
 import Menu from './Menu';
 import Popup from "../components/ui/popup/Popup";
 import ErrorMessage from "../components/ui/errorMessage/ErrorMessage";
-import Welcome from "../components/ui/welcome/Welcome";
 
-const ViewContainer = styled.div``;
+const ViewContainer = styled.div`
+    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+   
+    @keyframes slideOut {
+        0% {
+            opacity: 0;
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+            opacity: 0;
+            transform: translateX(100vw);
+        }  
+    }  
+`;
 
-const FrameContainer = styled.div`
-    animation: 'fadeIn' 0.5s ease-in-out;
-    transition: all 0.5s ease-in-out;
+const Footer = styled.footer`
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: #444444;
+    background: #ffffff;
+    font-weight: bold;
+    user-select: none;
+    cursor: default;
     
-    @keyframes fadeIn {
-      0% {
-         transform: translateX(100vw);
-         opacity: 0;
-      }
-   }
+    @media screen and (max-width: 700px) {
+        font-size: 10px;
+    }
 `;
 
 // Note: the code is purely experimental and depending on performance will probably not make it in the final version...
-const viewController = (name, props) => {
+const viewController = (name, props, newFrame) => {
     try {
         let view = null;
         switch (name) {
@@ -38,16 +58,16 @@ const viewController = (name, props) => {
                 view = <Buildings {...props}/>;
                 break;
             case 'Apartments':
-                view = <Apartments {...props}/>;
+                view = <Apartments {...props} newFrame={newFrame}/>;
                 break;
             case 'Tenants':
-                view = <Tenants {...props}/>;
+                view = <Tenants {...props} newFrame={newFrame}/>;
                 break;
             case 'Tasks':
                 view = <Tasks {...props}/>;
                 break;
             case 'Messages':
-                view = <Messages {...props}/>;
+                view = <Messages {...props} newFrame={newFrame}/>;
                 break;
             case 'Settings':
                 view = <Settings {...props}/>;
@@ -58,11 +78,8 @@ const viewController = (name, props) => {
             default:
                 view = <Menu {...props}/>;
         }
-
         return (
-            <FrameContainer>
-                {view}
-            </FrameContainer>
+            view
         );
     } catch (e) {
         console.log('Failed to load view ', e);
@@ -78,22 +95,21 @@ class Views extends Component {
 
     render() {
         const isLoggedIn = this.props.viewState.token !== null;
-        const {title, props} = this.props.viewState.frame;
-        //const {showPopup, popupTitle} = this.props.viewState;
-        const view = viewController(title, props);
+        const {title, props, newFrame} = this.props.viewState.frame;
+        const view = viewController(title, props, newFrame);
 
         if (!isLoggedIn) {
             return (
                 <ViewContainer>
-                    <Welcome/>
                     <Login/>
                 </ViewContainer>
             )
         }
 
         return (
-            <ViewContainer>
+            <ViewContainer newFrame={newFrame}>
                 {view}
+                <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
                 <Popup/>
                 <ErrorMessage/>
             </ViewContainer>

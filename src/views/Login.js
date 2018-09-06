@@ -9,9 +9,49 @@ import Views from "./Views";
 
 const Container = styled.div``;
 
+const LoginContainer = styled.div`
+    position: fixed;
+    left: 0;
+    width: 80vw;
+    height: 40vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @media screen and (max-width: 700px) {
+        flex-direction: column;
+        width: 90vw;
+        height: 80vh;
+    }    
+`;
+
+const TextContainer = styled.div`
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10vw;
+    text-align: left;
+    font-size: 36px;
+    cursor: pointer;
+    user-select: none;
+    
+    @media screen and (max-width: 700px) {
+        font-size: 12px;
+        width: 80vw;
+        margin-bottom: 5vh;
+    }
+`;
+
+const Label = styled.label`
+    font-size: 16px;
+    font-weight: bold;
+    user-select: none;
+`;
+
 const Title = styled.h2`
     color: #444444;
-    font-size: 30px;
+    font-size: 48px;
+    text-align: left;
     user-select: none;
     cursor: default;
     
@@ -23,12 +63,16 @@ const Title = styled.h2`
 const FormContainer = styled.form`
     display: flex;
     flex-direction: column;
-    width: 400px;
-    margin: auto;
+    margin-top: 10vw;
+    margin-left: 10vw;
+    width: 30vw;
+    height: 30vh;
     font-size: 14px;
     
     @media screen and (max-width: 700px) {
-        max-width: 80%;
+        width: 80vw;
+        position: relative;
+        margin-top: 0;
     }
 `;
 
@@ -43,8 +87,8 @@ const LoginButton = styled.button`
 `;
 
 const Footer = styled.footer`
-    position: absolute;
-    width: 100%;
+    position: fixed;
+    width: 100vw;
     bottom: 0;
     color: #444444;
     font-weight: bold;
@@ -68,16 +112,15 @@ class Login extends Component {
         loginForm: {
             username: {
                 formType: 'input',
-                description: 'Email',
+                description: 'Username or email',
                 formConfig: {
                     type: 'text',
                     name: 'username',
-                    placeholder: 'Username or email'
+                    placeholder: 'Write your username or email'
                 },
                 value: '',
                 validation: {
                     required: true,
-                    email: true
                 },
                 valid: false
             },
@@ -153,20 +196,29 @@ class Login extends Component {
         if (!isLoggedIn) {
             return (
                 <Container>
-                    <Title>Welcome</Title>
-                    <FormContainer>
-                        {loginFormInputs.map(input => (
-                            <Forms
-                                key={input.id}
-                                formType={input.config.formType}
-                                formConfig={input.config.formConfig}
-                                value={input.config.value}
-                                valid={input.config.valid}
-                                changed={(event) => this.userInputHandler(event)}/>
-                        ))}
-                        {errorMessage}
-                        <LoginButton onClick={(event) => this.handleSubmit(event)}>Log in</LoginButton>
-                    </FormContainer>
+                    <LoginContainer>
+                        <TextContainer>
+                            <Title>Built for Roth Fastigheter</Title>
+                            <Label>This application was developed to help streamline your daily work
+                                process. From managing property to communicating with your 100+ tenants, you can plan
+                                and
+                                organize work, and respond faster to different tasks and requests.</Label>
+                        </TextContainer>
+                        <FormContainer>
+                            {loginFormInputs.map(input => (
+                                <Forms
+                                    key={input.id}
+                                    formType={input.config.formType}
+                                    formConfig={input.config.formConfig}
+                                    description={input.config.description}
+                                    value={input.config.value}
+                                    valid={input.config.valid}
+                                    changed={(event) => this.userInputHandler(event)}/>
+                            ))}
+                            {errorMessage}
+                            <LoginButton onClick={(event) => this.handleSubmit(event)}>Log in</LoginButton>
+                        </FormContainer>
+                    </LoginContainer>
                     <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
                 </Container>
             );

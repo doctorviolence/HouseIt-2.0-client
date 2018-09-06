@@ -13,14 +13,22 @@ const Container = styled.div`
     width: 100vw;
     display: flex;
     align-items: center;
-    animation: 'fadeIn' 0.3s ease-in-out;
+    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    
-    @keyframes fadeIn {
-      0% {
-         opacity: 0;
-      }
-   }
+   
+    @keyframes slideOut {
+        0% {
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+            opacity: 0;
+            transform: translateX(100vw);
+        }  
+    }  
     
     @media screen and (max-width: 700px) {
         flex-direction: column;
@@ -113,7 +121,7 @@ class Apartments extends Component {
                 removeApartment={() => this.removeFromApartments(this.state.apartmentSelectedId)}/>;
         }
         return (
-            <Container>
+            <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</MenuButton>
                 </Menu>

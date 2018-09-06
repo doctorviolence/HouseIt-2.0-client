@@ -9,14 +9,22 @@ const Container = styled.div`
     align-items: center;
     display: flex;
     flex-direction: column;
-    animation: 'fadeIn' 0.3s ease-in-out;
+    transform: ${props => props.newFrame ? 'slideOut' : null} 0.3s ease-in-out;
+    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
-    
-    @keyframes fadeIn {
-      0% {
-         opacity: 0;
-      }
-   }
+   
+    @keyframes slideOut {
+        0% {
+            transform: translateX(-20vw);
+        }
+    }
+   
+    @keyframes slideIn {
+        100% {
+             opacity: 0;
+             transform: translateX(100vw);
+        }  
+    }  
 `;
 
 const Title = styled.h2`
