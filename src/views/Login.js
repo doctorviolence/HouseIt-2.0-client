@@ -21,7 +21,7 @@ const LoginContainer = styled.div`
     @media screen and (max-width: 700px) {
         flex-direction: column;
         width: 90vw;
-        height: 80vh;
+        height: 100%;
     }    
 `;
 
@@ -70,7 +70,6 @@ const FormContainer = styled.form`
     
     @media screen and (max-width: 700px) {
         width: 80vw;
-        position: relative;
         margin-top: 0;
     }
 `;

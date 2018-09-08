@@ -40,6 +40,10 @@ const Logo = styled.h1`
             transform: scale(0);
         }
     }
+    
+    @media screen and (max-width: 700px) {
+        font-size: 50px;
+    }
 `;
 
 const WelcomeText = styled.h1`
