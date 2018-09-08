@@ -16,7 +16,6 @@ import TenantDetails from "../../components/tenant/details/Details";
 import styled from "styled-components";
 
 const Container = styled.div`
-    width: 100vw;
     display: flex;
     align-items: center;
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
@@ -100,7 +99,7 @@ class Tenants extends Component {
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Apartments',
                         {buildingId: building.buildingId, name: building.name, newFrame: false})
-                    }>‹ Apartments</MenuButton>
+                    }>‹ Apartments in {building.name}</MenuButton>
                 </Menu>
                 <PageContainer>
                     <Title>Tenants in {apartment.apartmentNo}</Title>
@@ -115,7 +114,7 @@ class Tenants extends Component {
                                 clicked={() => this.tenantSelectedHandler(t.tenantId)}/>
                         )
                     })}
-                    <AddButton onClick={this.toggleAdd}>+</AddButton>
+                    <AddButton onClick={this.toggleAdd}>New Tenant...</AddButton>
                 </PageContainer>
                 <TenantData add={this.state.add}
                             title={"Add new tenant"}

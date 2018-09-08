@@ -53,7 +53,5 @@ export const logout = () => {
     }
 };
 
-//export const viewPopup = (popup) => ({type: 'VIEW_POPUP', title: popup.title});
-//export const closePopup = () => ({type: 'CLOSE_POPUP'});
 export const viewFrame = (view, props) => ({type: 'VIEW_FRAME', view, props: props});
 export const closeFrame = (view, props) => ({type: 'CLOSE_FRAME', view, props: props});

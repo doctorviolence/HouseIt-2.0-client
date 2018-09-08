@@ -1,20 +1,20 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 90vw;
+    width: 80vw;
     padding: 24px;
     display: flex;
     align-items: center;
 `;
 
 export const TextContainer = styled.div`
-    width: 90vw;
+    width: 80vw;
     display: flex;
     text-align: left;
     font-size: 24px;
     margin-bottom: 5px;
     border-bottom: 1px solid #bdbebf;
-    align-items: center;
+    align-items: left;
     justify-content: space-between;
     cursor: pointer;
     user-select: none;
@@ -46,7 +46,7 @@ export const Button = styled.button`
     color: #CC0033;
     background: #ffffff;
     border: none;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     user-select: none;
     

@@ -4,13 +4,12 @@ import styled from "styled-components";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import {Menu, Title, AddButton, MenuButton} from "../../components/constants/styles/views";
+import {Menu, Title, Subtitle, AddButton, MenuButton} from "../../components/constants/styles/views";
 import Apartment from "../../components/apartment/Apartment";
 import ApartmentData from "../../components/apartment/Data";
 import ApartmentDetails from "../../components/apartment/details/Details";
 
 const Container = styled.div`
-    width: 100vw;
     display: flex;
     align-items: center;
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
@@ -48,19 +47,21 @@ const PageContainer = styled.div`
 `;
 
 const BuildingContainer = styled.div`
-    width: 200vw;
-    min-width: 200px;
-    max-width: 200px;
-    height: 200px;
-    min-height: 200px;    
-    max-height: 200px;
+    margin-top: 48px;
+    width: 250vw;
+    min-width: 250px;
+    max-width: 250px;
+    height: 250px;
+    min-height: 250px;    
+    max-height: 250px;
     margin-left: 10px;
     margin-right: 40px;
     margin-bottom: 40px;
     border: 1px solid #f2f2f2;
-    flex: 1 1 40%;
     align-text: center;
 `;
+
+const DescriptionContainer = styled.div``;
 
 class Apartments extends Component {
     constructor(props) {
@@ -127,7 +128,9 @@ class Apartments extends Component {
                 </Menu>
                 <BuildingContainer>{this.props.name}</BuildingContainer>
                 <PageContainer>
-                    <Title>Apartments in {this.props.name}</Title>
+                    <DescriptionContainer>
+                        <Title>Apartments in {this.props.name}</Title>
+                    </DescriptionContainer>
                     {apartmentDetails}
                     {apartments.map((a) => {
                         return (
@@ -150,7 +153,7 @@ class Apartments extends Component {
                                 clicked={() => this.apartmentSelectedHandler(a.apartmentId)}/>
                         )
                     })}
-                    <AddButton onClick={this.toggleAdd}>+</AddButton>
+                    <AddButton onClick={this.toggleAdd}>New Apartment...</AddButton>
                 </PageContainer>
                 <ApartmentData add={this.state.add}
                                title={"Add new apartment"}

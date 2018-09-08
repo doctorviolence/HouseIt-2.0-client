@@ -11,8 +11,8 @@ const FormContainer = styled.div`
     left: 0;
     right: 0;
     z-index: 1000;
-    width: 100%;
-    height: 100%;
+    width: 100vvw;
+    height: 100vh;
     background: #ffffff;
     animation: ${props => (props.show ? 'slideOut' : 'slideIn')} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
@@ -53,13 +53,12 @@ const Button = styled.button`
     color: #CC0033;
     background: #ffffff;
     border: none;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
     cursor: pointer;
     user-select: none;
         
     @media screen and (max-width: 700px) {
-        font-size: 15px;
+        font-size: 16px;
     }
 `;
 
@@ -67,15 +66,14 @@ const SubmitButton = styled.button`
     color: #CC0033;
     background: #ffffff;
     border: none;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
     cursor: pointer;
     user-select: none;
     color: ${props => props.formIsValid ? '#CC0033' : '#999999'};
     pointer-events: ${props => props.formIsValid ? 'auto' : 'none'}; 
     
     @media screen and (max-width: 700px) {
-        font-size: 15px;
+        font-size: 16px;
     }
 `;
 

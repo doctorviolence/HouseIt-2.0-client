@@ -16,7 +16,6 @@ import TaskMessageDetails from "../../components/message/details/Details";
 import styled from "styled-components";
 
 const Container = styled.div`
-    width: 100vw;
     display: flex;
     align-items: center;
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
@@ -98,6 +97,7 @@ class TaskMessages extends Component {
                 toggleTaskMessageDetails={() => this.taskMessageSelectedHandler()}
                 removeTaskMessage={() => this.removeFromTaskMessages(this.state.taskMessageSelectedId)}/>;
         }
+        console.log(this.props.viewState.tenant);
         return (
             <Container newFrame={this.props.newFrame}>
                 <Menu>
@@ -111,12 +111,13 @@ class TaskMessages extends Component {
                             <TaskMessage
                                 key={t.messageNo}
                                 id={t.messageNo}
+                                tenant={task}
                                 timePosted={t.timePosted}
                                 messageText={t.messageText}
                                 clicked={() => this.taskMessageSelectedHandler(t.messageNo)}/>
                         )
                     })}
-                    <AddButton onClick={this.toggleAdd}>+</AddButton>
+                    <AddButton onClick={this.toggleAdd}>Write Message...</AddButton>
                 </PageContainer>
                 <TaskMessageData add={this.state.add}
                                  title={"Write new message"}

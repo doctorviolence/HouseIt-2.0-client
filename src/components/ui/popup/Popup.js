@@ -9,10 +9,10 @@ const Container = styled.div`
     z-index: 1000;
     right: 5px;
     bottom: 5px;
-    width: 320px;
+    width: 50vw;
     height: auto;
     margin: auto;
-    background: ${props => (props.show ? 'rgba(38, 38, 38, 0.8)' : '#ffffff')};
+    background: ${props => (props.show ? 'rgba(38, 38, 38, 0.9)' : '#ffffff')};
     animation: ${props => (props.show ? 'slideOut' : 'slideIn')} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
       
@@ -20,6 +20,7 @@ const Container = styled.div`
         left: 0px;
         right: 0px;
         bottom: 0px;
+        width: 90vw;
     }
     
     @keyframes slideOut {

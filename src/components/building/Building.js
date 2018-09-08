@@ -1,28 +1,30 @@
 import React from 'react';
 import styled from "styled-components";
-import {Button} from "../constants/styles/components";
 
 const BuildingContainer = styled.div`
     width: 200px;
+    height: 250px;
     max-width: 200px;
-    height: 200px;
-    max-height: 200px;
+    max-height: 250px;
     margin-right: 40px;
     margin-bottom: 40px;
-    border: 1px solid #f2f2f2;
-    flex: 1 1 40%;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 20%;
+    text-align: left;
     
     @media screen and (max-width: 700px) {
-        width: 100px;
-        max-width: 100px;
-        height: 100px;
-        max-height: 100px;
+        width: 200px;
+        height: 250px;
+        max-width: 200px;
+        max-height: 250px;
     }
 `;
 
-const TextContainer = styled.div`
+const ImageContainer = styled.div`
     height: 200px;
+    width: 200px;
+    border: 1px solid #f2f2f2;
     text-align: center;
     font-size: 14px;
     font-weight: bold;
@@ -33,7 +35,10 @@ const TextContainer = styled.div`
     user-select: none;
     
     @media screen and (max-width: 700px) {
-        height: 100px;
+        width: 200px;
+        height: 200px;
+        max-width: 200px;
+        max-height: 200px;
     }
     
     &:hover {
@@ -41,11 +46,33 @@ const TextContainer = styled.div`
     }
 `;
 
+const BuildingName = styled.div`
+    font-size: 24px;
+    margin-bottom: 5px;
+`;
+
+const Button = styled.div`
+    color: #CC0033;
+    width: 200px;
+    background: #ffffff;
+    text-align: left;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    user-select: none;
+    
+    @media screen and (max-width: 700px) {
+        width: 100px;
+    }
+`;
+
 const Building = (props) => (
     <BuildingContainer key={props.id}>
-        <TextContainer onClick={props.viewApartments}>
+        <ImageContainer onClick={props.viewApartments}>
+        </ImageContainer>
+        <BuildingName>
             {props.name}
-        </TextContainer>
+        </BuildingName>
         <Button onClick={props.clicked}>View Details</Button>
     </BuildingContainer>
 );

@@ -37,15 +37,16 @@ const TaskContainer = styled.div`
 
 const Title = styled.h2`
     color: #333333;
-    font-size: 24px;
-    text-align: center;
+    font-size: 36px;
+    text-align: left;
     margin-left: 32px;
+    margin-top: 48px;
     margin-bottom: 32px;
     cursor: default;
     user-select: none;
     
     @media screen and (max-width: 700px) {
-        font-size: 16px;
+        font-size: 24px;
     }
 `;
 
@@ -125,7 +126,7 @@ class Tasks extends Component {
         }
         let addTask = null;
         if (tenant) {
-            addTask = <AddButton onClick={this.toggleAdd}>+</AddButton>;
+            addTask = <AddButton onClick={this.toggleAdd}>Add Task...</AddButton>;
         }
 
         const completedTasks = tasks.filter((t) => t.resolved === 'Yes').map(t => {

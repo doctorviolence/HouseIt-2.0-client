@@ -56,7 +56,7 @@ const Title = styled.h2`
     cursor: default;
     
     @media screen and (max-width: 700px) {
-        font-size: 20px;
+        font-size: 36px;
     }
 `;
 
@@ -66,7 +66,6 @@ const FormContainer = styled.form`
     margin-top: 10vw;
     margin-left: 10vw;
     width: 30vw;
-    height: 30vh;
     font-size: 14px;
     
     @media screen and (max-width: 700px) {
@@ -101,7 +100,7 @@ const Footer = styled.footer`
 `;
 
 const ErrorMessage = styled.label`
-    margin-bottom: 20px;
+    margin-top: 20px;
     color: #fd5c63;
     font-size: 14px;
     font-weight: bold;
@@ -215,8 +214,8 @@ class Login extends Component {
                                     valid={input.config.valid}
                                     changed={(event) => this.userInputHandler(event)}/>
                             ))}
-                            {errorMessage}
                             <LoginButton onClick={(event) => this.handleSubmit(event)}>Log in</LoginButton>
+                            {errorMessage}
                         </FormContainer>
                     </LoginContainer>
                     <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>

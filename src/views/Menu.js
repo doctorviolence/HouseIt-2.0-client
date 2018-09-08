@@ -30,7 +30,7 @@ const Container = styled.div`
 const Title = styled.h2`
     margin-bottom: 50px;
     color: #444444;
-    font-size: 30px;
+    font-size: 36px;
     user-select: none;
     cursor: default;
     
@@ -40,12 +40,11 @@ const Title = styled.h2`
 `;
 
 const Button = styled.div`
-    width: 40vw;
+    width: 80vw;
     margin-bottom: 40px;
     color: #CC0033;
     background: #ffffff;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 24px;
     display: flex;
     text-align: left;
     border-bottom: 1px solid #bdbebf;
@@ -80,14 +79,20 @@ class Menu extends Component {
                 <Container>
                     <Title>Menu</Title>
                     <Button
-                        onClick={() => this.props.viewFrame('Buildings')}>Buildings <ArrowContainer>›</ArrowContainer>
+                        onClick={() => this.props.viewFrame('Buildings')}>Manage Property
+                        <ArrowContainer>›</ArrowContainer>
                     </Button>
-                    <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks <ArrowContainer>›</ArrowContainer>
+                    <Button onClick={() => this.props.viewFrame('Tasks')}>Manage Tasks
+                        <ArrowContainer>›</ArrowContainer>
                     </Button>
-                    <Button onClick={() => this.props.viewFrame('Settings')}>Settings <ArrowContainer>›</ArrowContainer>
+                    <Button onClick={() => this.props.viewFrame('Settings')}>Settings
+                        <ArrowContainer>›</ArrowContainer>
                     </Button>
-                    <Button onClick={this.logOutHandler}>Log out <ArrowContainer>›</ArrowContainer>
+                    <Button onClick={this.logOutHandler}>Log out
+                        <ArrowContainer>›</ArrowContainer>
                     </Button>
+                    <Title>Dashboard</Title>
+                    To-do...
                 </Container>
             );
         }

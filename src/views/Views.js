@@ -13,6 +13,7 @@ import Settings from "./Settings";
 import Menu from './Menu';
 import Popup from "../components/ui/popup/Popup";
 import ErrorMessage from "../components/ui/errorMessage/ErrorMessage";
+import BuildingData from "../components/building/Data";
 
 const ViewContainer = styled.div`
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
@@ -21,32 +22,15 @@ const ViewContainer = styled.div`
    
     @keyframes slideOut {
         0% {
-            opacity: 0;
             transform: translateX(-20vw);
         }
     }
    
     @keyframes slideIn {
         100% {
-            opacity: 0;
             transform: translateX(100vw);
         }  
     }  
-`;
-
-const Footer = styled.footer`
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    color: #444444;
-    background: #ffffff;
-    font-weight: bold;
-    user-select: none;
-    cursor: default;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 10px;
-    }
 `;
 
 // Note: the code is purely experimental and depending on performance will probably not make it in the final version...
@@ -109,7 +93,6 @@ class Views extends Component {
         return (
             <ViewContainer newFrame={newFrame}>
                 {view}
-                <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
                 <Popup/>
                 <ErrorMessage/>
             </ViewContainer>

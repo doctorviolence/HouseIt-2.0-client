@@ -8,7 +8,6 @@ injectGlobal`
    body {
         padding: 0;
         text-align: center;
-        margin-top: 72px;
         background-color: #ffffff;
         font-family: "Helvetica", Helvetica;
         font-size: 14px;

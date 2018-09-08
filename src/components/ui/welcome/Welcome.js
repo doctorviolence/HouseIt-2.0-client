@@ -11,12 +11,10 @@ const Container = styled.div`
     width: 100%;
     height: 100%;
     justify-content: center;
-    align-items: center;
     background: #ffffff;
-    transition: all 0.3s ease-in-out;
     display: ${props => props.show ? 'flex' : 'none'}
-    animation: ${props => props.show ? null : 'hide'};
-
+    animation: ${props => props.hide ? 'hide' : 'scale'} 0.3s;
+    
     @keyframes hide {
         100% {
              transform: scale(0);
@@ -26,31 +24,29 @@ const Container = styled.div`
 `;
 
 const TextContainer = styled.div`
-    transition: all 0.3s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s ease;
 `;
 
 const Logo = styled.h1`
-    position: relative;
     color: #444444;
-    font-size: 100px;
-    transition: all 0.3s ease-in-out;
-    animation: 'slideIn' 0.3s ease;
+    font-size: 150px;
+    animation: 'slideIn' 0.5s ease;
     
     @keyframes slideIn {
         0% {
-            transform: translateX(50vw);
+            transform: scale(0);
         }
     }
 `;
 
 const WelcomeText = styled.h1`
-    position: relative;
-    margin-top: 60px;
     margin-left: 10px;
     color: #444444;
     font-size: 40px;
-    transition: all 0.3s ease-in-out;
-    animation: 'slideIn' 0.3s ease;
+    animation: 'slideIn' 0.5s ease;
     
     @keyframes slideIn {
         0% {
@@ -67,6 +63,7 @@ const WelcomeText = styled.h1`
 class Welcome extends Component {
     state = {
         display: true,
+        hide: false,
         showLogo: false,
         showText: false
     };
@@ -74,26 +71,32 @@ class Welcome extends Component {
     componentDidMount() {
         setTimeout(() => {
             this.setState({showLogo: true});
-        }, 0);
+        }, 300);
 
         setTimeout(() => {
             this.setState({showText: true});
-        }, 700);
+        }, 800);
 
         setTimeout(() => {
-            this.setState({showLogo: false, showText: false});
-        }, 1500);
+            this.setState({hide: true});
+        }, 1700);
 
         setTimeout(() => {
-            this.setState({display: false});
-        }, 1800);
+            this.setState({showLogo: false, showText: false})
+        }, 1900);
+
+        setTimeout(() => {
+            this.setState({display: false, hide: false});
+        }, 2000);
     }
 
     render() {
         return (
-            <Container show={this.state.display}>
-                <Logo hidden={!this.state.showLogo}>⌂</Logo>
-                <TextContainer>
+            <Container show={this.state.display} hide={this.state.hide}>
+                <TextContainer hide={this.state.hide}>
+                    <Logo hidden={!this.state.showLogo}>⌂</Logo>
+                </TextContainer>
+                <TextContainer hide={this.state.hide}>
                     <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER AB</WelcomeText>
                 </TextContainer>
             </Container>

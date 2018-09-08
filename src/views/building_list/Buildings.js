@@ -12,37 +12,14 @@ import BuildingDetails from "../../components/building/details/Details";
 const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-left: 10vw;
+    margin-left: 5vw;
     
     @media screen and (max-width: 700px) {
-        margin-left: 10vw;
+        margin-left: 5vw;
     }
     
     @media screen and (max-width: 300px) {
-        margin-left: 20vw;
-    }
-`;
-
-const BuildingContainer = styled.div`
-    width: 200px;
-    max-width: 200px;
-    height: 200px;
-    max-height: 200px;
-    margin-right: 40px;
-    margin-bottom: 40px;
-    border: 1px solid #f2f2f2;
-    flex: 1 1 40%;
-    justify-content: center;
-    
-    @media screen and (max-width: 700px) {
-        width: 100px;
-        max-width: 100px;
-        height: 100px;
-        max-height: 100px;
-    }
-    
-    &:hover {
-        background: #f2f2f2;
+        margin-left: 5vw;
     }
 `;
 
@@ -127,10 +104,9 @@ class Buildings extends Component {
                                     clicked={() => this.buildingSelectedHandler(b.buildingId)}/>
                             )
                         })}
-                        <BuildingContainer>
-                            <AddButton onClick={this.toggleAdd}>+</AddButton>
-                        </BuildingContainer>
                     </Content>
+                    <AddButton onClick={this.toggleAdd}>New Building...</AddButton>
+
                 </PageContainer>
                 <BuildingData add={this.state.add}
                               title={"Add new building"}

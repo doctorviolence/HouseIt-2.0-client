@@ -11,7 +11,7 @@ const Container = styled.div`
     width: 50vw;
     height: auto;
     margin: auto;
-    background: ${props => (props.show ? 'rgba(204, 0, 51, 0.8)' : '#ffffff')};
+    background: ${props => (props.show ? 'rgba(204, 0, 51, 0.9)' : '#ffffff')};
     animation: ${props => (props.show ? 'slideOut' : 'slideIn')} 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;
       
