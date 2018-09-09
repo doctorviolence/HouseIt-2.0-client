@@ -85,7 +85,7 @@ const LoginButton = styled.button`
 `;
 
 const Footer = styled.footer`
-    position: fixed;
+    position: absolute;
     width: 100vw;
     bottom: 0;
     color: #444444;

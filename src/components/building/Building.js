@@ -21,16 +21,10 @@ const BuildingContainer = styled.div`
     }
 `;
 
-const ImageContainer = styled.div`
+const ImageContainer = styled.img`
     height: 200px;
     width: 200px;
     border: 1px solid #f2f2f2;
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     cursor: pointer;
     user-select: none;
     
@@ -68,8 +62,7 @@ const Button = styled.div`
 
 const Building = (props) => (
     <BuildingContainer key={props.id}>
-        <ImageContainer onClick={props.viewApartments}>
-        </ImageContainer>
+        <ImageContainer src="/images/house.png" onClick={props.viewApartments}/>
         <BuildingName>
             {props.name}
         </BuildingName>

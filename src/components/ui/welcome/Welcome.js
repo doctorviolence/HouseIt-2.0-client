@@ -30,19 +30,21 @@ const TextContainer = styled.div`
     transition: 0.5s ease;
 `;
 
-const Logo = styled.h1`
-    color: #444444;
-    font-size: 150px;
+const Logo = styled.img`
+    height: 100px;
+    width: 100px;
     animation: 'slideIn' 0.5s ease;
     
     @keyframes slideIn {
         0% {
+            opacity: 0;
             transform: scale(0);
         }
     }
     
     @media screen and (max-width: 700px) {
-        font-size: 50px;
+        height: 50px;
+        width: 50px;
     }
 `;
 
@@ -98,7 +100,7 @@ class Welcome extends Component {
         return (
             <Container show={this.state.display} hide={this.state.hide}>
                 <TextContainer hide={this.state.hide}>
-                    <Logo hidden={!this.state.showLogo}>⌂</Logo>
+                    <Logo src="/images/house_logo.png" hidden={!this.state.showLogo}/>
                 </TextContainer>
                 <TextContainer hide={this.state.hide}>
                     <WelcomeText hidden={!this.state.showText}>ROTH FASTIGHETER AB</WelcomeText>

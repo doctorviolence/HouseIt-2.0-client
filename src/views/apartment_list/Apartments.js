@@ -46,7 +46,7 @@ const PageContainer = styled.div`
     }
 `;
 
-const BuildingContainer = styled.div`
+const BuildingContainer = styled.img`
     margin-top: 48px;
     width: 250vw;
     min-width: 250px;
@@ -57,8 +57,6 @@ const BuildingContainer = styled.div`
     margin-left: 10px;
     margin-right: 40px;
     margin-bottom: 40px;
-    border: 1px solid #f2f2f2;
-    align-text: center;
 `;
 
 const DescriptionContainer = styled.div``;
@@ -126,7 +124,7 @@ class Apartments extends Component {
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</MenuButton>
                 </Menu>
-                <BuildingContainer>{this.props.name}</BuildingContainer>
+                <BuildingContainer src="/images/house.png"/>
                 <PageContainer>
                     <DescriptionContainer>
                         <Title>Apartments in {this.props.name}</Title>
