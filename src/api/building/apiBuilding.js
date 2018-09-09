@@ -30,6 +30,19 @@ class ApiBuilding {
             .then(response => response.data);
     };
 
+    uploadFile = (file, name, queryToken) => {
+        const formData = new FormData();
+        formData.append('file', file, name);
+        return axios
+            .post('/buildings/upload-image', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    'Authorization': queryToken
+                }
+            })
+            .then(response => response.data);
+    };
+
     editBuilding = (data, queryToken) => {
         return axios
             .put('/buildings/update-building', data, {

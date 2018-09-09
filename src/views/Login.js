@@ -100,6 +100,7 @@ const Footer = styled.footer`
 
 const ErrorMessage = styled.label`
     margin-top: 20px;
+    margin-bottom: 24px;
     color: #fd5c63;
     font-size: 14px;
     font-weight: bold;

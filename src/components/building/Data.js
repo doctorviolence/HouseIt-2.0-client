@@ -77,6 +77,21 @@ class BuildingData extends Component {
                 },
                 valid: false
             },
+            image: {
+                formType: 'input',
+                description: 'Image',
+                formConfig: {
+                    type: 'file',
+                    name: 'image',
+                    placeholder: 'Upload an image of the building'
+                },
+                value: '',
+                file: [],
+                validation: {
+                    required: false
+                },
+                valid: true
+            },
         },
         formIsValid: false
     };
@@ -89,6 +104,10 @@ class BuildingData extends Component {
         updatedForm.valid = validation(event.target.value, updatedForm.validation);
         updatedDataForm[event.target.name] = updatedForm;
 
+        if (updatedForm.file) {
+            updatedForm.file = event.target.files[0];
+        }
+
         let isValid = true;
         for (let i in updatedDataForm) {
             isValid = updatedDataForm[i].valid && isValid;
@@ -99,25 +118,36 @@ class BuildingData extends Component {
 
     addBuilding = (event) => {
         event.preventDefault();
+        const file = this.state.dataForm.image.file;
+        const fileSelected = file != 0; // returns boolean value if file was selected or not
         const data = {
             id: null,
             name: this.state.dataForm.name.value,
             address: this.state.dataForm.streetAddress.value,
             zipCode: this.state.dataForm.zipCode.value,
             yearBuilt: this.state.dataForm.yearBuilt.value,
-            inspectionDate: this.state.dataForm.inspectionDate.value
+            inspectionDate: this.state.dataForm.inspectionDate.value,
+            image: fileSelected
         };
 
         if (this.state.formIsValid) {
             this.props.toggleAdd;
             this.props.addBuilding(data);
-        } else {
-            // Replacing this with error message, eventually...
+        }
+
+        if (fileSelected) {
+            this.props.uploadBuildingImage(data.name, file);
+            const updatedDataForm = {...this.state.dataForm};
+            updatedDataForm.image.file = [];
+            updatedDataForm.image.value = '';
+            this.setState({dataForm: updatedDataForm}); // resets the image object
         }
     };
 
     editBuilding = (event) => {
         event.preventDefault();
+        const file = this.state.dataForm.image.file;
+        const fileSelected = file != 0;
         const id = this.props.id;
         const data = {
             buildingId: id,
@@ -125,12 +155,21 @@ class BuildingData extends Component {
             address: this.state.dataForm.streetAddress.value,
             zipCode: this.state.dataForm.zipCode.value,
             yearBuilt: this.state.dataForm.yearBuilt.value,
-            inspectionDate: this.state.dataForm.inspectionDate.value
+            inspectionDate: this.state.dataForm.inspectionDate.value,
+            image: fileSelected
         };
 
         if (this.state.formIsValid) {
             this.props.toggleEdit;
             this.props.editBuilding(data, id);
+        }
+
+        if (fileSelected) {
+            this.props.uploadBuildingImage(data.name, file);
+            const updatedDataForm = {...this.state.dataForm};
+            updatedDataForm.image.file = [];
+            updatedDataForm.image.value = '';
+            this.setState({dataForm: updatedDataForm}); // resets the image object
         }
     };
 

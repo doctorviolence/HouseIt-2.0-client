@@ -29,6 +29,7 @@ class Buildings extends Component {
 
         this.buildingSelectedHandler = this.buildingSelectedHandler.bind(this);
         this.addToBuildings = this.addToBuildings.bind(this);
+        this.uploadBuildingImage = this.uploadBuildingImage.bind(this);
         this.removeFromBuildings = this.removeFromBuildings.bind(this);
         this.toggleAdd = this.toggleAdd.bind(this);
 
@@ -57,9 +58,13 @@ class Buildings extends Component {
         });
     };
 
-    addToBuildings = (data, file) => {
+    addToBuildings = (data) => {
         this.toggleAdd();
-        this.props.addBuilding(data, file);
+        this.props.addBuilding(data);
+    };
+
+    uploadBuildingImage = (name, file) => {
+        this.props.uploadBuildingFile(name, file);
     };
 
     removeFromBuildings = (id) => {
@@ -92,26 +97,28 @@ class Buildings extends Component {
                                     key={b.buildingId}
                                     id={b.buildingId}
                                     name={b.name}
+                                    image={b.image}
                                     viewApartments={() => this.props.viewFrame('Apartments', {
                                             buildingId: b.buildingId,
                                             name: b.name,
                                             address: b.address,
                                             zipCode: b.zipCode,
                                             yearBuilt: b.yearBuilt,
-                                            inspectionDate: b.inspectionDate
+                                            inspectionDate: b.inspectionDate,
+                                            image: b.image
                                         }
-                                    ) && this}
+                                    )}
                                     clicked={() => this.buildingSelectedHandler(b.buildingId)}/>
                             )
                         })}
                     </Content>
                     <AddButton onClick={this.toggleAdd}>New Building...</AddButton>
-
                 </PageContainer>
                 <BuildingData add={this.state.add}
                               title={"Add new building"}
                               toggleAdd={this.toggleAdd}
-                              addBuilding={this.addToBuildings}/>
+                              addBuilding={this.addToBuildings}
+                              uploadBuildingImage={this.uploadBuildingImage}/>
             </Container>
         );
     }
@@ -127,7 +134,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         retrieveBuildings: () => dispatch(apiActions.retrieveBuildings()),
-        addBuilding: (building, file) => dispatch(apiActions.addBuilding(building, file)),
+        addBuilding: (building) => dispatch(apiActions.addBuilding(building)),
+        uploadBuildingFile: (name, file) => dispatch(apiActions.uploadBuildingFile(name, file)),
         removeBuilding: (id) => dispatch(apiActions.removeBuilding(id)),
         viewFrame: (view, props) => dispatch(viewActions.viewFrame(view, props)),
         closeFrame: (view) => dispatch(viewActions.closeFrame(view))

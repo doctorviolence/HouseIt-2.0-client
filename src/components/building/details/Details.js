@@ -23,6 +23,7 @@ class BuildingDetails extends Component {
 
         this.toggleEdit = this.toggleEdit.bind(this);
         this.editBuilding = this.editBuilding.bind(this);
+        this.uploadBuildingImage = this.uploadBuildingImage.bind(this);
         this.removeBuilding = this.removeBuilding.bind(this);
 
         this.state = {
@@ -39,6 +40,10 @@ class BuildingDetails extends Component {
     editBuilding = (data, id) => {
         this.toggleEdit();
         this.props.editBuilding(data, id);
+    };
+
+    uploadBuildingImage = (name, file) => {
+        this.props.uploadBuildingFile(name, file);
     };
 
     removeBuilding = (id) => {
@@ -75,7 +80,7 @@ class BuildingDetails extends Component {
                             <Button onClick={() => this.removeBuilding(this.props.id)}>Remove</Button>
                         </ButtonContainer>
                     </DetailsContainer>
-                    <BuildingData id={b[0].id}
+                    <BuildingData id={b[0].buildingId}
                                   edit={this.state.edit}
                                   title={"Edit building"}
                                   toggleEdit={this.toggleEdit}
@@ -84,7 +89,8 @@ class BuildingDetails extends Component {
                                   streetAddress={b[0].address}
                                   zipCode={b[0].zipCode}
                                   yearBuilt={b[0].yearBuilt}
-                                  inspectionDate={b[0].inspectionDate}/>
+                                  inspectionDate={b[0].inspectionDate}
+                                  uploadBuildingImage={this.uploadBuildingImage}/>
                     <Backdrop onClick={() => this.props.toggleBuildingDetails()}/>
                 </Container>
             );
@@ -102,6 +108,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        uploadBuildingFile: (name, file) => dispatch(apiActions.uploadBuildingFile(name, file)),
         editBuilding: (building, id) => dispatch(apiActions.editBuilding(building, id)),
     };
 };

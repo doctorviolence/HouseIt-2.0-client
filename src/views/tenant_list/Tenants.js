@@ -98,7 +98,7 @@ class Tenants extends Component {
             <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Apartments',
-                        {buildingId: building.buildingId, name: building.name, newFrame: false})
+                        {buildingId: building.buildingId, name: building.name, image: this.props.image, newFrame: false})
                     }>‹ Apartments in {building.name}</MenuButton>
                 </Menu>
                 <PageContainer>

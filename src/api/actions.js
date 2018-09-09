@@ -40,6 +40,20 @@ export const addBuilding = (building) => {
     }
 };
 
+export const uploadBuildingFile = (name, file) => {
+    return dispatch => {
+        const queryToken = localStorage.getItem('token');
+        return apiBuilding.uploadFile(file, name, queryToken)
+            .then(result => {
+                }
+            ).catch(e => {
+                console.log(e);
+                dispatch(closePopup());
+                dispatch({type: 'SHOW_ERROR', error: 'Failed to upload image...'})
+            })
+    }
+};
+
 export const editBuilding = (building, id) => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');

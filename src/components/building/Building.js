@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import styled from "styled-components";
 
 const BuildingContainer = styled.div`
@@ -60,14 +60,19 @@ const Button = styled.div`
     }
 `;
 
-const Building = (props) => (
-    <BuildingContainer key={props.id}>
-        <ImageContainer src="/images/house.png" onClick={props.viewApartments}/>
-        <BuildingName>
-            {props.name}
-        </BuildingName>
-        <Button onClick={props.clicked}>View Details</Button>
-    </BuildingContainer>
-);
+class Building extends Component {
+    render() {
+        const url = this.props.image ? `/images/${this.props.name}.png` : `/images/house.png`;
+        return (
+            <BuildingContainer key={this.props.id}>
+                <ImageContainer src={url} onClick={this.props.viewApartments}/>
+                <BuildingName>
+                    {this.props.name}
+                </BuildingName>
+                <Button onClick={this.props.clicked}>View Details</Button>
+            </BuildingContainer>
+        )
+    }
+}
 
 export default Building;

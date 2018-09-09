@@ -10,7 +10,7 @@ import ApartmentData from "../../components/apartment/Data";
 import ApartmentDetails from "../../components/apartment/details/Details";
 
 const Container = styled.div`
-    display: flex;
+    display: inline-block;
     align-items: center;
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
     animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
@@ -102,6 +102,7 @@ class Apartments extends Component {
 
     render() {
         const apartments = this.props.apiState.data.apartments;
+        const url = this.props.image ? `/images/${this.props.name}.png` : `/images/house.png`;
         const building = {
             buildingId: this.props.buildingId,
             name: this.props.name,
@@ -124,7 +125,7 @@ class Apartments extends Component {
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</MenuButton>
                 </Menu>
-                <BuildingContainer src="/images/house.png"/>
+                <BuildingContainer src={url}/>
                 <PageContainer>
                     <DescriptionContainer>
                         <Title>Apartments in {this.props.name}</Title>
@@ -144,8 +145,9 @@ class Apartments extends Component {
                                             apartmentNo: a.apartmentNo,
                                             size: a.size,
                                             rent: a.rent,
-                                            floorNo: a.floorNo
-                                        }
+                                            floorNo: a.floorNo,
+                                        },
+                                        image: this.props.image
                                     }
                                 )}
                                 clicked={() => this.apartmentSelectedHandler(a.apartmentId)}/>

@@ -71,7 +71,7 @@ const Error = (props) => (
 const mapStateToProps = state => {
     return {
         showError: state.apiState.showError,
-        error: state.apiState.error
+        error: state.apiState.error,
     };
 };
 
