@@ -4,47 +4,17 @@ import styled from "styled-components";
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import {Menu, Title, Subtitle, AddButton, MenuButton} from "../../components/constants/styles/views";
+import {
+    Container,
+    PageContainer,
+    Menu,
+    Title,
+    AddButton,
+    MenuButton
+} from "../../components/constants/styles/views";
 import Apartment from "../../components/apartment/Apartment";
 import ApartmentData from "../../components/apartment/Data";
 import ApartmentDetails from "../../components/apartment/details/Details";
-
-const Container = styled.div`
-    display: inline-block;
-    align-items: center;
-    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
-    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-   
-    @keyframes slideOut {
-        0% {
-            transform: translateX(-20vw);
-        }
-    }
-   
-    @keyframes slideIn {
-        100% {
-            opacity: 0;
-            transform: translateX(100vw);
-        }  
-    }  
-    
-    @media screen and (max-width: 700px) {
-        flex-direction: column;
-    }
-`;
-
-const PageContainer = styled.div`
-    width: 80vw;
-    margin-bottom: 16px;
-    display: flex;
-    flex-direction: column;
-    
-    @media screen and (max-width: 700px) {
-        width: 100vw;
-        margin-bottom: 48px;
-    }
-`;
 
 const BuildingContainer = styled.img`
     margin-top: 48px;
@@ -60,6 +30,8 @@ const BuildingContainer = styled.img`
 `;
 
 const DescriptionContainer = styled.div``;
+
+const ApartmentContainer = styled.div``;
 
 class Apartments extends Component {
     constructor(props) {
@@ -124,37 +96,39 @@ class Apartments extends Component {
             <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Buildings')}>‹ Buildings</MenuButton>
+                    <Title>Apartments in {this.props.name}</Title>
                 </Menu>
-                <BuildingContainer src={url}/>
                 <PageContainer>
                     <DescriptionContainer>
-                        <Title>Apartments in {this.props.name}</Title>
                     </DescriptionContainer>
-                    {apartmentDetails}
-                    {apartments.map((a) => {
-                        return (
-                            <Apartment
-                                key={a.apartmentId}
-                                id={a.apartmentId}
-                                apartmentNo={a.apartmentNo}
-                                name={this.props.name}
-                                viewTenants={() => this.props.viewFrame('Tenants', {
-                                        building: building,
-                                        apartment: {
-                                            apartmentId: a.apartmentId,
-                                            apartmentNo: a.apartmentNo,
-                                            size: a.size,
-                                            rent: a.rent,
-                                            floorNo: a.floorNo,
-                                        },
-                                        image: this.props.image
-                                    }
-                                )}
-                                clicked={() => this.apartmentSelectedHandler(a.apartmentId)}/>
-                        )
-                    })}
-                    <AddButton onClick={this.toggleAdd}>New Apartment...</AddButton>
+                    <ApartmentContainer>
+                        {apartmentDetails}
+                        <BuildingContainer src={url}/>
+                        {apartments.map((a) => {
+                            return (
+                                <Apartment
+                                    key={a.apartmentId}
+                                    id={a.apartmentId}
+                                    apartmentNo={a.apartmentNo}
+                                    name={this.props.name}
+                                    viewTenants={() => this.props.viewFrame('Tenants', {
+                                            building: building,
+                                            apartment: {
+                                                apartmentId: a.apartmentId,
+                                                apartmentNo: a.apartmentNo,
+                                                size: a.size,
+                                                rent: a.rent,
+                                                floorNo: a.floorNo,
+                                            },
+                                            image: this.props.image
+                                        }
+                                    )}
+                                    clicked={() => this.apartmentSelectedHandler(a.apartmentId)}/>
+                            )
+                        })}
+                    </ApartmentContainer>
                 </PageContainer>
+                <AddButton onClick={this.toggleAdd}>New Apartment...</AddButton>
                 <ApartmentData add={this.state.add}
                                title={"Add new apartment"}
                                toggleAdd={this.toggleAdd}

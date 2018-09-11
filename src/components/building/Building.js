@@ -62,7 +62,7 @@ const Button = styled.div`
 
 class Building extends Component {
     render() {
-        const url = this.props.image ? `/images/${this.props.name}.png` : `/images/house.png`;
+        const url = this.props.imageAttached ? `/images/${this.props.name}.png` : `/images/house.png`;
         return (
             <BuildingContainer key={this.props.id}>
                 <ImageContainer src={url} onClick={this.props.viewApartments}/>

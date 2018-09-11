@@ -12,14 +12,12 @@ import BuildingDetails from "../../components/building/details/Details";
 const Content = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin-left: 5vw;
+    margin: auto;
     
     @media screen and (max-width: 700px) {
-        margin-left: 5vw;
     }
     
     @media screen and (max-width: 300px) {
-        margin-left: 5vw;
     }
 `;
 
@@ -86,9 +84,9 @@ class Buildings extends Component {
             <Container>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Menu')}>‹ Menu</MenuButton>
+                    <Title>Buildings</Title>
                 </Menu>
                 <PageContainer>
-                    <Title>Buildings</Title>
                     {buildingDetails}
                     <Content>
                         {buildings.map((b) => {
@@ -97,7 +95,7 @@ class Buildings extends Component {
                                     key={b.buildingId}
                                     id={b.buildingId}
                                     name={b.name}
-                                    image={b.image}
+                                    imageAttached={b.imageAttached}
                                     viewApartments={() => this.props.viewFrame('Apartments', {
                                             buildingId: b.buildingId,
                                             name: b.name,
@@ -105,15 +103,15 @@ class Buildings extends Component {
                                             zipCode: b.zipCode,
                                             yearBuilt: b.yearBuilt,
                                             inspectionDate: b.inspectionDate,
-                                            image: b.image
+                                            image: b.imageAttached
                                         }
                                     )}
                                     clicked={() => this.buildingSelectedHandler(b.buildingId)}/>
                             )
                         })}
                     </Content>
-                    <AddButton onClick={this.toggleAdd}>New Building...</AddButton>
                 </PageContainer>
+                <AddButton onClick={this.toggleAdd}>New Building...</AddButton>
                 <BuildingData add={this.state.add}
                               title={"Add new building"}
                               toggleAdd={this.toggleAdd}

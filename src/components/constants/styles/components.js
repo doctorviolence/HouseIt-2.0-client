@@ -1,25 +1,31 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-    width: 80vw;
+    width: 100%;
     padding: 24px;
     display: flex;
     align-items: center;
+    
+    @media screen and (max-width: 700px) {
+        width: 70vw;
+        flex-direction: column;
+    }
 `;
 
 export const TextContainer = styled.div`
-    width: 80vw;
+    width: 60vw;
     display: flex;
     text-align: left;
     font-size: 24px;
     margin-bottom: 5px;
     border-bottom: 1px solid #bdbebf;
-    align-items: left;
+    align-items: center;
     justify-content: space-between;
     cursor: pointer;
     user-select: none;
     
     @media screen and (max-width: 700px) {
+        width: 80vw;
         font-size: 16px;
     }
 `;
@@ -42,7 +48,6 @@ export const ButtonContainer = styled.div`
 `;
 
 export const Button = styled.button`
-    width: 150px;
     color: #CC0033;
     background: #ffffff;
     border: none;

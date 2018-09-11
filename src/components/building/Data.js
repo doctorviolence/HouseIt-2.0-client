@@ -127,7 +127,7 @@ class BuildingData extends Component {
             zipCode: this.state.dataForm.zipCode.value,
             yearBuilt: this.state.dataForm.yearBuilt.value,
             inspectionDate: this.state.dataForm.inspectionDate.value,
-            image: fileSelected
+            imageAttached: fileSelected
         };
 
         if (this.state.formIsValid) {
@@ -156,7 +156,7 @@ class BuildingData extends Component {
             zipCode: this.state.dataForm.zipCode.value,
             yearBuilt: this.state.dataForm.yearBuilt.value,
             inspectionDate: this.state.dataForm.inspectionDate.value,
-            image: fileSelected
+            imageAttached: fileSelected
         };
 
         if (this.state.formIsValid) {

@@ -13,7 +13,7 @@ import Settings from "./Settings";
 import Menu from './Menu';
 import Popup from "../components/ui/popup/Popup";
 import ErrorMessage from "../components/ui/errorMessage/ErrorMessage";
-import BuildingData from "../components/building/Data";
+import LoginMessage from "../components/ui/loginMessage/LoginMessage";
 
 const ViewContainer = styled.div`
     transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
@@ -86,6 +86,7 @@ class Views extends Component {
             return (
                 <ViewContainer>
                     <Login/>
+                    <LoginMessage/>
                 </ViewContainer>
             )
         }

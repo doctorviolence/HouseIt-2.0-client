@@ -4,6 +4,7 @@ const initialState = {
     tenant: null,
     apartment: null,
     building: null,
+    showLoginError: false,
     loginError: null
 };
 
@@ -28,6 +29,7 @@ const loginSuccess = (state, action) => {
 const loginFail = (state, action) => {
     return {
         ...state,
+        showLoginError: true,
         loginError: action.error
     }
 };
@@ -54,6 +56,15 @@ const closeFrame = (state, action) => {
     };
 };
 
+const closeLoginError = (state, action) => {
+    return {
+        ...state,
+        loginError: null,
+        showLoginError: false
+    };
+};
+
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'LOGIN_INIT':
@@ -62,6 +73,8 @@ const reducer = (state = initialState, action) => {
             return loginSuccess(state, action);
         case 'LOGIN_FAIL':
             return loginFail(state, action);
+        case 'CLOSE_LOGIN_ERROR':
+            return closeLoginError(state, action);
         case 'LOGOUT':
             return logout(state, action);
         case 'VIEW_FRAME':

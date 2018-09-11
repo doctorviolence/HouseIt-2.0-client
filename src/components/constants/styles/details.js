@@ -1,8 +1,6 @@
-import styled, {keyframes} from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
-    justify-content: center;
-    align-items: center;
     margin-left: 20vw;
     margin-right: 20vw;
     
@@ -24,7 +22,7 @@ export const DetailsContainer = styled.div`
     background: #ffffff;
     right: 0;
     top: 0;
-    width: 40vw;
+    width: 30vw;
     height: 100vh;
     animation: 'slideIn' 0.3s ease-in-out;
     transition: all 0.3s ease-in-out;

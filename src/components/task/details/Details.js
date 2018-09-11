@@ -61,7 +61,7 @@ class TaskDetails extends Component {
             taskNo: task[0].taskNo,
             taskDate: task[0].taskDate,
             taskType: task[0].taskType,
-            resolved: 'Yes',
+            resolved: true,
             tenant: task[0].tenant,
             apartment: task[0].apartment,
             building: task[0].building,
@@ -84,8 +84,8 @@ class TaskDetails extends Component {
 
         if (this.props.id) {
             const t = this.getTaskDetails(this.props.id);
-            const {taskNo, taskType, resolved, taskDate, tenant, apartment, building} = t[0];
-            const alreadyResolved = resolved === 'Yes';
+            const {taskNo, subject, resolved, datePosted, tenant, apartment, building} = t[0];
+            const alreadyResolved = resolved === true;
 
             task = (
                 <Container>
@@ -94,11 +94,9 @@ class TaskDetails extends Component {
                             <CloseButton onClick={() => this.props.toggleTaskDetails()}>&times;</CloseButton>
                         </DetailsClose>
                         <DetailsText>
-                            <DetailsTitle>{taskDate}</DetailsTitle>
-                            <Text><Label>Task No:</Label> {taskNo}</Text>
-                            <Text><Label>Subject:</Label> {taskType}</Text>
-                            <Text><Label>Resolved:</Label> {resolved}</Text>
-                            <Text><Label>Date:</Label> {taskDate}</Text>
+                            <DetailsTitle>{datePosted}</DetailsTitle>
+                            <Text><Label>Subject:</Label> {subject}</Text>
+                            <Text><Label>Date:</Label> {datePosted}</Text>
                             <Text><Label>Tenant:</Label> {tenant.firstName}</Text>
                             <Text><Label>Apartment:</Label> {apartment.apartmentNo}</Text>
                             <Text><Label>Building:</Label> {building.name}</Text>

@@ -12,7 +12,7 @@ class ApiTask {
             .then(response => response.data);
     };
 
-    getAllTasks = (queryToken) => {
+    getTasks = (queryToken) => {
         return axios
             .get('/tasks', {headers: {'Content-Type': 'application/json', 'Authorization': queryToken}})
             .then(response => response.data);
@@ -20,7 +20,7 @@ class ApiTask {
 
     getTasksByTenant = (id, queryToken) => {
         return axios
-            .get('/tasks-by-tenant/' + id, {
+            .get('/tasks/tasks-by-tenant/' + id, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': queryToken
@@ -28,27 +28,6 @@ class ApiTask {
             })
             .then(response => response.data);
     };
-
-    //getTasksByTenant = id => {
-    //    return axios
-    //        .get('/tasks/tasks-by-tenant' + id)
-    //        .then(response => response.data)
-    //        .catch(error => error.response);
-    //};
-
-    //getTasksByType = type => {
-    //    return axios
-    //        .get('/tasks/tasks-by-type' + type)
-    //        .then(response => response.data)
-    //        .catch(error => error.response);
-    //};
-
-    //getTasksByFixDate = () => {
-    //    return axios
-    //        .get('/tasks/tasks-by-fix-date')
-    //        .then(response => response.data)
-    //        .catch(error => error.response);
-    //};
 
     addTask = (data, queryToken) => {
         return axios

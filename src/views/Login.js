@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import * as viewActions from './actions';
 import {validation} from "../components/constants/validation";
 import Forms from "../components/ui/forms/Forms";
+import LoginMessage from "../components/ui/loginMessage/LoginMessage";
 import Views from "./Views";
 
 const Container = styled.div``;
@@ -17,6 +18,7 @@ const LoginContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: auto;
     
     @media screen and (max-width: 700px) {
         flex-direction: column;
@@ -139,7 +141,6 @@ class Login extends Component {
                 valid: false
             }
         }, formIsValid: false,
-        error: false
     };
 
     userInputHandler = (event) => {
@@ -173,17 +174,7 @@ class Login extends Component {
 
     render() {
         const isLoggedIn = this.props.isLoggedIn;
-        //const tokenExists = localStorage.getItem('token');
         const loginFormInputs = [];
-        let errorMessage = null;
-
-        if (this.props.error) {
-            errorMessage = (<ErrorMessage>{this.props.error}</ErrorMessage>);
-        }
-
-        if (this.state.error) {
-            errorMessage = (<ErrorMessage>Please fill out a valid email and/or password...</ErrorMessage>);
-        }
 
         for (let key in this.state.loginForm) {
             loginFormInputs.push({
@@ -215,7 +206,6 @@ class Login extends Component {
                                     changed={(event) => this.userInputHandler(event)}/>
                             ))}
                             <LoginButton onClick={(event) => this.handleSubmit(event)}>Log in</LoginButton>
-                            {errorMessage}
                         </FormContainer>
                     </LoginContainer>
                     <Footer>Copyright © 2018 Roth Fastigheter AB. All rights reserved.</Footer>
@@ -226,12 +216,9 @@ class Login extends Component {
     }
 }
 
-//<Button onClick={this.props.logout}>Logout</Button>
-
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.viewState.token !== null,
-        error: state.viewState.loginError
     };
 };
 

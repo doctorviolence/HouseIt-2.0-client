@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
 import {
+    Container,
     PageContainer,
     Menu,
     Title,
@@ -15,32 +16,7 @@ import TenantData from "../../components/tenant/Data";
 import TenantDetails from "../../components/tenant/details/Details";
 import styled from "styled-components";
 
-const Container = styled.div`
-    display: flex;
-    align-items: center;
-    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
-    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-   
-    @keyframes slideOut {
-        0% {
-            opacity: 0;
-            transform: translateX(-20vw);
-        }
-    }
-   
-    @keyframes slideIn {
-        100% {
-             opacity: 0;
-             transform: translateX(100vw);
-        }  
-    }  
-    
-    @media screen and (max-width: 700px) {
-        flex-direction: column;
-    }
-`;
-
+const TenantContainer = styled.div``;
 
 class Tenants extends Component {
     constructor(props) {
@@ -98,22 +74,29 @@ class Tenants extends Component {
             <Container newFrame={this.props.newFrame}>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Apartments',
-                        {buildingId: building.buildingId, name: building.name, image: this.props.image, newFrame: false})
+                        {
+                            buildingId: building.buildingId,
+                            name: building.name,
+                            image: this.props.image,
+                            newFrame: false
+                        })
                     }>‹ Apartments in {building.name}</MenuButton>
+                    <Title>Tenants in {apartment.apartmentNo}</Title>
                 </Menu>
                 <PageContainer>
-                    <Title>Tenants in {apartment.apartmentNo}</Title>
-                    {tenantDetails}
-                    {tenants.map((t) => {
-                        return (
-                            <Tenant
-                                key={t.tenantId}
-                                id={t.tenantId}
-                                firstName={t.firstName}
-                                lastName={t.lastName}
-                                clicked={() => this.tenantSelectedHandler(t.tenantId)}/>
-                        )
-                    })}
+                    <TenantContainer>
+                        {tenantDetails}
+                        {tenants.map((t) => {
+                            return (
+                                <Tenant
+                                    key={t.tenantId}
+                                    id={t.tenantId}
+                                    firstName={t.firstName}
+                                    lastName={t.lastName}
+                                    clicked={() => this.tenantSelectedHandler(t.tenantId)}/>
+                            )
+                        })}
+                    </TenantContainer>
                     <AddButton onClick={this.toggleAdd}>New Tenant...</AddButton>
                 </PageContainer>
                 <TenantData add={this.state.add}

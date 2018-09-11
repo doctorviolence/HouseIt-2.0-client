@@ -100,9 +100,9 @@ class Menu extends Component {
         return (
             <Container>
                 <Title>Menu</Title>
-                <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks</Button>
-                <Button onClick={() => this.props.viewFrame('Settings')}>Settings</Button>
-                <Button onClick={this.logOutHandler}>Log out</Button>
+                <Button onClick={() => this.props.viewFrame('Tasks')}>Tasks <ArrowContainer>›</ArrowContainer></Button>
+                <Button onClick={() => this.props.viewFrame('Settings')}>Settings <ArrowContainer>›</ArrowContainer></Button>
+                <Button onClick={this.logOutHandler}>Log out <ArrowContainer>›</ArrowContainer></Button>
             </Container>
         );
     };

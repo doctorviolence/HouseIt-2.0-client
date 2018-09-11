@@ -3,52 +3,13 @@ import {connect} from 'react-redux';
 
 import * as apiActions from '../../api/actions';
 import * as viewActions from '../actions';
-import {AddButton, Container, Menu, MenuButton, PageContainer} from "../../components/constants/styles/views";
+import {AddButton, Container, PageContainer, Menu, MenuButton, Title} from "../../components/constants/styles/views";
 import Task from '../../components/task/Task';
 import TaskData from '../../components/task/Data';
 import styled from "styled-components";
 import TaskDetails from "../../components/task/details/Details";
 
-const TaskContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    transform: ${props => props.newFrame ? 'slideOut' : 'none'} 0.3s ease-in-out;
-    animation: ${props => props.newFrame ? 'slideIn' : 'slideOut'} 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-   
-    @keyframes slideOut {
-        0% {
-            opacity: 0;
-            transform: translateX(-20vw);
-        }
-    }
-   
-    @keyframes slideIn {
-        100% {
-             opacity: 0;
-             transform: translateX(100vw);
-        }  
-    }  
-    
-    @media screen and (max-width: 700px) {
-        justify-content: center;
-    }
-`;
-
-const Title = styled.h2`
-    color: #333333;
-    font-size: 36px;
-    text-align: left;
-    margin-left: 32px;
-    margin-top: 48px;
-    margin-bottom: 32px;
-    cursor: default;
-    user-select: none;
-    
-    @media screen and (max-width: 700px) {
-        font-size: 24px;
-    }
-`;
+const TaskContainer = styled.div``;
 
 const TaskTitle = styled.h2`
     color: #333333;
@@ -129,17 +90,17 @@ class Tasks extends Component {
             addTask = <AddButton onClick={this.toggleAdd}>Add Task...</AddButton>;
         }
 
-        const completedTasks = tasks.filter((t) => t.resolved === 'Yes').map(t => {
+        const todoTasks = tasks.filter((t) => t.resolved === false).map(t => {
                 return (
                     <Task key={t.taskNo}
                           id={t.taskNo}
-                          subject={t.taskType}
-                          date={t.taskDate}
+                          subject={t.subject}
+                          datePosted={t.datePosted}
                           viewMessages={() => this.props.viewFrame('Messages', {
                               taskNo: t.taskNo,
-                              type: t.taskType,
+                              subject: t.subject,
                               resolved: t.resolved,
-                              taskDate: t.taskDate,
+                              datePosted: t.datePosted,
                               tenant: t.tenant,
                               apartment: t.apartment,
                               building: t.building
@@ -149,20 +110,18 @@ class Tasks extends Component {
             }
         );
 
-        const todoTasks = tasks.filter((t) => t.resolved === 'No').map(t => {
+        const completedTasks = tasks.filter((t) => t.resolved === true).map(t => {
                 return (
                     <Task key={t.taskNo}
                           id={t.taskNo}
-                          subject={t.taskType}
-                          date={t.taskDate}
+                          subject={t.subject}
+                          datePosted={t.datePosted}
                           viewMessages={() => this.props.viewFrame('Messages', {
                               taskNo: t.taskNo,
-                              type: t.taskType,
+                              subject: t.subject,
                               resolved: t.resolved,
-                              taskDate: t.taskDate,
-                              tenant: t.tenant,
-                              apartment: t.apartment,
-                              building: t.building
+                              datePosted: t.datePosted,
+                              tenant: t.tenant
                           })}
                           clicked={() => this.taskSelectedHandler(t.taskNo)}/>
                 )
@@ -173,19 +132,19 @@ class Tasks extends Component {
             <Container>
                 <Menu>
                     <MenuButton onClick={() => this.props.closeFrame('Menu')}>‹ Menu</MenuButton>
+                    <Title>Tasks</Title>
                 </Menu>
                 <PageContainer>
-                    <Title>Tasks</Title>
                     {taskDetails}
+                    <TaskContainer>
+                        <TaskTitle>To do</TaskTitle>
+                        {todoTasks}
+                    </TaskContainer>
                     <TaskContainer>
                         <TaskTitle>Completed tasks</TaskTitle>
                         {completedTasks}
                     </TaskContainer>
-                    <TaskContainer>
-                        <TaskTitle>To do</TaskTitle>
-                        {todoTasks}
-                        {addTask}
-                    </TaskContainer>
+                    {addTask}
                 </PageContainer>
                 <TaskData add={this.state.add}
                           title={"Add new task"}

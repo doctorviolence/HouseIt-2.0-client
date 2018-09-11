@@ -253,7 +253,7 @@ export const retrieveTask = (id) => {
 export const retrieveTasks = () => {
     return dispatch => {
         const queryToken = localStorage.getItem('token');
-        return apiTask.getAllTasks(queryToken)
+        return apiTask.getTasks(queryToken)
             .then(tasks => {
                     dispatch({type: 'TASKS_RETRIEVED_SUCCESS', tasks});
                 }
@@ -314,6 +314,7 @@ export const editTask = (task, id) => {
                 if (e && e.response !== undefined) {
                     dispatch({type: 'SHOW_ERROR', error: e.response.data.message});
                 } else {
+                    console.log(e);
                     dispatch({type: 'SHOW_ERROR', error: 'Failed to update task...'})
                 }
             })

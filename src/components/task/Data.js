@@ -5,29 +5,29 @@ import Add from "../../components/add/Add";
 class TaskData extends Component {
     state = {
         dataForm: {
-            taskType: {
+            subject: {
                 formType: 'input',
                 description: 'Subject',
                 formConfig: {
                     type: 'text',
-                    name: 'taskType',
+                    name: 'subject',
                     placeholder: 'Subject'
                 },
-                value: this.props.taskType || '',
+                value: this.props.subject || '',
                 validation: {
                     required: true
                 },
                 valid: false
             },
-            taskDate: {
+            datePosted: {
                 formType: 'input',
                 description: 'Date',
                 formConfig: {
                     type: 'date',
-                    name: 'taskDate',
+                    name: 'datePosted',
                     placeholder: 'Date'
                 },
-                value: this.props.taskDate || '',
+                value: this.props.datePosted || '',
                 validation: {
                     required: true
                 },
@@ -57,9 +57,9 @@ class TaskData extends Component {
         event.preventDefault();
         const data = {
             taskNo: null,
-            taskType: this.state.dataForm.taskType.value,
-            resolved: 'No',
-            taskDate: this.state.dataForm.taskDate.value,
+            subject: this.state.dataForm.subject.value,
+            resolved: false,
+            datePosted: this.state.dataForm.datePosted.value,
             tenant: {tenantId: this.props.tenant},
             apartment: {apartmentId: this.props.apartment},
             building: {buildingId: this.props.building}

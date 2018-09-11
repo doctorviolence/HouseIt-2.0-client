@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {validation} from "../constants/validation";
 import Add from "../add/Add";
+import * as apiActions from "../../api/actions";
+import * as viewActions from "../../views/actions";
 
 class MessageData extends Component {
     state = {
@@ -46,12 +49,14 @@ class MessageData extends Component {
         const d = new Date();
         const month = d.getMonth() + 1;
         const datePosted = d.getFullYear() + "-" + month + "-" + d.getDate();
+        const isTenant = this.props.viewState.tenant !== null;
         const data = {
             messageNo: null,
             datePosted: datePosted,
             timePosted: datePosted + " " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds(),
             messageText: this.state.dataForm.messageText.value,
-            task: this.props.taskNo
+            writtenByTenant: isTenant,
+            task: this.props.task
         };
         if (this.state.formIsValid) {
             this.props.toggleAdd;
@@ -60,21 +65,6 @@ class MessageData extends Component {
             // Replacing this with error message, eventually...
         }
     };
-
-    //editTaskMessage = (event) => {
-    //    event.preventDefault();
-    //    const no = this.props.id;
-    //    const data = {
-    //        messageNo: no,
-    //        messageText: this.state.dataForm.messageText.value,
-    //        task: {taskNo: this.props.taskNo}
-    //    };
-    //
-    //    if (this.state.formIsValid) {
-    //        this.props.toggleEdit;
-    //        this.props.editTaskMessage(data, no);
-    //    }
-    //};
 
     render() {
         if (this.props.add) {
@@ -93,4 +83,10 @@ class MessageData extends Component {
     }
 }
 
-export default MessageData;
+const mapStateToProps = state => {
+    return {
+        viewState: state.viewState
+    };
+};
+
+export default connect(mapStateToProps)(MessageData);

@@ -7,7 +7,10 @@ export const login = (username, password) => {
         dispatch(loginInit());
         return api.login(username, password).then(result => {
                 const token = result.headers.authorization;
-                const tenant = result.headers.tenant;
+                let tenant = null;
+                if (result.headers.tenant) {
+                    tenant = result.headers.tenant;
+                }
                 const apartment = {apartmentId: result.headers.apartmentid, apartmentNo: result.headers.apartmentno};
                 const building = {buildingId: result.headers.buildingid, buildingName: result.headers.buildingname};
                 localStorage.setItem('token', token);
@@ -53,5 +56,6 @@ export const logout = () => {
     }
 };
 
+export const closeLoginError = () => ({type: 'CLOSE_LOGIN_ERROR'});
 export const viewFrame = (view, props) => ({type: 'VIEW_FRAME', view, props: props});
 export const closeFrame = (view, props) => ({type: 'CLOSE_FRAME', view, props: props});

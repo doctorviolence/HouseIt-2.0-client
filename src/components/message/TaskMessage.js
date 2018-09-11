@@ -1,71 +1,40 @@
 import React from 'react';
+import {Container} from "../constants/styles/components";
 import styled from "styled-components";
 
-const Container = styled.div`
-    width: 90vw;
-    padding: 24px;
-    display: flex;
-    
-    @media screen and (max-width: 700px) {
-        flex-direction: column;
-    }
-`;
-
 const DateContainer = styled.div`
-    width: 20vw;
-    display: flex;
-    font-size: 16px;
-    align-items: center;
-    justify-content: space-between;
+    text-align: right;
+    font-size: 12px;
     user-select: none;
     
     @media screen and (max-width: 700px) {
-        font-size: 12px;
-        width: 80vw;
-        justify-content: center;
+        font-size: 10px;
     }
 `;
 
-const ArrowContainer = styled.div`
-    font-size: 30px;
-    color: #bdbebf;
-    
-     @media screen and (max-width: 700px) {
-        margin-left: 20px;
-    }
-`;
-
-const TextContainer = styled.div`
-    width: 90vw;
-    display: flex;
-    text-align: left;
-    font-size: 20px;
-    margin-left: 20px;
-    margin-bottom: 5px;
-    border-bottom: 1px dotted #bdbebf;
-    align-items: center;
-    justify-content: space-between;
+const MessageContainer = styled.div` 
+    width: 60vw;
+    margin-left: ${props => props.writtenByTenant ? '10vw' : '0'}; 
+    background: ${props => props.writtenByTenant ? '#f2f2f2' : '#ffffff'};  
+    padding: 4px 8px;
+	text-align: left;
+    border: 1px solid #333333;     
     cursor: pointer;
     user-select: none;
     
     @media screen and (max-width: 700px) {
-        width: 80vw;
-        font-size: 12px;
-        margin-left: 0px;
         text-align: left;
-        justify-content: center;
     }
 `;
 
 const TaskMessage = (props) => (
     <Container key={props.id}>
-        <DateContainer>
-            {props.timePosted}
-            <ArrowContainer>›</ArrowContainer>
-        </DateContainer>
-        <TextContainer onClick={props.clicked}>
-            {props.messageText}
-        </TextContainer>
+            <MessageContainer writtenByTenant={props.writtenByTenant} onClick={props.clicked}>
+                {props.messageText}
+                <DateContainer>
+                    {props.timePosted}
+                </DateContainer>
+            </MessageContainer>
     </Container>
 );
 
